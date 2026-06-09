@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="900"             
+			 xmlns:vm="using:ClientCW.ViewModels"			 
+			 xmlns:UserControl="using:ClientCW.Views"
+			 x:Class="ClientCW.Views.MainTab"
+			 x:DataType="vm:MainTabViewModel">
+	
+		<Grid RowDefinitions="*"  
+			  Margin="5" 
+			  ShowGridLines="false" 
+			  MaxWidth="1024">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*" MinWidth="645"/>
+				<ColumnDefinition Width="1"/>			
+				<ColumnDefinition Width="*" MinWidth="165"/>
+			</Grid.ColumnDefinitions>
+
+			<UserControl:Weight Grid.Row="0" Grid.Column="0" Name="LeftWeight"/>
+			
+			<Rectangle Fill="Black" 
+					   Grid.Column="1"
+					   Width="1"/>
+			
+			<UserControl:Order  Grid.Row="0" Grid.Column="2" Name="RightOrder"/>
+	    </Grid>
+	
+</UserControl>

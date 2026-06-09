@@ -1,0 +1,150 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ClientCW.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="330" d:DesignHeight="650"
+             x:Class="ClientCW.Views.Order"
+			 x:DataType="vm:MainTabViewModel">
+	
+	<Grid Margin="10 10"
+		  ShowGridLines="false"
+		  RowDefinitions="Auto *">
+
+		<StackPanel Grid.Row="0">
+			<StackPanel Margin="0 10 0 0">
+				<TextBlock FontSize="16" 
+						   FontWeight="Bold"
+						   Text="Тип Заказа"/>
+				<ComboBox SelectedIndex=""						  						  
+						  Margin="0 5"
+						  Padding="10 0"
+						  MinWidth="125"
+						  SelectionChanged="ComboBox_SelectionChanged">
+					<ComboBoxItem>Элевация</ComboBoxItem>
+					<ComboBoxItem>На море</ComboBoxItem>
+				</ComboBox>
+			</StackPanel>
+ 
+			<StackPanel Margin="0 10 0 0">
+				<TextBlock FontSize="16" 
+						   FontWeight="Bold" 
+						   Text="Номер"/>
+				<TextBox  Watermark="Order 0.0"						  
+						  MaxLength="10"						  
+						  Text=""
+						  KeyDown="InputId"						  
+						  TextChanged="InputId_TextChanged"/>
+			</StackPanel>
+
+			<StackPanel  Margin="0 10 0 0">
+				<TextBlock FontSize="16" 
+						   FontWeight="Bold" 
+						   Margin="0 5"						   
+						   Text="Вес заказа"/>
+				<TextBox  Watermark="0"
+						  MaxLength="8"						 
+						  Text=""
+						  Name="OrderWeightInput"
+						  KeyDown="InputWeight"/>
+			</StackPanel>
+
+			<StackPanel  Margin="0 10 0 0">
+				<TextBlock FontSize="16" 
+						   FontWeight="Bold" 
+						   Text="Отвес"/>
+				<TextBox  Watermark="6500"
+						  MaxLength="4"						  
+						  Text=""
+						  KeyDown="InputDruft"
+						  TextChanging="TextBox_TextChanging"/>
+			</StackPanel>
+
+			<StackPanel Margin="0 10 0 0">
+				<TextBlock FontSize="16" 
+						   FontWeight="Bold"						   
+						   Text="Продукт"/>
+					<ComboBox SelectedIndex="" 
+							  Margin="0 5" 
+							  MinWidth="125"
+							  Padding="10 0">
+						<ComboBoxItem>Пшеница</ComboBoxItem>
+						<ComboBoxItem>Другой</ComboBoxItem>
+					</ComboBox>
+			</StackPanel>
+
+			<StackPanel  Margin="0 10 0 0">
+				<TextBlock FontSize="16" 
+						   FontWeight="Bold"
+						   Margin="0 5"
+						   Text="Заказчик"/>
+				<TextBox Text=""						 
+						 MaxLength="30"						 
+						 KeyDown="InputCustomer"/>
+			</StackPanel>
+
+			<StackPanel  Margin="0 10 0 0">
+				<TextBlock FontSize="16" 
+						   FontWeight="Bold"
+						   Margin="0 5"
+						   Text="Комментарий"/>
+				<TextBox  Height="50" 
+						  AcceptsReturn="False" 
+						  TextWrapping="Wrap"
+						  MaxLength="120"						  
+						  Text=""
+						  KeyDown="InputComment"/>
+			</StackPanel>
+		</StackPanel>
+		
+		
+		<StackPanel Grid.Row="1"
+					VerticalAlignment="Bottom">
+			<Grid ColumnDefinitions="Auto Auto" 
+				  RowDefinitions="* *">
+				
+				<!-- КНОПКА - Текущий итог -->
+				<Button Background="#f0f0f0"
+						HorizontalContentAlignment="Center"
+						Padding="15"
+						FontSize="16"
+						Margin="0 10 10 0"
+						Content="Текущий итог"
+						Grid.Row="0"
+						Grid.Column="0"
+						MinWidth="150"/>
+
+				<!-- КНОПКА - Тара -->
+				<Button Background="#f0f0f0"
+						HorizontalContentAlignment="Center"
+						Padding="15"
+						FontSize="16"
+						Margin="0 10 10 0"
+						Content="Тара"
+						Grid.Row="1"
+						Grid.Column="0"
+						MinWidth="150"
+						FontWeight="Bold"/>
+
+				<!-- КНОПКА - Начать -->
+				<Button Background="#f0f0f0"
+						HorizontalContentAlignment="Center"
+						Padding="15"
+						FontSize="16"
+						Margin="0 10 10 0"
+						Content="Начать"
+						Grid.Row="1"
+						Grid.Column="1"
+						MinWidth="150"
+						FontWeight="Bold"
+						IsEnabled=""/>
+			</Grid>
+		</StackPanel>
+		
+		
+		
+		
+		
+	</Grid>
+	
+</UserControl>
