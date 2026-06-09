@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Core/Weight.csproj" />
+  <Project Path="Desktop/Desktop.csproj" />
+</Solution>
