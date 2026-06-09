@@ -6,7 +6,7 @@
 			 xmlns:ctrl="clr-namespace:ClientCW.Views"             			 
              mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="1000"
              x:Class="ClientCW.Views.Weight"
-			 x:DataType="vm:MainTabViewModel">
+			 x:DataType="vm:WeightViewModel">
 
 	
 	<StackPanel Margin="5">
@@ -400,7 +400,7 @@
 					Grid.Column="0" 
 					Content="Кнопка 1" 
 					HorizontalAlignment="Center"
-					Command="{Binding ClickButton1}"/>
+					Command="{Binding WeightClick}"/>
 
 			<!--  Кнопка 2-->
 			<Button Padding="15"  
