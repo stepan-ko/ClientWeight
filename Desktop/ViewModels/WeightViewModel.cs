@@ -3,38 +3,29 @@ using System.Diagnostics;
 using System.Runtime.Serialization;
 using Avalonia.Threading;
 using ClientCW.Views;
-using ReactiveUI;
-using System.Reactive;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Weight;
 using Weight.Data;
-using ReactiveUI.Primitives;
 
 namespace ClientCW.ViewModels
 {
-    public class WeightViewModel : ReactiveObject
+    public class WeightViewModel : ObservableObject
     {
 
         public WeightViewModel()
-            {
-
+        {
             orderData = new OrderData();
             staticOrderData = new StaticOrderData();
             statusData = new StatusData();
             miscStatusData = new MiscStatusData();
             configData = new ConfigData();
             newOrderData = new NewOrderData();
-
-            Debug.WriteLine("До ReactiveCommand.Create(OnButtonClicked)");
-            ClickCommand = ReactiveCommand.Create(OnButtonClicked);
-
-            weightTitle = "Это public class WeightViewModel : ReactiveObject";
+            ClickCommand = new RelayCommand(OnButtonClicked);
         }
 
-        private string _weightTitle;
-        public string weightTitle { get => _weightTitle; set => this.RaiseAndSetIfChanged(ref _weightTitle, value); }
 
-        public ReactiveCommand<RxVoid, RxVoid> ClickCommand { get; }
-        
+        public RelayCommand ClickCommand { get; }
         private void OnButtonClicked()
         {
             Debug.WriteLine("Команда выполнена! Отладочная строка из View‑Model");
@@ -48,12 +39,12 @@ namespace ClientCW.ViewModels
         private NewOrderData _newOrderData;
 
 
-        public OrderData orderData { get => _orderData; set => this.RaiseAndSetIfChanged(ref _orderData, value); }
-        public StaticOrderData staticOrderData { get => _staticOrderData; set => this.RaiseAndSetIfChanged(ref _staticOrderData, value); }
-        public StatusData statusData { get => _statusData; set => this.RaiseAndSetIfChanged(ref _statusData, value); }
-        public MiscStatusData miscStatusData { get => _miscStatusData; set => this.RaiseAndSetIfChanged(ref _miscStatusData, value); }
-        public ConfigData configData { get => _configData; set => this.RaiseAndSetIfChanged(ref _configData, value); }
-        public NewOrderData newOrderData { get => _newOrderData; set => this.RaiseAndSetIfChanged(ref _newOrderData, value); }
+        public OrderData orderData { get => _orderData; set => this.SetProperty(ref _orderData, value); }
+        public StaticOrderData staticOrderData { get => _staticOrderData; set => this.SetProperty(ref _staticOrderData, value); }
+        public StatusData statusData { get => _statusData; set => this.SetProperty(ref _statusData, value); }
+        public MiscStatusData miscStatusData { get => _miscStatusData; set => this.SetProperty(ref _miscStatusData, value); }
+        public ConfigData configData { get => _configData; set => this.SetProperty(ref _configData, value); }
+        public NewOrderData newOrderData { get => _newOrderData; set => this.SetProperty(ref _newOrderData, value); }
 
 
        

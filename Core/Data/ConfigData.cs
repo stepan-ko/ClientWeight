@@ -4,11 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Weight
 {
-    public class ConfigData : ReactiveObject
+    public class ConfigData : ObservableObject
     {
         
         private string _ScaleName = "";
@@ -209,28 +209,28 @@ namespace Weight
 
 
 
-        public string ScaleName { get => _ScaleName; set => this.RaiseAndSetIfChanged(ref _ScaleName, value); }
-        public int ScaleCapacityInDecimal { get => _ScaleCapacityInDecimal; set => this.RaiseAndSetIfChanged(ref _ScaleCapacityInDecimal, value); }
-        public int DivisionSizeInDecimal { get => _DivisionSizeInDecimal; set => this.RaiseAndSetIfChanged(ref _DivisionSizeInDecimal, value); }
-        public int Decimals { get => _Decimals; set => this.RaiseAndSetIfChanged(ref _Decimals, value); }
-        public int WeightUnits { get => _WeightUnits; set => this.RaiseAndSetIfChanged(ref _WeightUnits, value); }
-        public int DefaultDraftSize { get => _DefaultDraftSize; set => this.RaiseAndSetIfChanged(ref _DefaultDraftSize, value); }
-        public int MaxAddtoDraftSize { get => _MaxAddtoDraftSize; set => this.RaiseAndSetIfChanged(ref _MaxAddtoDraftSize, value); }
-        public int TareResetRange { get => _TareResetRange; set => this.RaiseAndSetIfChanged(ref _TareResetRange, value); }
-        public int WHEmptyOffset { get => _WHEmptyOffset; set => this.RaiseAndSetIfChanged(ref _WHEmptyOffset, value); }
-        public int GateControlType { get => _GateControlType; set => this.RaiseAndSetIfChanged(ref _GateControlType, value); }
-        public int GatePulseTime { get => _GatePulseTime; set => this.RaiseAndSetIfChanged(ref _GatePulseTime, value); }
-        public int GateDeadBand { get => _GateDeadBand; set => this.RaiseAndSetIfChanged(ref _GateDeadBand, value); }
-        public int GateJoggingDeadBand { get => _GateJoggingDeadBand; set => this.RaiseAndSetIfChanged(ref _GateJoggingDeadBand, value); }
-        public int LGCleanoutTime { get => _LGCleanoutTime; set => this.RaiseAndSetIfChanged(ref _LGCleanoutTime, value); }
-        public int LGGateType { get => _LGGateType; set => this.RaiseAndSetIfChanged(ref _LGGateType, value); }
+        public string ScaleName { get => _ScaleName; set => this.SetProperty(ref _ScaleName, value); }
+        public int ScaleCapacityInDecimal { get => _ScaleCapacityInDecimal; set => this.SetProperty(ref _ScaleCapacityInDecimal, value); }
+        public int DivisionSizeInDecimal { get => _DivisionSizeInDecimal; set => this.SetProperty(ref _DivisionSizeInDecimal, value); }
+        public int Decimals { get => _Decimals; set => this.SetProperty(ref _Decimals, value); }
+        public int WeightUnits { get => _WeightUnits; set => this.SetProperty(ref _WeightUnits, value); }
+        public int DefaultDraftSize { get => _DefaultDraftSize; set => this.SetProperty(ref _DefaultDraftSize, value); }
+        public int MaxAddtoDraftSize { get => _MaxAddtoDraftSize; set => this.SetProperty(ref _MaxAddtoDraftSize, value); }
+        public int TareResetRange { get => _TareResetRange; set => this.SetProperty(ref _TareResetRange, value); }
+        public int WHEmptyOffset { get => _WHEmptyOffset; set => this.SetProperty(ref _WHEmptyOffset, value); }
+        public int GateControlType { get => _GateControlType; set => this.SetProperty(ref _GateControlType, value); }
+        public int GatePulseTime { get => _GatePulseTime; set => this.SetProperty(ref _GatePulseTime, value); }
+        public int GateDeadBand { get => _GateDeadBand; set => this.SetProperty(ref _GateDeadBand, value); }
+        public int GateJoggingDeadBand { get => _GateJoggingDeadBand; set => this.SetProperty(ref _GateJoggingDeadBand, value); }
+        public int LGCleanoutTime { get => _LGCleanoutTime; set => this.SetProperty(ref _LGCleanoutTime, value); }
+        public int LGGateType { get => _LGGateType; set => this.SetProperty(ref _LGGateType, value); }
         public ushort MiscSingleBitData1 
         { 
             get => _MiscSingleBitData1;
             set
             {
                 if (_MiscSingleBitData1 != value) UpdateMiscWord1();
-                this.RaiseAndSetIfChanged(ref _MiscSingleBitData1, value);
+                this.SetProperty(ref _MiscSingleBitData1, value);
             }
         }
         public ushort MiscSingleBitData2
@@ -239,65 +239,65 @@ namespace Weight
             set
             {
                 if (_MiscSingleBitData2 != value) UpdateMiscWord2();
-                this.RaiseAndSetIfChanged(ref _MiscSingleBitData2, value);
+                this.SetProperty(ref _MiscSingleBitData2, value);
             }
         }
-        public int DraftCountRollover { get => _DraftCountRollover; set => this.RaiseAndSetIfChanged(ref _DraftCountRollover, value); }
-        public int DraftsPerSubtotal { get => _DraftsPerSubtotal; set => this.RaiseAndSetIfChanged(ref _DraftsPerSubtotal, value); }
-        public int FillMotionDelayTime { get => _FillMotionDelayTime; set => this.RaiseAndSetIfChanged(ref _FillMotionDelayTime, value); }
-        public int DumpMotionDelayTime { get => _DumpMotionDelayTime; set => this.RaiseAndSetIfChanged(ref _DumpMotionDelayTime, value); }
+        public int DraftCountRollover { get => _DraftCountRollover; set => this.SetProperty(ref _DraftCountRollover, value); }
+        public int DraftsPerSubtotal { get => _DraftsPerSubtotal; set => this.SetProperty(ref _DraftsPerSubtotal, value); }
+        public int FillMotionDelayTime { get => _FillMotionDelayTime; set => this.SetProperty(ref _FillMotionDelayTime, value); }
+        public int DumpMotionDelayTime { get => _DumpMotionDelayTime; set => this.SetProperty(ref _DumpMotionDelayTime, value); }
         public ushort AllowedTransactionTypes 
         { 
             get => _AllowedTransactionTypes;
             set
             {
                 if (_AllowedTransactionTypes != value) UpdateTypes();
-                this.RaiseAndSetIfChanged(ref _AllowedTransactionTypes, value);
+                this.SetProperty(ref _AllowedTransactionTypes, value);
             }
         }
-        public int AuditPrinterPaperSize { get => _AuditPrinterPaperSize; set => this.RaiseAndSetIfChanged(ref _AuditPrinterPaperSize, value); }
-        public int RemotePrinterPaperSize { get => _RemotePrinterPaperSize; set => this.RaiseAndSetIfChanged(ref _RemotePrinterPaperSize, value); }
-        public int ReportPrinterPaperSize { get => _ReportPrinterPaperSize; set => this.RaiseAndSetIfChanged(ref _ReportPrinterPaperSize, value); }
-        public string HeaderLine1 { get => _HeaderLine1; set => this.RaiseAndSetIfChanged(ref _HeaderLine1, value); }
-        public string HeaderLine2 { get => _HeaderLine2; set => this.RaiseAndSetIfChanged(ref _HeaderLine2, value); }
-        public string SignatureLine1 { get => _SignatureLine1; set => this.RaiseAndSetIfChanged(ref _SignatureLine1, value); }
-        public string SignatureLine2 { get => _SignatureLine2; set => this.RaiseAndSetIfChanged(ref _SignatureLine2, value); }
-        public int PrintCustomTicketInformation { get => _PrintCustomTicketInformation; set => this.RaiseAndSetIfChanged(ref _PrintCustomTicketInformation, value); }
-        public int DeviationInfluencein { get => _DeviationInfluencein; set => this.RaiseAndSetIfChanged(ref _DeviationInfluencein, value); }
-        public int UnderZeroRange { get => _UnderZeroRange; set => this.RaiseAndSetIfChanged(ref _UnderZeroRange, value); }
-        public int OvercapacityRange { get => _OvercapacityRange; set => this.RaiseAndSetIfChanged(ref _OvercapacityRange, value); }
-        public int MaxAllowableDraftSize { get => _MaxAllowableDraftSize; set => this.RaiseAndSetIfChanged(ref _MaxAllowableDraftSize, value); }
-        public int MinAllowableDraftSize { get => _MinAllowableDraftSize; set => this.RaiseAndSetIfChanged(ref _MinAllowableDraftSize, value); }
-        public int DirectTrimRange { get => _DirectTrimRange; set => this.RaiseAndSetIfChanged(ref _DirectTrimRange, value); }
-        public int JogRangein { get => _JogRangein; set => this.RaiseAndSetIfChanged(ref _JogRangein, value); }
-        public int UGGateJogTime { get => _UGGateJogTime; set => this.RaiseAndSetIfChanged(ref _UGGateJogTime, value); }
-        public int MaxWeightThroughUG { get => _MaxWeightThroughUG; set => this.RaiseAndSetIfChanged(ref _MaxWeightThroughUG, value); }
-        public int TrimLSPosition { get => _TrimLSPosition; set => this.RaiseAndSetIfChanged(ref _TrimLSPosition, value); }
-        public uint SmartTechAlarmsMask1 { get => _SmartTechAlarmsMask1; set => this.RaiseAndSetIfChanged(ref _SmartTechAlarmsMask1, value); }
-        public uint SmartTechAlarmsMask2 { get => _SmartTechAlarmsMask2; set => this.RaiseAndSetIfChanged(ref _SmartTechAlarmsMask2, value); }
-        public int GateFullMotionTime { get => _GateFullMotionTime; set => this.RaiseAndSetIfChanged(ref _GateFullMotionTime, value); }
-        public int GateTrimMotionTime { get => _GateTrimMotionTime; set => this.RaiseAndSetIfChanged(ref _GateTrimMotionTime, value); }
-        public int GateDirectTrimMotionTime { get => _GateDirectTrimMotionTime; set => this.RaiseAndSetIfChanged(ref _GateDirectTrimMotionTime, value); }
-        public int GateFullTrimMotionTime { get => _GateFullTrimMotionTime; set => this.RaiseAndSetIfChanged(ref _GateFullTrimMotionTime, value); }
-        public int LGGateADRange { get => _LGGateADRange; set => this.RaiseAndSetIfChanged(ref _LGGateADRange, value); }
-        public int DWIMotionRange { get => _DWIMotionRange; set => this.RaiseAndSetIfChanged(ref _DWIMotionRange, value); }
+        public int AuditPrinterPaperSize { get => _AuditPrinterPaperSize; set => this.SetProperty(ref _AuditPrinterPaperSize, value); }
+        public int RemotePrinterPaperSize { get => _RemotePrinterPaperSize; set => this.SetProperty(ref _RemotePrinterPaperSize, value); }
+        public int ReportPrinterPaperSize { get => _ReportPrinterPaperSize; set => this.SetProperty(ref _ReportPrinterPaperSize, value); }
+        public string HeaderLine1 { get => _HeaderLine1; set => this.SetProperty(ref _HeaderLine1, value); }
+        public string HeaderLine2 { get => _HeaderLine2; set => this.SetProperty(ref _HeaderLine2, value); }
+        public string SignatureLine1 { get => _SignatureLine1; set => this.SetProperty(ref _SignatureLine1, value); }
+        public string SignatureLine2 { get => _SignatureLine2; set => this.SetProperty(ref _SignatureLine2, value); }
+        public int PrintCustomTicketInformation { get => _PrintCustomTicketInformation; set => this.SetProperty(ref _PrintCustomTicketInformation, value); }
+        public int DeviationInfluencein { get => _DeviationInfluencein; set => this.SetProperty(ref _DeviationInfluencein, value); }
+        public int UnderZeroRange { get => _UnderZeroRange; set => this.SetProperty(ref _UnderZeroRange, value); }
+        public int OvercapacityRange { get => _OvercapacityRange; set => this.SetProperty(ref _OvercapacityRange, value); }
+        public int MaxAllowableDraftSize { get => _MaxAllowableDraftSize; set => this.SetProperty(ref _MaxAllowableDraftSize, value); }
+        public int MinAllowableDraftSize { get => _MinAllowableDraftSize; set => this.SetProperty(ref _MinAllowableDraftSize, value); }
+        public int DirectTrimRange { get => _DirectTrimRange; set => this.SetProperty(ref _DirectTrimRange, value); }
+        public int JogRangein { get => _JogRangein; set => this.SetProperty(ref _JogRangein, value); }
+        public int UGGateJogTime { get => _UGGateJogTime; set => this.SetProperty(ref _UGGateJogTime, value); }
+        public int MaxWeightThroughUG { get => _MaxWeightThroughUG; set => this.SetProperty(ref _MaxWeightThroughUG, value); }
+        public int TrimLSPosition { get => _TrimLSPosition; set => this.SetProperty(ref _TrimLSPosition, value); }
+        public uint SmartTechAlarmsMask1 { get => _SmartTechAlarmsMask1; set => this.SetProperty(ref _SmartTechAlarmsMask1, value); }
+        public uint SmartTechAlarmsMask2 { get => _SmartTechAlarmsMask2; set => this.SetProperty(ref _SmartTechAlarmsMask2, value); }
+        public int GateFullMotionTime { get => _GateFullMotionTime; set => this.SetProperty(ref _GateFullMotionTime, value); }
+        public int GateTrimMotionTime { get => _GateTrimMotionTime; set => this.SetProperty(ref _GateTrimMotionTime, value); }
+        public int GateDirectTrimMotionTime { get => _GateDirectTrimMotionTime; set => this.SetProperty(ref _GateDirectTrimMotionTime, value); }
+        public int GateFullTrimMotionTime { get => _GateFullTrimMotionTime; set => this.SetProperty(ref _GateFullTrimMotionTime, value); }
+        public int LGGateADRange { get => _LGGateADRange; set => this.SetProperty(ref _LGGateADRange, value); }
+        public int DWIMotionRange { get => _DWIMotionRange; set => this.SetProperty(ref _DWIMotionRange, value); }
         public ushort SubtotalsConfiguration 
         { 
             get => _SubtotalsConfiguration;
             set
             {
                 if(_SubtotalsConfiguration != value) UpdateSubtotalsConfig();
-                this.RaiseAndSetIfChanged(ref _SubtotalsConfiguration, value);
+                this.SetProperty(ref _SubtotalsConfiguration, value);
             }
         }
-        public int ModbusNodeAddress { get => _ModbusNodeAddress; set => this.RaiseAndSetIfChanged(ref _ModbusNodeAddress, value); }
+        public int ModbusNodeAddress { get => _ModbusNodeAddress; set => this.SetProperty(ref _ModbusNodeAddress, value); }
         public ushort SerialCommParameters 
         { 
             get => _SerialCommParameters;
             set
             {
                 if (_SerialCommParameters != value) UpdateComm();
-                this.RaiseAndSetIfChanged(ref _SerialCommParameters, value);
+                this.SetProperty(ref _SerialCommParameters, value);
             }
         }
         public uint IPAddress 
@@ -306,7 +306,7 @@ namespace Weight
             set 
             {
                 if (_IPAddress != value) IPAddressString = Lib.RegIpToString(value);
-                this.RaiseAndSetIfChanged(ref _IPAddress, value); 
+                this.SetProperty(ref _IPAddress, value); 
             } 
         }
         public uint SubnetMask 
@@ -315,79 +315,79 @@ namespace Weight
             set
             {
                 if (_SubnetMask != value) SubnetMaskString = Lib.RegIpToString(value);
-                this.RaiseAndSetIfChanged(ref _SubnetMask, value);
+                this.SetProperty(ref _SubnetMask, value);
             }
         }
-        public int TCPPort { get => _TCPPort; set => this.RaiseAndSetIfChanged(ref _TCPPort, value); }
-        public int ModbusTimeout { get => _ModbusTimeout; set => this.RaiseAndSetIfChanged(ref _ModbusTimeout, value); }
-        public int SocketTimeout { get => _SocketTimeout; set => this.RaiseAndSetIfChanged(ref _SocketTimeout, value); }
-        public int MaxTCPConnectionsAllowed { get => _MaxTCPConnectionsAllowed; set => this.RaiseAndSetIfChanged(ref _MaxTCPConnectionsAllowed, value); }
+        public int TCPPort { get => _TCPPort; set => this.SetProperty(ref _TCPPort, value); }
+        public int ModbusTimeout { get => _ModbusTimeout; set => this.SetProperty(ref _ModbusTimeout, value); }
+        public int SocketTimeout { get => _SocketTimeout; set => this.SetProperty(ref _SocketTimeout, value); }
+        public int MaxTCPConnectionsAllowed { get => _MaxTCPConnectionsAllowed; set => this.SetProperty(ref _MaxTCPConnectionsAllowed, value); }
         public uint DefaultGateway
         {
             get => _DefaultGateway;
             set 
             { 
                 if (_DefaultGateway != value) DefaultGatewayString = Lib.RegIpToString(value);
-                this.RaiseAndSetIfChanged(ref _DefaultGateway, value); 
+                this.SetProperty(ref _DefaultGateway, value); 
             }
         }
-        public int WHGateType { get => _WHGateType; set => this.RaiseAndSetIfChanged(ref _WHGateType, value); }
+        public int WHGateType { get => _WHGateType; set => this.SetProperty(ref _WHGateType, value); }
 
-        public bool mbHydraulicUnitStatus { get => _mbHydraulicUnitStatus; set => this.RaiseAndSetIfChanged(ref _mbHydraulicUnitStatus, value); }
-        public bool mbBypassDSOptimizing { get => _mbBypassDSOptimizing; set => this.RaiseAndSetIfChanged(ref _mbBypassDSOptimizing, value); }
-        public bool mbLGLowLevelPresent { get => _mbLGLowLevelPresent; set => this.RaiseAndSetIfChanged(ref _mbLGLowLevelPresent, value); }
-        public bool mbWHCloseSolenoidPresent { get => _mbWHCloseSolenoidPresent; set => this.RaiseAndSetIfChanged(ref _mbWHCloseSolenoidPresent, value); }
-        public bool mbUGCloseSolenoidPresent { get => _mbUGCloseSolenoidPresent; set => this.RaiseAndSetIfChanged(ref _mbUGCloseSolenoidPresent, value); }
-        public bool mbReportPrinterPresent { get => _mbReportPrinterPresent; set => this.RaiseAndSetIfChanged(ref _mbReportPrinterPresent, value); }
-        public bool mbRemotePrinterFormFeed { get => _mbRemotePrinterFormFeed; set => this.RaiseAndSetIfChanged(ref _mbRemotePrinterFormFeed, value); }
-        public bool mbWideRemotePrinter { get => _mbWideRemotePrinter; set => this.RaiseAndSetIfChanged(ref _mbWideRemotePrinter, value); }
-        public bool mbRemotePrinterPresent { get => _mbRemotePrinterPresent; set => this.RaiseAndSetIfChanged(ref _mbRemotePrinterPresent, value); }
-        public bool mbAuditPrinterFormFeed { get => _mbAuditPrinterFormFeed; set => this.RaiseAndSetIfChanged(ref _mbAuditPrinterFormFeed, value); }
-        public bool mbWideAuditPrinter { get => _mbWideAuditPrinter; set => this.RaiseAndSetIfChanged(ref _mbWideAuditPrinter, value); }
-        public bool mbPrintSignatureLines { get => _mbPrintSignatureLines; set => this.RaiseAndSetIfChanged(ref _mbPrintSignatureLines, value); }
-        public bool mbExtendMotionInterval { get => _mbExtendMotionInterval; set => this.RaiseAndSetIfChanged(ref _mbExtendMotionInterval, value); }
-        public bool mbOvercapacityManualPrint { get => _mbOvercapacityManualPrint; set => this.RaiseAndSetIfChanged(ref _mbOvercapacityManualPrint, value); }
-        public bool mbUGMidLevelContactInUse { get => _mbUGMidLevelContactInUse; set => this.RaiseAndSetIfChanged(ref _mbUGMidLevelContactInUse, value); }
-        public bool mbAutoTrimInUse { get => _mbAutoTrimInUse; set => this.RaiseAndSetIfChanged(ref _mbAutoTrimInUse, value); }
+        public bool mbHydraulicUnitStatus { get => _mbHydraulicUnitStatus; set => this.SetProperty(ref _mbHydraulicUnitStatus, value); }
+        public bool mbBypassDSOptimizing { get => _mbBypassDSOptimizing; set => this.SetProperty(ref _mbBypassDSOptimizing, value); }
+        public bool mbLGLowLevelPresent { get => _mbLGLowLevelPresent; set => this.SetProperty(ref _mbLGLowLevelPresent, value); }
+        public bool mbWHCloseSolenoidPresent { get => _mbWHCloseSolenoidPresent; set => this.SetProperty(ref _mbWHCloseSolenoidPresent, value); }
+        public bool mbUGCloseSolenoidPresent { get => _mbUGCloseSolenoidPresent; set => this.SetProperty(ref _mbUGCloseSolenoidPresent, value); }
+        public bool mbReportPrinterPresent { get => _mbReportPrinterPresent; set => this.SetProperty(ref _mbReportPrinterPresent, value); }
+        public bool mbRemotePrinterFormFeed { get => _mbRemotePrinterFormFeed; set => this.SetProperty(ref _mbRemotePrinterFormFeed, value); }
+        public bool mbWideRemotePrinter { get => _mbWideRemotePrinter; set => this.SetProperty(ref _mbWideRemotePrinter, value); }
+        public bool mbRemotePrinterPresent { get => _mbRemotePrinterPresent; set => this.SetProperty(ref _mbRemotePrinterPresent, value); }
+        public bool mbAuditPrinterFormFeed { get => _mbAuditPrinterFormFeed; set => this.SetProperty(ref _mbAuditPrinterFormFeed, value); }
+        public bool mbWideAuditPrinter { get => _mbWideAuditPrinter; set => this.SetProperty(ref _mbWideAuditPrinter, value); }
+        public bool mbPrintSignatureLines { get => _mbPrintSignatureLines; set => this.SetProperty(ref _mbPrintSignatureLines, value); }
+        public bool mbExtendMotionInterval { get => _mbExtendMotionInterval; set => this.SetProperty(ref _mbExtendMotionInterval, value); }
+        public bool mbOvercapacityManualPrint { get => _mbOvercapacityManualPrint; set => this.SetProperty(ref _mbOvercapacityManualPrint, value); }
+        public bool mbUGMidLevelContactInUse { get => _mbUGMidLevelContactInUse; set => this.SetProperty(ref _mbUGMidLevelContactInUse, value); }
+        public bool mbAutoTrimInUse { get => _mbAutoTrimInUse; set => this.SetProperty(ref _mbAutoTrimInUse, value); }
 
-        public bool mbWaitingforPurge { get => _mbWaitingforPurge; set => this.RaiseAndSetIfChanged(ref _mbWaitingforPurge, value); }
-        public bool mbBypassOvercapAssistant { get => _mbBypassOvercapAssistant; set => this.RaiseAndSetIfChanged(ref _mbBypassOvercapAssistant, value); }
-        public bool mbDisableAuthorizingEXP { get => _mbDisableAuthorizingEXP; set => this.RaiseAndSetIfChanged(ref _mbDisableAuthorizingEXP, value); }
-        public bool mbAskforBinCompleteEXP { get => _mbAskforBinCompleteEXP; set => this.RaiseAndSetIfChanged(ref _mbAskforBinCompleteEXP, value); }
-        public bool mbAutoSelfLearningOn { get => _mbAutoSelfLearningOn; set => this.RaiseAndSetIfChanged(ref _mbAutoSelfLearningOn, value); }
-        public bool mbLocalInhibitEXP { get => _mbLocalInhibitEXP; set => this.RaiseAndSetIfChanged(ref _mbLocalInhibitEXP, value); }
-        public bool mbClearMemOnBootEXP { get => _mbClearMemOnBootEXP; set => this.RaiseAndSetIfChanged(ref _mbClearMemOnBootEXP, value); }
-        public bool mbRecvOrderWtAllowed { get => _mbRecvOrderWtAllowed; set => this.RaiseAndSetIfChanged(ref _mbRecvOrderWtAllowed, value); }
-        public bool mbPrintCertificates { get => _mbPrintCertificates; set => this.RaiseAndSetIfChanged(ref _mbPrintCertificates, value); }
+        public bool mbWaitingforPurge { get => _mbWaitingforPurge; set => this.SetProperty(ref _mbWaitingforPurge, value); }
+        public bool mbBypassOvercapAssistant { get => _mbBypassOvercapAssistant; set => this.SetProperty(ref _mbBypassOvercapAssistant, value); }
+        public bool mbDisableAuthorizingEXP { get => _mbDisableAuthorizingEXP; set => this.SetProperty(ref _mbDisableAuthorizingEXP, value); }
+        public bool mbAskforBinCompleteEXP { get => _mbAskforBinCompleteEXP; set => this.SetProperty(ref _mbAskforBinCompleteEXP, value); }
+        public bool mbAutoSelfLearningOn { get => _mbAutoSelfLearningOn; set => this.SetProperty(ref _mbAutoSelfLearningOn, value); }
+        public bool mbLocalInhibitEXP { get => _mbLocalInhibitEXP; set => this.SetProperty(ref _mbLocalInhibitEXP, value); }
+        public bool mbClearMemOnBootEXP { get => _mbClearMemOnBootEXP; set => this.SetProperty(ref _mbClearMemOnBootEXP, value); }
+        public bool mbRecvOrderWtAllowed { get => _mbRecvOrderWtAllowed; set => this.SetProperty(ref _mbRecvOrderWtAllowed, value); }
+        public bool mbPrintCertificates { get => _mbPrintCertificates; set => this.SetProperty(ref _mbPrintCertificates, value); }
 
-        public bool typeXFER { get => _typeXFER; set => this.RaiseAndSetIfChanged(ref _typeXFER, value); }
-        public bool typeGenericInbound { get => _typeGenericInbound; set => this.RaiseAndSetIfChanged(ref _typeGenericInbound, value); }
-        public bool typeGenericOutbound { get => _typeGenericOutbound; set => this.RaiseAndSetIfChanged(ref _typeGenericOutbound, value); }
-        public bool typeShipInbound { get => _typeShipInbound; set => this.RaiseAndSetIfChanged(ref _typeShipInbound, value); }
-        public bool typeShipOutbound { get => _typeShipOutbound; set => this.RaiseAndSetIfChanged(ref _typeShipOutbound, value); }
-        public bool typeBargeInbound { get => _typeBargeInbound; set => this.RaiseAndSetIfChanged(ref _typeBargeInbound, value); }
-        public bool typeBargeOutbound { get => _typeBargeOutbound; set => this.RaiseAndSetIfChanged(ref _typeBargeOutbound, value); }
-        public bool typeTruckInbound { get => _typeTruckInbound; set => this.RaiseAndSetIfChanged(ref _typeTruckInbound, value); }
-        public bool typeTruckOutbound { get => _typeTruckOutbound; set => this.RaiseAndSetIfChanged(ref _typeTruckOutbound, value); }
-        public bool typeRailInbound { get => _typeRailInbound; set => this.RaiseAndSetIfChanged(ref _typeRailInbound, value); }
-        public bool typeRailOutbound { get => _typeRailOutbound; set => this.RaiseAndSetIfChanged(ref _typeRailOutbound, value); }
+        public bool typeXFER { get => _typeXFER; set => this.SetProperty(ref _typeXFER, value); }
+        public bool typeGenericInbound { get => _typeGenericInbound; set => this.SetProperty(ref _typeGenericInbound, value); }
+        public bool typeGenericOutbound { get => _typeGenericOutbound; set => this.SetProperty(ref _typeGenericOutbound, value); }
+        public bool typeShipInbound { get => _typeShipInbound; set => this.SetProperty(ref _typeShipInbound, value); }
+        public bool typeShipOutbound { get => _typeShipOutbound; set => this.SetProperty(ref _typeShipOutbound, value); }
+        public bool typeBargeInbound { get => _typeBargeInbound; set => this.SetProperty(ref _typeBargeInbound, value); }
+        public bool typeBargeOutbound { get => _typeBargeOutbound; set => this.SetProperty(ref _typeBargeOutbound, value); }
+        public bool typeTruckInbound { get => _typeTruckInbound; set => this.SetProperty(ref _typeTruckInbound, value); }
+        public bool typeTruckOutbound { get => _typeTruckOutbound; set => this.SetProperty(ref _typeTruckOutbound, value); }
+        public bool typeRailInbound { get => _typeRailInbound; set => this.SetProperty(ref _typeRailInbound, value); }
+        public bool typeRailOutbound { get => _typeRailOutbound; set => this.SetProperty(ref _typeRailOutbound, value); }
 
-        public bool subtotalPrintHourlyTotal { get => _subtotalPrintHourlyTotal; set => this.RaiseAndSetIfChanged(ref _subtotalPrintHourlyTotal, value); }
-        public bool subtotalPrintOrderSubtotal { get => _subtotalPrintOrderSubtotal; set => this.RaiseAndSetIfChanged(ref _subtotalPrintOrderSubtotal, value); }
-        public int subtotalResetHourlyTotal { get => _subtotalResetHourlyTotal; set => this.RaiseAndSetIfChanged(ref _subtotalResetHourlyTotal, value); }
-        public bool subtotalResetDailyTotalOnPrint { get => _subtotalResetDailyTotalOnPrint; set => this.RaiseAndSetIfChanged(ref _subtotalResetDailyTotalOnPrint, value); }
-        public bool subtotalPrintDailyTotal { get => _subtotalPrintDailyTotal; set => this.RaiseAndSetIfChanged(ref _subtotalPrintDailyTotal, value); }
-        public int subtotalHourOfDayWhenPrintDailyTotal { get => _subtotalHourOfDayWhenPrintDailyTotal; set => this.RaiseAndSetIfChanged(ref _subtotalHourOfDayWhenPrintDailyTotal, value); }
+        public bool subtotalPrintHourlyTotal { get => _subtotalPrintHourlyTotal; set => this.SetProperty(ref _subtotalPrintHourlyTotal, value); }
+        public bool subtotalPrintOrderSubtotal { get => _subtotalPrintOrderSubtotal; set => this.SetProperty(ref _subtotalPrintOrderSubtotal, value); }
+        public int subtotalResetHourlyTotal { get => _subtotalResetHourlyTotal; set => this.SetProperty(ref _subtotalResetHourlyTotal, value); }
+        public bool subtotalResetDailyTotalOnPrint { get => _subtotalResetDailyTotalOnPrint; set => this.SetProperty(ref _subtotalResetDailyTotalOnPrint, value); }
+        public bool subtotalPrintDailyTotal { get => _subtotalPrintDailyTotal; set => this.SetProperty(ref _subtotalPrintDailyTotal, value); }
+        public int subtotalHourOfDayWhenPrintDailyTotal { get => _subtotalHourOfDayWhenPrintDailyTotal; set => this.SetProperty(ref _subtotalHourOfDayWhenPrintDailyTotal, value); }
 
-        public int commBaudRate { get => _commBaudRate; set => this.RaiseAndSetIfChanged(ref _commBaudRate, value); }
-        public int commDataWord { get => _commDataWord; set => this.RaiseAndSetIfChanged(ref _commDataWord, value); }
-        public int commStopBits { get => _commStopBits; set => this.RaiseAndSetIfChanged(ref _commStopBits, value); }
-        public int commParity { get => _commParity; set => this.RaiseAndSetIfChanged(ref _commParity, value); }
-        public int commHandshaking { get => _commHandshaking; set => this.RaiseAndSetIfChanged(ref _commHandshaking, value); }
+        public int commBaudRate { get => _commBaudRate; set => this.SetProperty(ref _commBaudRate, value); }
+        public int commDataWord { get => _commDataWord; set => this.SetProperty(ref _commDataWord, value); }
+        public int commStopBits { get => _commStopBits; set => this.SetProperty(ref _commStopBits, value); }
+        public int commParity { get => _commParity; set => this.SetProperty(ref _commParity, value); }
+        public int commHandshaking { get => _commHandshaking; set => this.SetProperty(ref _commHandshaking, value); }
 
-        public string IPAddressString { get => _IPAddressString; set => this.RaiseAndSetIfChanged(ref _IPAddressString, value); }
-        public string SubnetMaskString { get => _SubnetMaskString; set => this.RaiseAndSetIfChanged(ref _SubnetMaskString, value); }
-        public string DefaultGatewayString { get => _DefaultGatewayString; set => this.RaiseAndSetIfChanged(ref _DefaultGatewayString, value); }
+        public string IPAddressString { get => _IPAddressString; set => this.SetProperty(ref _IPAddressString, value); }
+        public string SubnetMaskString { get => _SubnetMaskString; set => this.SetProperty(ref _SubnetMaskString, value); }
+        public string DefaultGatewayString { get => _DefaultGatewayString; set => this.SetProperty(ref _DefaultGatewayString, value); }
 
 
 

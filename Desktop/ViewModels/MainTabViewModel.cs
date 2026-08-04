@@ -1,11 +1,12 @@
 
 using System.Diagnostics;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
+
 
 
 namespace ClientCW.ViewModels
 {
-    public class MainTabViewModel : ReactiveObject
+    public class MainTabViewModel : ObservableObject
     {
 
         public MainTabViewModel()

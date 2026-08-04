@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Weight.Data
 {
-    public class StaticOrderData : ReactiveObject
+    public class StaticOrderData : ObservableObject
     {
 
         //---------- Статические Данные заказа (не изменяемые) -----------
@@ -49,26 +49,26 @@ namespace Weight.Data
             set
             {
                 if (_sOrderTypeInformation != value) UpdatesOrderTypeInformation();
-                this.RaiseAndSetIfChanged(ref _sOrderTypeInformation, value);
+                this.SetProperty(ref _sOrderTypeInformation, value);
             }
         }
-        public int sTransactionType { get => _sTransactionType; set => this.RaiseAndSetIfChanged(ref _sTransactionType, value); }
-        public int sSmartLoadType { get => _sSmartLoadType; set => this.RaiseAndSetIfChanged(ref _sSmartLoadType, value); }
-        public int sStartUpMode { get => _sStartUpMode; set => this.RaiseAndSetIfChanged(ref _sStartUpMode, value); }
-        public int sOrderWeight { get => _sOrderWeight; set => this.RaiseAndSetIfChanged(ref _sOrderWeight, value); }
-        public int sDefaultDraftSize { get => _sDefaultDraftSize; set => this.RaiseAndSetIfChanged(ref _sDefaultDraftSize, value); }
-        public uint sTicketNumber { get => _sTicketNumber; set => this.RaiseAndSetIfChanged(ref _sTicketNumber, value); }
-        public int sProductDensity { get => _sProductDensity; set => this.RaiseAndSetIfChanged(ref _sProductDensity, value); }
-        public uint sGlobalTicketCounter { get => _sGlobalTicketCounter; set => this.RaiseAndSetIfChanged(ref _sGlobalTicketCounter, value); }
-        public int sLotSize { get => _sLotSize; set => this.RaiseAndSetIfChanged(ref _sLotSize, value); }
-        public string? sOrderID { get => _sOrderID; set => this.RaiseAndSetIfChanged(ref _sOrderID, value); }
-        public string? sVesselID { get => _sVesselID; set => this.RaiseAndSetIfChanged(ref _sVesselID, value); }
-        public string? sBinID { get => _sBinID; set => this.RaiseAndSetIfChanged(ref _sBinID, value); }
-        public string? sProductID { get => _sProductID; set => this.RaiseAndSetIfChanged(ref _sProductID, value); }
-        public string? sProductName { get => _sProductName; set => this.RaiseAndSetIfChanged(ref _sProductName, value); }
-        public string? sCustomerName { get => _sCustomerName; set => this.RaiseAndSetIfChanged(ref _sCustomerName, value); }
-        public string? sUnitTrainNumber { get => _sUnitTrainNumber; set => this.RaiseAndSetIfChanged(ref _sUnitTrainNumber, value); }
-        public string? sNotes { get => _sNotes; set => this.RaiseAndSetIfChanged(ref _sNotes, value); }
+        public int sTransactionType { get => _sTransactionType; set => this.SetProperty(ref _sTransactionType, value); }
+        public int sSmartLoadType { get => _sSmartLoadType; set => this.SetProperty(ref _sSmartLoadType, value); }
+        public int sStartUpMode { get => _sStartUpMode; set => this.SetProperty(ref _sStartUpMode, value); }
+        public int sOrderWeight { get => _sOrderWeight; set => this.SetProperty(ref _sOrderWeight, value); }
+        public int sDefaultDraftSize { get => _sDefaultDraftSize; set => this.SetProperty(ref _sDefaultDraftSize, value); }
+        public uint sTicketNumber { get => _sTicketNumber; set => this.SetProperty(ref _sTicketNumber, value); }
+        public int sProductDensity { get => _sProductDensity; set => this.SetProperty(ref _sProductDensity, value); }
+        public uint sGlobalTicketCounter { get => _sGlobalTicketCounter; set => this.SetProperty(ref _sGlobalTicketCounter, value); }
+        public int sLotSize { get => _sLotSize; set => this.SetProperty(ref _sLotSize, value); }
+        public string? sOrderID { get => _sOrderID; set => this.SetProperty(ref _sOrderID, value); }
+        public string? sVesselID { get => _sVesselID; set => this.SetProperty(ref _sVesselID, value); }
+        public string? sBinID { get => _sBinID; set => this.SetProperty(ref _sBinID, value); }
+        public string? sProductID { get => _sProductID; set => this.SetProperty(ref _sProductID, value); }
+        public string? sProductName { get => _sProductName; set => this.SetProperty(ref _sProductName, value); }
+        public string? sCustomerName { get => _sCustomerName; set => this.SetProperty(ref _sCustomerName, value); }
+        public string? sUnitTrainNumber { get => _sUnitTrainNumber; set => this.SetProperty(ref _sUnitTrainNumber, value); }
+        public string? sNotes { get => _sNotes; set => this.SetProperty(ref _sNotes, value); }
 
     }
 }

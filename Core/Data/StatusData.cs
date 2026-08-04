@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Avalonia;
-using Avalonia.Media;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
+using static Weight.Lib;
 
 namespace Weight
 {
-    public class StatusData : ReactiveObject
+    public class StatusData : ObservableObject
     {
         private int _ScaleMode;
         private int _ScaleWeight;
@@ -104,21 +104,21 @@ namespace Weight
 
         // -------------------------------  ЦВЕТА для привязки --------------------------   
 
-        private IBrush _ColorUGFullSensor = Lib.MyGreen;
-        private IBrush _ColorWHFullSensor = Lib.MyGreen;
-        private IBrush _ColorLGFullSensor = Lib.MyGreen;
+        private MyColor _ColorUGFullSensor = 0;
+        private MyColor _ColorWHFullSensor = 0;
+        private MyColor _ColorLGFullSensor = 0;
 
-        private IBrush _ColorUGate = Lib.MyGreen;
-        private IBrush _ColorWGate = Lib.MyGreen;
-        private IBrush _ColorLGate = Lib.MyGreen;
+        private MyColor _ColorWGate = 0;
+        private MyColor _ColorUGate = 0;
+        private MyColor _ColorLGate = 0;
 
-        public IBrush ColorUGFullSensor { get => _ColorUGFullSensor; set => this.RaiseAndSetIfChanged(ref _ColorUGFullSensor, value); }
-        public IBrush ColorWHFullSensor { get => _ColorWHFullSensor; set => this.RaiseAndSetIfChanged(ref _ColorWHFullSensor, value); }
-        public IBrush ColorLGFullSensor { get => _ColorLGFullSensor; set => this.RaiseAndSetIfChanged(ref _ColorLGFullSensor, value); }
+        public MyColor ColorUGFullSensor { get => _ColorUGFullSensor; set => this.SetProperty(ref _ColorUGFullSensor, value); }
+        public MyColor ColorWHFullSensor { get => _ColorWHFullSensor; set => this.SetProperty(ref _ColorWHFullSensor, value); }
+        public MyColor ColorLGFullSensor { get => _ColorLGFullSensor; set => this.SetProperty(ref _ColorLGFullSensor, value); }
 
-        public IBrush ColorUGate { get => _ColorUGate; set => this.RaiseAndSetIfChanged(ref _ColorUGate, value); }
-        public IBrush ColorWGate { get => _ColorWGate; set => this.RaiseAndSetIfChanged(ref _ColorWGate, value); }
-        public IBrush ColorLGate { get => _ColorLGate; set => this.RaiseAndSetIfChanged(ref _ColorLGate, value); }
+        public MyColor ColorUGate { get => _ColorUGate; set => this.SetProperty(ref _ColorUGate, value); }
+        public MyColor ColorWGate { get => _ColorWGate; set => this.SetProperty(ref _ColorWGate, value); }
+        public MyColor ColorLGate { get => _ColorLGate; set => this.SetProperty(ref _ColorLGate, value); }
 
         // -------------------------------  ВХОДА/ВЫХОДА --------------------------
 
@@ -463,33 +463,33 @@ namespace Weight
         
 
 
-        public int ScaleMode { get => _ScaleMode; set => this.RaiseAndSetIfChanged(ref _ScaleMode, value); }
-        public int ScaleWeight { get => _ScaleWeight; set => this.RaiseAndSetIfChanged(ref _ScaleWeight, value); }
-        public int ScaleFlowRate { get => _ScaleFlowRate; set => this.RaiseAndSetIfChanged(ref _ScaleFlowRate, value); }
-        public int ScaleGatePosition { get => _ScaleGatePosition; set => this.RaiseAndSetIfChanged(ref _ScaleGatePosition, value); }
-        public int NewGatePosition { get => _NewGatePosition; set => this.RaiseAndSetIfChanged(ref _NewGatePosition, value); }
-        public int DWIStatus { get => _DWIStatus; set => this.RaiseAndSetIfChanged(ref _DWIStatus, value); }
-        public int CounterLive { get => _CounterLive; set => this.RaiseAndSetIfChanged(ref _CounterLive, value); }
-        public int TimeOur { get => _TimeOur; set => this.RaiseAndSetIfChanged(ref _TimeOur, value); }
-        public int TimeMin { get => _TimeMin; set => this.RaiseAndSetIfChanged(ref _TimeMin, value); }
+        public int ScaleMode { get => _ScaleMode; set => this.SetProperty(ref _ScaleMode, value); }
+        public int ScaleWeight { get => _ScaleWeight; set => this.SetProperty(ref _ScaleWeight, value); }
+        public int ScaleFlowRate { get => _ScaleFlowRate; set => this.SetProperty(ref _ScaleFlowRate, value); }
+        public int ScaleGatePosition { get => _ScaleGatePosition; set => this.SetProperty(ref _ScaleGatePosition, value); }
+        public int NewGatePosition { get => _NewGatePosition; set => this.SetProperty(ref _NewGatePosition, value); }
+        public int DWIStatus { get => _DWIStatus; set => this.SetProperty(ref _DWIStatus, value); }
+        public int CounterLive { get => _CounterLive; set => this.SetProperty(ref _CounterLive, value); }
+        public int TimeOur { get => _TimeOur; set => this.SetProperty(ref _TimeOur, value); }
+        public int TimeMin { get => _TimeMin; set => this.SetProperty(ref _TimeMin, value); }
         public int TimeSec
         {
             get => _TimeSec;
             set
             {
                 if (_TimeSec != value) UpdateTimeString();
-                this.RaiseAndSetIfChanged(ref _TimeSec, value);
+                this.SetProperty(ref _TimeSec, value);
             }
         }
-        public int TimeMSec { get => _TimeMSec; set => this.RaiseAndSetIfChanged(ref _TimeMSec, value); }
-        public ushort AcceptedCode { get => _AcceptedCode; set => this.RaiseAndSetIfChanged(ref _AcceptedCode, value); }
-        public ushort RejectCode { get => _RejectCode; set => this.RaiseAndSetIfChanged(ref _RejectCode, value); }
-        public int CommunicationResult { get => _CommunicationResult; set => this.RaiseAndSetIfChanged(ref _CommunicationResult, value); }
-        public uint EventIdMask { get => _EventIdMask; set => this.RaiseAndSetIfChanged(ref _EventIdMask, value); }
-        public int MastersCount { get => _MastersCount; set => this.RaiseAndSetIfChanged(ref _MastersCount, value); }
-        public int ObservCount { get => _ObservCount; set => this.RaiseAndSetIfChanged(ref _ObservCount, value); }
-        public ushort ClientInfo { get => _ClientInfo; set => this.RaiseAndSetIfChanged(ref _ClientInfo, value); }
-        public string TimeString { get => _TimeString; set => this.RaiseAndSetIfChanged(ref _TimeString, value); }
+        public int TimeMSec { get => _TimeMSec; set => this.SetProperty(ref _TimeMSec, value); }
+        public ushort AcceptedCode { get => _AcceptedCode; set => this.SetProperty(ref _AcceptedCode, value); }
+        public ushort RejectCode { get => _RejectCode; set => this.SetProperty(ref _RejectCode, value); }
+        public int CommunicationResult { get => _CommunicationResult; set => this.SetProperty(ref _CommunicationResult, value); }
+        public uint EventIdMask { get => _EventIdMask; set => this.SetProperty(ref _EventIdMask, value); }
+        public int MastersCount { get => _MastersCount; set => this.SetProperty(ref _MastersCount, value); }
+        public int ObservCount { get => _ObservCount; set => this.SetProperty(ref _ObservCount, value); }
+        public ushort ClientInfo { get => _ClientInfo; set => this.SetProperty(ref _ClientInfo, value); }
+        public string TimeString { get => _TimeString; set => this.SetProperty(ref _TimeString, value); }
 
         public ushort StatusWord1
         {
@@ -497,7 +497,7 @@ namespace Weight
             set
             {
                 if (_StatusWord1 != value) UpdateStatus1();
-                this.RaiseAndSetIfChanged(ref _StatusWord1, value);
+                this.SetProperty(ref _StatusWord1, value);
             }
         }
         public ushort StatusWord2
@@ -506,54 +506,54 @@ namespace Weight
             set
             {
                 if (_StatusWord2 != value) UpdateStatus2();
-                this.RaiseAndSetIfChanged(ref _StatusWord2, value);
+                this.SetProperty(ref _StatusWord2, value);
             }
         }
 
-        public bool StatusSmartLoadStop { get => _StatusSmartLoadStop; set => this.RaiseAndSetIfChanged(ref _StatusSmartLoadStop, value); }
-        public bool StatusOrderReplaceOK { get => _StatusOrderReplaceOK; set => this.RaiseAndSetIfChanged(ref _StatusOrderReplaceOK, value); }
-        public bool StatusWaitingUGmidlevel { get => _StatusWaitingUGmidlevel; set => this.RaiseAndSetIfChanged(ref _StatusWaitingUGmidlevel, value); }
-        public bool StatusCleanout { get => _StatusCleanout; set => this.RaiseAndSetIfChanged(ref _StatusCleanout, value); }
-        public bool StatusMotion { get => _StatusMotion; set => this.RaiseAndSetIfChanged(ref _StatusMotion, value); }
-        public bool StatusOrderInMemory { get => _StatusOrderInMemory; set => this.RaiseAndSetIfChanged(ref _StatusOrderInMemory, value); }
-        public bool StatusSlowDelivery { get => _StatusSlowDelivery; set => this.RaiseAndSetIfChanged(ref _StatusSlowDelivery, value); }
-        public bool StatusKeysEnabled { get => _StatusKeysEnabled; set => this.RaiseAndSetIfChanged(ref _StatusKeysEnabled, value); }
-        public bool StatusFillDischargeCycle { get => _StatusFillDischargeCycle; set => this.RaiseAndSetIfChanged(ref _StatusFillDischargeCycle, value); }
-        public bool StatusWaitingForPurge { get => _StatusWaitingForPurge; set => this.RaiseAndSetIfChanged(ref _StatusWaitingForPurge, value); }
-        public bool StatusAuthorizingDISABLED { get => _StatusAuthorizingDISABLED; set => this.RaiseAndSetIfChanged(ref _StatusAuthorizingDISABLED, value); }
-        public bool StatusWaitingForAcceptfromAWMS { get => _StatusWaitingForAcceptfromAWMS; set => this.RaiseAndSetIfChanged(ref _StatusWaitingForAcceptfromAWMS, value); }
-        public bool StatusSmartLoadActive { get => _StatusSmartLoadActive; set => this.RaiseAndSetIfChanged(ref _StatusSmartLoadActive, value); }
-        public bool StatusOrderInProgress { get => _StatusOrderInProgress; set => this.RaiseAndSetIfChanged(ref _StatusOrderInProgress, value); }
-        public bool StatusFinishInProgress { get => _StatusFinishInProgress; set => this.RaiseAndSetIfChanged(ref _StatusFinishInProgress, value); }
-        public int StatusMode { get => _StatusMode; set => this.RaiseAndSetIfChanged(ref _StatusMode, value); }
-        public int StatusCurrentKeySet { get => _StatusCurrentKeySet; set => this.RaiseAndSetIfChanged(ref _StatusCurrentKeySet, value); }
-        public bool AlarmReportsPrinterErr { get => _AlarmReportsPrinterErr; set => this.RaiseAndSetIfChanged(ref _AlarmReportsPrinterErr, value); }
-        public bool AlarmGateNotInPosition { get => _AlarmGateNotInPosition; set => this.RaiseAndSetIfChanged(ref _AlarmGateNotInPosition, value); }
-        public bool AlarmSmartTechAlarm { get => _AlarmSmartTechAlarm; set => this.RaiseAndSetIfChanged(ref _AlarmSmartTechAlarm, value); }
-        public bool AlarmDWIOffline { get => _AlarmDWIOffline; set => this.RaiseAndSetIfChanged(ref _AlarmDWIOffline, value); }
-        public bool AlarmGateNotCalibrated { get => _AlarmGateNotCalibrated; set => this.RaiseAndSetIfChanged(ref _AlarmGateNotCalibrated, value); }
-        public bool AlarmRemoteLinkShutdown { get => _AlarmRemoteLinkShutdown; set => this.RaiseAndSetIfChanged(ref _AlarmRemoteLinkShutdown, value); }
-        public bool AlarmCommunicationError { get => _AlarmCommunicationError; set => this.RaiseAndSetIfChanged(ref _AlarmCommunicationError, value); }
-        public bool AlarmRemoteLinkOffline { get => _AlarmRemoteLinkOffline; set => this.RaiseAndSetIfChanged(ref _AlarmRemoteLinkOffline, value); }
-        public bool AlarmDataErrBadConfigCRC { get => _AlarmDataErrBadConfigCRC; set => this.RaiseAndSetIfChanged(ref _AlarmDataErrBadConfigCRC, value); }
-        public bool AlarmAuditPrinterErr { get => _AlarmAuditPrinterErr; set => this.RaiseAndSetIfChanged(ref _AlarmAuditPrinterErr, value); }
-        public bool AlarmUnderzero { get => _AlarmUnderzero; set => this.RaiseAndSetIfChanged(ref _AlarmUnderzero, value); }
-        public bool AlarmOvercapacity { get => _AlarmOvercapacity; set => this.RaiseAndSetIfChanged(ref _AlarmOvercapacity, value); }
-        public bool AlarmInterlockAlarm { get => _AlarmInterlockAlarm; set => this.RaiseAndSetIfChanged(ref _AlarmInterlockAlarm, value); }
-        public bool AlarmLGFullAlarm { get => _AlarmLGFullAlarm; set => this.RaiseAndSetIfChanged(ref _AlarmLGFullAlarm, value); }
-        public bool AlarmUGFullAlarm { get => _AlarmUGFullAlarm; set => this.RaiseAndSetIfChanged(ref _AlarmUGFullAlarm, value); }
-        public bool AlarmWHFullAlarm { get => _AlarmWHFullAlarm; set => this.RaiseAndSetIfChanged(ref _AlarmWHFullAlarm, value); }
-        public bool AlarmLGNotEmpty { get => _AlarmLGNotEmpty; set => this.RaiseAndSetIfChanged(ref _AlarmLGNotEmpty, value); }
-        public bool AlarmDWIJumperErr { get => _AlarmDWIJumperErr; set => this.RaiseAndSetIfChanged(ref _AlarmDWIJumperErr, value); }
-        public bool AlarmDWIDataErr { get => _AlarmDWIDataErr; set => this.RaiseAndSetIfChanged(ref _AlarmDWIDataErr, value); }
-        public bool AlarmRemotePrinterErr { get => _AlarmRemotePrinterErr; set => this.RaiseAndSetIfChanged(ref _AlarmRemotePrinterErr, value); }
-        public string AlarmList { get => _AlarmList; set => this.RaiseAndSetIfChanged(ref _AlarmList, value); }
+        public bool StatusSmartLoadStop { get => _StatusSmartLoadStop; set => this.SetProperty(ref _StatusSmartLoadStop, value); }
+        public bool StatusOrderReplaceOK { get => _StatusOrderReplaceOK; set => this.SetProperty(ref _StatusOrderReplaceOK, value); }
+        public bool StatusWaitingUGmidlevel { get => _StatusWaitingUGmidlevel; set => this.SetProperty(ref _StatusWaitingUGmidlevel, value); }
+        public bool StatusCleanout { get => _StatusCleanout; set => this.SetProperty(ref _StatusCleanout, value); }
+        public bool StatusMotion { get => _StatusMotion; set => this.SetProperty(ref _StatusMotion, value); }
+        public bool StatusOrderInMemory { get => _StatusOrderInMemory; set => this.SetProperty(ref _StatusOrderInMemory, value); }
+        public bool StatusSlowDelivery { get => _StatusSlowDelivery; set => this.SetProperty(ref _StatusSlowDelivery, value); }
+        public bool StatusKeysEnabled { get => _StatusKeysEnabled; set => this.SetProperty(ref _StatusKeysEnabled, value); }
+        public bool StatusFillDischargeCycle { get => _StatusFillDischargeCycle; set => this.SetProperty(ref _StatusFillDischargeCycle, value); }
+        public bool StatusWaitingForPurge { get => _StatusWaitingForPurge; set => this.SetProperty(ref _StatusWaitingForPurge, value); }
+        public bool StatusAuthorizingDISABLED { get => _StatusAuthorizingDISABLED; set => this.SetProperty(ref _StatusAuthorizingDISABLED, value); }
+        public bool StatusWaitingForAcceptfromAWMS { get => _StatusWaitingForAcceptfromAWMS; set => this.SetProperty(ref _StatusWaitingForAcceptfromAWMS, value); }
+        public bool StatusSmartLoadActive { get => _StatusSmartLoadActive; set => this.SetProperty(ref _StatusSmartLoadActive, value); }
+        public bool StatusOrderInProgress { get => _StatusOrderInProgress; set => this.SetProperty(ref _StatusOrderInProgress, value); }
+        public bool StatusFinishInProgress { get => _StatusFinishInProgress; set => this.SetProperty(ref _StatusFinishInProgress, value); }
+        public int StatusMode { get => _StatusMode; set => this.SetProperty(ref _StatusMode, value); }
+        public int StatusCurrentKeySet { get => _StatusCurrentKeySet; set => this.SetProperty(ref _StatusCurrentKeySet, value); }
+        public bool AlarmReportsPrinterErr { get => _AlarmReportsPrinterErr; set => this.SetProperty(ref _AlarmReportsPrinterErr, value); }
+        public bool AlarmGateNotInPosition { get => _AlarmGateNotInPosition; set => this.SetProperty(ref _AlarmGateNotInPosition, value); }
+        public bool AlarmSmartTechAlarm { get => _AlarmSmartTechAlarm; set => this.SetProperty(ref _AlarmSmartTechAlarm, value); }
+        public bool AlarmDWIOffline { get => _AlarmDWIOffline; set => this.SetProperty(ref _AlarmDWIOffline, value); }
+        public bool AlarmGateNotCalibrated { get => _AlarmGateNotCalibrated; set => this.SetProperty(ref _AlarmGateNotCalibrated, value); }
+        public bool AlarmRemoteLinkShutdown { get => _AlarmRemoteLinkShutdown; set => this.SetProperty(ref _AlarmRemoteLinkShutdown, value); }
+        public bool AlarmCommunicationError { get => _AlarmCommunicationError; set => this.SetProperty(ref _AlarmCommunicationError, value); }
+        public bool AlarmRemoteLinkOffline { get => _AlarmRemoteLinkOffline; set => this.SetProperty(ref _AlarmRemoteLinkOffline, value); }
+        public bool AlarmDataErrBadConfigCRC { get => _AlarmDataErrBadConfigCRC; set => this.SetProperty(ref _AlarmDataErrBadConfigCRC, value); }
+        public bool AlarmAuditPrinterErr { get => _AlarmAuditPrinterErr; set => this.SetProperty(ref _AlarmAuditPrinterErr, value); }
+        public bool AlarmUnderzero { get => _AlarmUnderzero; set => this.SetProperty(ref _AlarmUnderzero, value); }
+        public bool AlarmOvercapacity { get => _AlarmOvercapacity; set => this.SetProperty(ref _AlarmOvercapacity, value); }
+        public bool AlarmInterlockAlarm { get => _AlarmInterlockAlarm; set => this.SetProperty(ref _AlarmInterlockAlarm, value); }
+        public bool AlarmLGFullAlarm { get => _AlarmLGFullAlarm; set => this.SetProperty(ref _AlarmLGFullAlarm, value); }
+        public bool AlarmUGFullAlarm { get => _AlarmUGFullAlarm; set => this.SetProperty(ref _AlarmUGFullAlarm, value); }
+        public bool AlarmWHFullAlarm { get => _AlarmWHFullAlarm; set => this.SetProperty(ref _AlarmWHFullAlarm, value); }
+        public bool AlarmLGNotEmpty { get => _AlarmLGNotEmpty; set => this.SetProperty(ref _AlarmLGNotEmpty, value); }
+        public bool AlarmDWIJumperErr { get => _AlarmDWIJumperErr; set => this.SetProperty(ref _AlarmDWIJumperErr, value); }
+        public bool AlarmDWIDataErr { get => _AlarmDWIDataErr; set => this.SetProperty(ref _AlarmDWIDataErr, value); }
+        public bool AlarmRemotePrinterErr { get => _AlarmRemotePrinterErr; set => this.SetProperty(ref _AlarmRemotePrinterErr, value); }
+        public string AlarmList { get => _AlarmList; set => this.SetProperty(ref _AlarmList, value); }
         public ushort SmartAlarmWord1
         {
             get => _SmartAlarmWord1;
             set
             {
-                this.RaiseAndSetIfChanged(ref _SmartAlarmWord1, value);
+                this.SetProperty(ref _SmartAlarmWord1, value);
 
                 if (_ScaleAlarmWord1_last != value)
                 {
@@ -567,7 +567,7 @@ namespace Weight
             get => _SmartAlarmWord2;
             set
             {
-                this.RaiseAndSetIfChanged(ref _SmartAlarmWord2, value);
+                this.SetProperty(ref _SmartAlarmWord2, value);
 
                 if (_ScaleAlarmWord2_last != value)
                 {
@@ -585,7 +585,7 @@ namespace Weight
             {
                 if (_ScaleAlarmWord1 != value)
                 {
-                    this.RaiseAndSetIfChanged(ref _ScaleAlarmWord1, value);
+                    this.SetProperty(ref _ScaleAlarmWord1, value);
                     UpdateAlarms1();
                 }
             }
@@ -597,14 +597,14 @@ namespace Weight
             {
                 if (_ScaleAlarmWord2 != value)
                 {
-                    this.RaiseAndSetIfChanged(ref _ScaleAlarmWord2, value);
+                    this.SetProperty(ref _ScaleAlarmWord2, value);
                     UpdateAlarms2();
                 }
             }
         }
 
 
-        public string SmartAlarmList { get => _SmartAlarmList; set => this.RaiseAndSetIfChanged(ref _SmartAlarmList, value); }
+        public string SmartAlarmList { get => _SmartAlarmList; set => this.SetProperty(ref _SmartAlarmList, value); }
 
         public ushort InputWord1
         {
@@ -612,7 +612,7 @@ namespace Weight
             set
             {
                 if (_InputWord1 != value) UpdateInput1();
-                this.RaiseAndSetIfChanged(ref _InputWord1, value);
+                this.SetProperty(ref _InputWord1, value);
             }
         }
         public ushort InputWord2
@@ -621,7 +621,7 @@ namespace Weight
             set
             {
                 if (_InputWord2 != value) UpdateInput2();
-                this.RaiseAndSetIfChanged(ref _InputWord2, value);
+                this.SetProperty(ref _InputWord2, value);
             }
         }
         public ushort OutputWord1
@@ -630,7 +630,7 @@ namespace Weight
             set
             {
                 if (_OutputWord1 != value) UpdateOutput1();
-                this.RaiseAndSetIfChanged(ref _OutputWord1, value);
+                this.SetProperty(ref _OutputWord1, value);
             }
         }
         public ushort OutputWord2
@@ -639,16 +639,16 @@ namespace Weight
             set
             {
                 if (_OutputWord2 != value) UpdateOutput2();
-                this.RaiseAndSetIfChanged(ref _OutputWord2, value);
+                this.SetProperty(ref _OutputWord2, value);
             }
         }
-        public bool InputLGClosedLS { get => _InputLGClosedLS; set => this.RaiseAndSetIfChanged(ref _InputLGClosedLS, value); }
-        public bool InputFinishOrder { get => _InputFinishOrder; set => this.RaiseAndSetIfChanged(ref _InputFinishOrder, value); }
-        public bool InputUGMidLevelSensor { get => _InputUGMidLevelSensor; set => this.RaiseAndSetIfChanged(ref _InputUGMidLevelSensor, value); }
-        public bool InputRemoteStop { get => _InputRemoteStop; set => this.RaiseAndSetIfChanged(ref _InputRemoteStop, value); }
-        public bool InputLGFullSensor { get => _InputLGFullSensor; set => this.RaiseAndSetIfChanged(ref _InputLGFullSensor, value); }
-        public bool InputUGTrimLS { get => _InputUGTrimLS; set => this.RaiseAndSetIfChanged(ref _InputUGTrimLS, value); }
-        public bool InputWHFullSensor { get => _InputWHFullSensor; set => this.RaiseAndSetIfChanged(ref _InputWHFullSensor, value); }
+        public bool InputLGClosedLS { get => _InputLGClosedLS; set => this.SetProperty(ref _InputLGClosedLS, value); }
+        public bool InputFinishOrder { get => _InputFinishOrder; set => this.SetProperty(ref _InputFinishOrder, value); }
+        public bool InputUGMidLevelSensor { get => _InputUGMidLevelSensor; set => this.SetProperty(ref _InputUGMidLevelSensor, value); }
+        public bool InputRemoteStop { get => _InputRemoteStop; set => this.SetProperty(ref _InputRemoteStop, value); }
+        public bool InputLGFullSensor { get => _InputLGFullSensor; set => this.SetProperty(ref _InputLGFullSensor, value); }
+        public bool InputUGTrimLS { get => _InputUGTrimLS; set => this.SetProperty(ref _InputUGTrimLS, value); }
+        public bool InputWHFullSensor { get => _InputWHFullSensor; set => this.SetProperty(ref _InputWHFullSensor, value); }
         public bool InputUGFullSensor
         {
             get => _InputUGFullSensor;
@@ -656,41 +656,41 @@ namespace Weight
             {
                 if (_InputUGFullSensor != value)
                 {
-                    ColorUGFullSensor = value ? Lib.MyGreen : Lib.MyRed;
+                    ColorUGFullSensor = value ? Lib.MyColor.Green : Lib.MyColor.Red;
 
                 }
-                this.RaiseAndSetIfChanged(ref _InputUGFullSensor, value);
+                this.SetProperty(ref _InputUGFullSensor, value);
             }
         }
-        public bool InputUGClosedLS { get => _InputUGClosedLS; set => this.RaiseAndSetIfChanged(ref _InputUGClosedLS, value); }
-        public bool InputWHClosedLS { get => _InputWHClosedLS; set => this.RaiseAndSetIfChanged(ref _InputWHClosedLS, value); }
-        public bool InputFinishInhibit { get => _InputFinishInhibit; set => this.RaiseAndSetIfChanged(ref _InputFinishInhibit, value); }
-        public bool InputHydraulicUnitStatus { get => _InputHydraulicUnitStatus; set => this.RaiseAndSetIfChanged(ref _InputHydraulicUnitStatus, value); }
-        public bool InputLGLowLevelSensor { get => _InputLGLowLevelSensor; set => this.RaiseAndSetIfChanged(ref _InputLGLowLevelSensor, value); }
-        public bool InputControlPowerON { get => _InputControlPowerON; set => this.RaiseAndSetIfChanged(ref _InputControlPowerON, value); }
-        public bool InputFieldPowerON { get => _InputFieldPowerON; set => this.RaiseAndSetIfChanged(ref _InputFieldPowerON, value); }
-        public bool InputUGClosePowerON { get => _InputUGClosePowerON; set => this.RaiseAndSetIfChanged(ref _InputUGClosePowerON, value); }
-        public bool InputUGOpenPowerON { get => _InputUGOpenPowerON; set => this.RaiseAndSetIfChanged(ref _InputUGOpenPowerON, value); }
-        public bool InputWHClosePowerON { get => _InputWHClosePowerON; set => this.RaiseAndSetIfChanged(ref _InputWHClosePowerON, value); }
-        public bool InputWHOpenPowerON { get => _InputWHOpenPowerON; set => this.RaiseAndSetIfChanged(ref _InputWHOpenPowerON, value); }
-        public bool OutputOrderCompleted { get => _OutputOrderCompleted; set => this.RaiseAndSetIfChanged(ref _OutputOrderCompleted, value); }
-        public bool OutputLGGateClose { get => _OutputLGGateClose; set => this.RaiseAndSetIfChanged(ref _OutputLGGateClose, value); }
-        public bool OutputLGGateOpen { get => _OutputLGGateOpen; set => this.RaiseAndSetIfChanged(ref _OutputLGGateOpen, value); }
-        public bool OutputOrderInProgress { get => _OutputOrderInProgress; set => this.RaiseAndSetIfChanged(ref _OutputOrderInProgress, value); }
-        public bool OutputExternalAlarmIndicator { get => _OutputExternalAlarmIndicator; set => this.RaiseAndSetIfChanged(ref _OutputExternalAlarmIndicator, value); }
-        public bool OutputTestWtsDown { get => _OutputTestWtsDown; set => this.RaiseAndSetIfChanged(ref _OutputTestWtsDown, value); }
-        public bool OutputTestWtsUp { get => _OutputTestWtsUp; set => this.RaiseAndSetIfChanged(ref _OutputTestWtsUp, value); }
-        public bool OutputOrderPreCutoff { get => _OutputOrderPreCutoff; set => this.RaiseAndSetIfChanged(ref _OutputOrderPreCutoff, value); }
-        public bool OutputUGGateClose { get => _OutputUGGateClose; set => this.RaiseAndSetIfChanged(ref _OutputUGGateClose, value); }
-        public bool OutputUGGateOpen { get => _OutputUGGateOpen; set => this.RaiseAndSetIfChanged(ref _OutputUGGateOpen, value); }
-        public bool OutputWHGateClose { get => _OutputWHGateClose; set => this.RaiseAndSetIfChanged(ref _OutputWHGateClose, value); }
-        public bool OutputWHGateOpen { get => _OutputWHGateOpen; set => this.RaiseAndSetIfChanged(ref _OutputWHGateOpen, value); }
-        public bool OutputFGISConnected { get => _OutputFGISConnected; set => this.RaiseAndSetIfChanged(ref _OutputFGISConnected, value); }
-        public bool OutputRemoteControlMode { get => _OutputRemoteControlMode; set => this.RaiseAndSetIfChanged(ref _OutputRemoteControlMode, value); }
-        public bool OutputBinComplete { get => _OutputBinComplete; set => this.RaiseAndSetIfChanged(ref _OutputBinComplete, value); }
-        public bool OutputTestMode { get => _OutputTestMode; set => this.RaiseAndSetIfChanged(ref _OutputTestMode, value); }
-        public bool OutputShippingMode { get => _OutputShippingMode; set => this.RaiseAndSetIfChanged(ref _OutputShippingMode, value); }
-        public bool OutputOverCapacity { get => _OutputOverCapacity; set => this.RaiseAndSetIfChanged(ref _OutputOverCapacity, value); }
+        public bool InputUGClosedLS { get => _InputUGClosedLS; set => this.SetProperty(ref _InputUGClosedLS, value); }
+        public bool InputWHClosedLS { get => _InputWHClosedLS; set => this.SetProperty(ref _InputWHClosedLS, value); }
+        public bool InputFinishInhibit { get => _InputFinishInhibit; set => this.SetProperty(ref _InputFinishInhibit, value); }
+        public bool InputHydraulicUnitStatus { get => _InputHydraulicUnitStatus; set => this.SetProperty(ref _InputHydraulicUnitStatus, value); }
+        public bool InputLGLowLevelSensor { get => _InputLGLowLevelSensor; set => this.SetProperty(ref _InputLGLowLevelSensor, value); }
+        public bool InputControlPowerON { get => _InputControlPowerON; set => this.SetProperty(ref _InputControlPowerON, value); }
+        public bool InputFieldPowerON { get => _InputFieldPowerON; set => this.SetProperty(ref _InputFieldPowerON, value); }
+        public bool InputUGClosePowerON { get => _InputUGClosePowerON; set => this.SetProperty(ref _InputUGClosePowerON, value); }
+        public bool InputUGOpenPowerON { get => _InputUGOpenPowerON; set => this.SetProperty(ref _InputUGOpenPowerON, value); }
+        public bool InputWHClosePowerON { get => _InputWHClosePowerON; set => this.SetProperty(ref _InputWHClosePowerON, value); }
+        public bool InputWHOpenPowerON { get => _InputWHOpenPowerON; set => this.SetProperty(ref _InputWHOpenPowerON, value); }
+        public bool OutputOrderCompleted { get => _OutputOrderCompleted; set => this.SetProperty(ref _OutputOrderCompleted, value); }
+        public bool OutputLGGateClose { get => _OutputLGGateClose; set => this.SetProperty(ref _OutputLGGateClose, value); }
+        public bool OutputLGGateOpen { get => _OutputLGGateOpen; set => this.SetProperty(ref _OutputLGGateOpen, value); }
+        public bool OutputOrderInProgress { get => _OutputOrderInProgress; set => this.SetProperty(ref _OutputOrderInProgress, value); }
+        public bool OutputExternalAlarmIndicator { get => _OutputExternalAlarmIndicator; set => this.SetProperty(ref _OutputExternalAlarmIndicator, value); }
+        public bool OutputTestWtsDown { get => _OutputTestWtsDown; set => this.SetProperty(ref _OutputTestWtsDown, value); }
+        public bool OutputTestWtsUp { get => _OutputTestWtsUp; set => this.SetProperty(ref _OutputTestWtsUp, value); }
+        public bool OutputOrderPreCutoff { get => _OutputOrderPreCutoff; set => this.SetProperty(ref _OutputOrderPreCutoff, value); }
+        public bool OutputUGGateClose { get => _OutputUGGateClose; set => this.SetProperty(ref _OutputUGGateClose, value); }
+        public bool OutputUGGateOpen { get => _OutputUGGateOpen; set => this.SetProperty(ref _OutputUGGateOpen, value); }
+        public bool OutputWHGateClose { get => _OutputWHGateClose; set => this.SetProperty(ref _OutputWHGateClose, value); }
+        public bool OutputWHGateOpen { get => _OutputWHGateOpen; set => this.SetProperty(ref _OutputWHGateOpen, value); }
+        public bool OutputFGISConnected { get => _OutputFGISConnected; set => this.SetProperty(ref _OutputFGISConnected, value); }
+        public bool OutputRemoteControlMode { get => _OutputRemoteControlMode; set => this.SetProperty(ref _OutputRemoteControlMode, value); }
+        public bool OutputBinComplete { get => _OutputBinComplete; set => this.SetProperty(ref _OutputBinComplete, value); }
+        public bool OutputTestMode { get => _OutputTestMode; set => this.SetProperty(ref _OutputTestMode, value); }
+        public bool OutputShippingMode { get => _OutputShippingMode; set => this.SetProperty(ref _OutputShippingMode, value); }
+        public bool OutputOverCapacity { get => _OutputOverCapacity; set => this.SetProperty(ref _OutputOverCapacity, value); }
 
 
     }

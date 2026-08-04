@@ -5,7 +5,7 @@ using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Avalonia.Media;
+
 
 namespace Weight
 {
@@ -161,15 +161,10 @@ namespace Weight
             return str;
         }
 
-
-        /// <summary>
-        /// Зеленый цвет для отображения
-        /// </summary>
-        public static IBrush MyGreen = new SolidColorBrush(Color.FromRgb(0, 255, 0));
-
-        /// <summary>
-        /// Красный цвет для отображения
-        /// </summary>
-        public static IBrush MyRed = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+        public enum MyColor
+        {
+            Green,
+            Red,
+        }
     }
 }

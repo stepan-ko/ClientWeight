@@ -4,13 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Avalonia;
-using Avalonia.Media;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Weight
 {
-    public class MiscStatusData : ReactiveObject
+    public class MiscStatusData : ObservableObject
     {
         //---------- Дополнительные Данные (Misc.) -----------
         private int _mBuildupTestWeight;
@@ -93,21 +91,21 @@ namespace Weight
 
 
 
-        public int mBuildupTestWeight { get => _mBuildupTestWeight; set => this.RaiseAndSetIfChanged(ref _mBuildupTestWeight, value); }
-        public int mRunningTotalWeight { get => _mRunningTotalWeight; set => this.RaiseAndSetIfChanged(ref _mRunningTotalWeight, value); }
-        public int mTotalDraftCounter { get => _mTotalDraftCounter; set => this.RaiseAndSetIfChanged(ref _mTotalDraftCounter, value); }
-        public int mGateSetpoint { get => _mGateSetpoint; set => this.RaiseAndSetIfChanged(ref _mGateSetpoint, value); }
-        public int mStatisticsLoggingStatus { get => _mStatisticsLoggingStatus; set => this.RaiseAndSetIfChanged(ref _mStatisticsLoggingStatus, value); }
-        public uint mOrderPreCutoff { get => _mOrderPreCutoff; set => this.RaiseAndSetIfChanged(ref _mOrderPreCutoff, value); }
-        public int mLGGateState { get => _mLGGateState; set => this.RaiseAndSetIfChanged(ref _mLGGateState, value); }
-        public int mHourlyTotal { get => _mHourlyTotal; set => this.RaiseAndSetIfChanged(ref _mHourlyTotal, value); }
+        public int mBuildupTestWeight { get => _mBuildupTestWeight; set => this.SetProperty(ref _mBuildupTestWeight, value); }
+        public int mRunningTotalWeight { get => _mRunningTotalWeight; set => this.SetProperty(ref _mRunningTotalWeight, value); }
+        public int mTotalDraftCounter { get => _mTotalDraftCounter; set => this.SetProperty(ref _mTotalDraftCounter, value); }
+        public int mGateSetpoint { get => _mGateSetpoint; set => this.SetProperty(ref _mGateSetpoint, value); }
+        public int mStatisticsLoggingStatus { get => _mStatisticsLoggingStatus; set => this.SetProperty(ref _mStatisticsLoggingStatus, value); }
+        public uint mOrderPreCutoff { get => _mOrderPreCutoff; set => this.SetProperty(ref _mOrderPreCutoff, value); }
+        public int mLGGateState { get => _mLGGateState; set => this.SetProperty(ref _mLGGateState, value); }
+        public int mHourlyTotal { get => _mHourlyTotal; set => this.SetProperty(ref _mHourlyTotal, value); }
         public int mHourlyTotalHour
         {
             get => _mHourlyTotalHour;
             set
             {
                 if (_mHourlyTotalHour != value) UpdateHourlyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mHourlyTotalHour, value);
+                this.SetProperty(ref _mHourlyTotalHour, value);
             }
         }
         public int mHourlyTotalMin
@@ -116,7 +114,7 @@ namespace Weight
             set
             {
                 if (_mHourlyTotalMin != value) UpdateHourlyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mHourlyTotalMin, value);
+                this.SetProperty(ref _mHourlyTotalMin, value);
             }
         }
         public int mHourlyTotalSec
@@ -125,7 +123,7 @@ namespace Weight
             set
             {
                 if (_mHourlyTotalSec != value) UpdateHourlyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mHourlyTotalSec, value);
+                this.SetProperty(ref _mHourlyTotalSec, value);
             }
         }
         public int mHourlyTotalDay
@@ -134,7 +132,7 @@ namespace Weight
             set
             {
                 if (_mHourlyTotalDay != value) UpdateHourlyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mHourlyTotalDay, value);
+                this.SetProperty(ref _mHourlyTotalDay, value);
             }
         }
         public int mHourlyTotalMonth
@@ -143,7 +141,7 @@ namespace Weight
             set
             {
                 if (_mHourlyTotalMonth != value) UpdateHourlyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mHourlyTotalMonth, value);
+                this.SetProperty(ref _mHourlyTotalMonth, value);
             }
         }
         public int mHourlyTotalYear
@@ -152,19 +150,19 @@ namespace Weight
             set
             {
                 if (_mHourlyTotalYear != value) UpdateHourlyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mHourlyTotalYear, value);
+                this.SetProperty(ref _mHourlyTotalYear, value);
             }
         }
-        public DateTime mHourlyTotalDateTime { get => _mHourlyTotalDateTime; set => this.RaiseAndSetIfChanged(ref _mHourlyTotalDateTime, value); }
+        public DateTime mHourlyTotalDateTime { get => _mHourlyTotalDateTime; set => this.SetProperty(ref _mHourlyTotalDateTime, value); }
 
-        public int mDailyTotal { get => _mDailyTotal; set => this.RaiseAndSetIfChanged(ref _mDailyTotal, value); }
+        public int mDailyTotal { get => _mDailyTotal; set => this.SetProperty(ref _mDailyTotal, value); }
         public int mDailyTotalHour
         {
             get => _mDailyTotalHour;
             set
             {
                 if (_mDailyTotalHour != value) UpdateDailyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mDailyTotalHour, value);
+                this.SetProperty(ref _mDailyTotalHour, value);
             }
         }
         public int mDailyTotalMin
@@ -173,7 +171,7 @@ namespace Weight
             set
             {
                 if (_mDailyTotalMin != value) UpdateDailyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mDailyTotalMin, value);
+                this.SetProperty(ref _mDailyTotalMin, value);
             }
         }
         public int mDailyTotalSec
@@ -182,7 +180,7 @@ namespace Weight
             set
             {
                 if (_mDailyTotalSec != value) UpdateDailyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mDailyTotalSec, value);
+                this.SetProperty(ref _mDailyTotalSec, value);
             }
         }
         public int mDailyTotalDay
@@ -191,7 +189,7 @@ namespace Weight
             set
             {
                 if (_mDailyTotalDay != value) UpdateDailyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mDailyTotalDay, value);
+                this.SetProperty(ref _mDailyTotalDay, value);
             }
         }
         public int mDailyTotalMonth
@@ -200,7 +198,7 @@ namespace Weight
             set
             {
                 if (_mDailyTotalMonth != value) UpdateDailyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mDailyTotalMonth, value);
+                this.SetProperty(ref _mDailyTotalMonth, value);
             }
         }
         public int mDailyTotalYear
@@ -209,10 +207,10 @@ namespace Weight
             set
             {
                 if (_mDailyTotalYear != value) UpdateDailyTotalDateTime();
-                this.RaiseAndSetIfChanged(ref _mDailyTotalYear, value);
+                this.SetProperty(ref _mDailyTotalYear, value);
             }
         }
-        public DateTime mDailyTotalDateTime { get => _mDailyTotalDateTime; set => this.RaiseAndSetIfChanged(ref _mDailyTotalDateTime, value); }
+        public DateTime mDailyTotalDateTime { get => _mDailyTotalDateTime; set => this.SetProperty(ref _mDailyTotalDateTime, value); }
 
         public ushort mHWWord1
         {
@@ -220,17 +218,17 @@ namespace Weight
             set
             {
                 if (_mHWWord1 != value) UpdateHWWord1();
-                this.RaiseAndSetIfChanged(ref _mHWWord1, value);
+                this.SetProperty(ref _mHWWord1, value);
             }
         }
 
-        public bool mHWDBSizeTooBig { get => _mHWDBSizeTooBig; set => this.RaiseAndSetIfChanged(ref _mHWDBSizeTooBig, value); }
-        public bool mHWLowDiskSpace { get => _mHWLowDiskSpace; set => this.RaiseAndSetIfChanged(ref _mHWLowDiskSpace, value); }
-        public bool mHWADBoardFault { get => _mHWADBoardFault; set => this.RaiseAndSetIfChanged(ref _mHWADBoardFault, value); }
-        public bool mHWIOBoardFault { get => _mHWIOBoardFault; set => this.RaiseAndSetIfChanged(ref _mHWIOBoardFault, value); }
-        public bool mHWCWCBoardFault { get => _mHWCWCBoardFault; set => this.RaiseAndSetIfChanged(ref _mHWCWCBoardFault, value); }
-        public bool mHWLCDFault { get => _mHWLCDFault; set => this.RaiseAndSetIfChanged(ref _mHWLCDFault, value); }
-        public bool mHWNVRAMFault { get => _mHWNVRAMFault; set => this.RaiseAndSetIfChanged(ref _mHWNVRAMFault, value); }
+        public bool mHWDBSizeTooBig { get => _mHWDBSizeTooBig; set => this.SetProperty(ref _mHWDBSizeTooBig, value); }
+        public bool mHWLowDiskSpace { get => _mHWLowDiskSpace; set => this.SetProperty(ref _mHWLowDiskSpace, value); }
+        public bool mHWADBoardFault { get => _mHWADBoardFault; set => this.SetProperty(ref _mHWADBoardFault, value); }
+        public bool mHWIOBoardFault { get => _mHWIOBoardFault; set => this.SetProperty(ref _mHWIOBoardFault, value); }
+        public bool mHWCWCBoardFault { get => _mHWCWCBoardFault; set => this.SetProperty(ref _mHWCWCBoardFault, value); }
+        public bool mHWLCDFault { get => _mHWLCDFault; set => this.SetProperty(ref _mHWLCDFault, value); }
+        public bool mHWNVRAMFault { get => _mHWNVRAMFault; set => this.SetProperty(ref _mHWNVRAMFault, value); }
 
         public ushort mSelShippWord
         {
@@ -238,12 +236,12 @@ namespace Weight
             set
             {
                 if (_mSelShippWord != 0) UpdateSelShipp();
-                this.RaiseAndSetIfChanged(ref _mSelShippWord, value);
+                this.SetProperty(ref _mSelShippWord, value);
             }
         }
 
-        public int mSelShippBinAB { get => _mSelShippBinAB; set => this.RaiseAndSetIfChanged(ref _mSelShippBinAB, value); }
-        public int mSelShippBinAutoSwitch { get => _mSelShippBinAutoSwitch; set => this.RaiseAndSetIfChanged(ref _mSelShippBinAutoSwitch, value); }
+        public int mSelShippBinAB { get => _mSelShippBinAB; set => this.SetProperty(ref _mSelShippBinAB, value); }
+        public int mSelShippBinAutoSwitch { get => _mSelShippBinAutoSwitch; set => this.SetProperty(ref _mSelShippBinAutoSwitch, value); }
 
 
     }

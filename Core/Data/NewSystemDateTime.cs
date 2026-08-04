@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Weight
 {
-    public class NewSystemDateTime : ReactiveObject
+    public class NewSystemDateTime : ObservableObject
     {
                        
         private int _NewSystemTimeHour;
@@ -33,13 +33,13 @@ namespace Weight
             return result;             
         }
         
-        public int NewSystemTimeHour { get => _NewSystemTimeHour; set => this.RaiseAndSetIfChanged(ref _NewSystemTimeHour, value); }
-        public int NewSystemTimeMin { get => _NewSystemTimeMin; set => this.RaiseAndSetIfChanged(ref _NewSystemTimeMin, value); }
-        public int NewSystemTimeSec { get => _NewSystemTimeSec; set => this.RaiseAndSetIfChanged(ref _NewSystemTimeSec, value); }
-        public int NewSystemTimeDay { get => _NewSystemTimeDay; set => this.RaiseAndSetIfChanged(ref _NewSystemTimeDay, value); }
-        public int NewSystemTimeMonth { get => _NewSystemTimeMonth; set => this.RaiseAndSetIfChanged(ref _NewSystemTimeMonth, value); }
-        public int NewSystemTimeYear { get => _NewSystemTimeYear; set => this.RaiseAndSetIfChanged(ref _NewSystemTimeYear, value); }
-        public string Comments { get => _Comments; set => this.RaiseAndSetIfChanged(ref _Comments, value); }
+        public int NewSystemTimeHour { get => _NewSystemTimeHour; set => this.SetProperty(ref _NewSystemTimeHour, value); }
+        public int NewSystemTimeMin { get => _NewSystemTimeMin; set => this.SetProperty(ref _NewSystemTimeMin, value); }
+        public int NewSystemTimeSec { get => _NewSystemTimeSec; set => this.SetProperty(ref _NewSystemTimeSec, value); }
+        public int NewSystemTimeDay { get => _NewSystemTimeDay; set => this.SetProperty(ref _NewSystemTimeDay, value); }
+        public int NewSystemTimeMonth { get => _NewSystemTimeMonth; set => this.SetProperty(ref _NewSystemTimeMonth, value); }
+        public int NewSystemTimeYear { get => _NewSystemTimeYear; set => this.SetProperty(ref _NewSystemTimeYear, value); }
+        public string Comments { get => _Comments; set => this.SetProperty(ref _Comments, value); }
         
 
     }

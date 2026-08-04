@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
-using System.Reactive;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Avalonia.Media;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Weight
 {
-    public class OrderData : ReactiveObject
+    public class OrderData : ObservableObject
     {
        
         private int _DraftGrossWeightYear;
@@ -104,7 +102,7 @@ namespace Weight
             set
             {
                 if (_DraftGrossWeightYear != value) UpdateDraftGrossWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftGrossWeightYear, value);
+                this.SetProperty(ref _DraftGrossWeightYear, value);
             }
         }
         public int DraftGrossWeightMonth
@@ -113,7 +111,7 @@ namespace Weight
             set
             {
                 if (_DraftGrossWeightMonth != value) UpdateDraftGrossWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftGrossWeightMonth, value);
+                this.SetProperty(ref _DraftGrossWeightMonth, value);
             }
         }
         public int DraftGrossWeightDay
@@ -122,7 +120,7 @@ namespace Weight
             set
             {
                 if (_DraftGrossWeightDay != value) UpdateDraftGrossWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftGrossWeightDay, value);
+                this.SetProperty(ref _DraftGrossWeightDay, value);
             }
         }
         public int DraftGrossWeightHour
@@ -131,7 +129,7 @@ namespace Weight
             set
             {
                 if (_DraftGrossWeightHour != value) UpdateDraftGrossWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftGrossWeightHour, value);
+                this.SetProperty(ref _DraftGrossWeightHour, value);
             }
         }
         public int DraftGrossWeightMin
@@ -140,7 +138,7 @@ namespace Weight
             set
             {
                 if (_DraftGrossWeightMin != value) UpdateDraftGrossWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftGrossWeightMin, value);
+                this.SetProperty(ref _DraftGrossWeightMin, value);
             }
         }
         public int DraftGrossWeightSec
@@ -149,10 +147,10 @@ namespace Weight
             set
             {
                 if (_DraftGrossWeightSec != value) UpdateDraftGrossWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftGrossWeightSec, value);
+                this.SetProperty(ref _DraftGrossWeightSec, value);
             }
         }
-        public DateTime DraftGrossWeightDateTime { get => _DraftGrossWeightDateTime; set => this.RaiseAndSetIfChanged(ref _DraftGrossWeightDateTime, value); }
+        public DateTime DraftGrossWeightDateTime { get => _DraftGrossWeightDateTime; set => this.SetProperty(ref _DraftGrossWeightDateTime, value); }
 
         public int DraftTareWeightYear
         {
@@ -160,7 +158,7 @@ namespace Weight
             set
             {
                 if (_DraftTareWeightYear != value) UpdateDraftTareWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftTareWeightYear, value);
+                this.SetProperty(ref _DraftTareWeightYear, value);
             }
         }
         public int DraftTareWeightMonth
@@ -169,7 +167,7 @@ namespace Weight
             set
             {
                 if (_DraftTareWeightMonth != value) UpdateDraftTareWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftTareWeightMonth, value);
+                this.SetProperty(ref _DraftTareWeightMonth, value);
             }
         }
         public int DraftTareWeightDay
@@ -178,7 +176,7 @@ namespace Weight
             set
             {
                 if (_DraftTareWeightDay != value) UpdateDraftTareWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftTareWeightDay, value);
+                this.SetProperty(ref _DraftTareWeightDay, value);
             }
         }
         public int DraftTareWeightHour
@@ -187,7 +185,7 @@ namespace Weight
             set
             {
                 if (_DraftTareWeightHour != value) UpdateDraftTareWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftTareWeightHour, value);
+                this.SetProperty(ref _DraftTareWeightHour, value);
             }
         }
         public int DraftTareWeightMin
@@ -196,7 +194,7 @@ namespace Weight
             set
             {
                 if (_DraftTareWeightMin != value) UpdateDraftTareWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftTareWeightMin, value);
+                this.SetProperty(ref _DraftTareWeightMin, value);
             }
         }
         public int DraftTareWeightSec
@@ -205,10 +203,10 @@ namespace Weight
             set
             {
                 if (_DraftTareWeightSec != value) UpdateDraftTareWeightDateTime();
-                this.RaiseAndSetIfChanged(ref _DraftTareWeightSec, value);
+                this.SetProperty(ref _DraftTareWeightSec, value);
             }
         }
-        public DateTime DraftTareWeightDateTime { get => _DraftTareWeightDateTime; set => this.RaiseAndSetIfChanged(ref _DraftTareWeightDateTime, value); }
+        public DateTime DraftTareWeightDateTime { get => _DraftTareWeightDateTime; set => this.SetProperty(ref _DraftTareWeightDateTime, value); }
 
         public int OrderStartYear
         {
@@ -216,7 +214,7 @@ namespace Weight
             set
             {
                 if (_OrderStartYear != value) UpdateOrderStartDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderStartYear, value);
+                this.SetProperty(ref _OrderStartYear, value);
             }
         }
         public int OrderStartMonth
@@ -225,7 +223,7 @@ namespace Weight
             set
             {
                 if (_OrderStartMonth != value) UpdateOrderStartDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderStartMonth, value);
+                this.SetProperty(ref _OrderStartMonth, value);
             }
         }
         public int OrderStartDay
@@ -234,7 +232,7 @@ namespace Weight
             set
             {
                 if (_OrderStartDay != value) UpdateOrderStartDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderStartDay, value);
+                this.SetProperty(ref _OrderStartDay, value);
             }
         }
         public int OrderStartHour
@@ -243,7 +241,7 @@ namespace Weight
             set
             {
                 if (_OrderStartHour != value) UpdateOrderStartDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderStartHour, value);
+                this.SetProperty(ref _OrderStartHour, value);
             }
         }
         public int OrderStartMin
@@ -252,7 +250,7 @@ namespace Weight
             set
             {
                 if (_OrderStartMin != value) UpdateOrderStartDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderStartMin, value);
+                this.SetProperty(ref _OrderStartMin, value);
             }
         }
         public int OrderStartSec
@@ -261,10 +259,10 @@ namespace Weight
             set
             {
                 if (_OrderStartSec != value) UpdateOrderStartDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderStartSec, value);
+                this.SetProperty(ref _OrderStartSec, value);
             }
         }
-        public DateTime OrderStartDateTime { get => _OrderStartDateTime; set => this.RaiseAndSetIfChanged(ref _OrderStartDateTime, value); }
+        public DateTime OrderStartDateTime { get => _OrderStartDateTime; set => this.SetProperty(ref _OrderStartDateTime, value); }
 
         public int OrderFinishYear
         {
@@ -272,7 +270,7 @@ namespace Weight
             set
             {
                 if (_OrderFinishYear != value) UpdateOrderFinishDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderFinishYear, value);
+                this.SetProperty(ref _OrderFinishYear, value);
             }
         }
         public int OrderFinishMonth
@@ -281,7 +279,7 @@ namespace Weight
             set
             {
                 if (_OrderFinishMonth != value) UpdateOrderFinishDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderFinishMonth, value);
+                this.SetProperty(ref _OrderFinishMonth, value);
             }
         }
         public int OrderFinishDay
@@ -290,7 +288,7 @@ namespace Weight
             set
             {
                 if (_OrderFinishDay != value) UpdateOrderFinishDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderFinishDay, value);
+                this.SetProperty(ref _OrderFinishDay, value);
             }
         }
         public int OrderFinishHour
@@ -299,7 +297,7 @@ namespace Weight
             set
             {
                 if (_OrderFinishHour != value) UpdateOrderFinishDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderFinishHour, value);
+                this.SetProperty(ref _OrderFinishHour, value);
             }
         }
         public int OrderFinishMin
@@ -308,7 +306,7 @@ namespace Weight
             set
             {
                 if (_OrderFinishMin != value) UpdateOrderFinishDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderFinishMin, value);
+                this.SetProperty(ref _OrderFinishMin, value);
             }
         }
         public int OrderFinishSec
@@ -317,25 +315,25 @@ namespace Weight
             set
             {
                 if (_OrderFinishSec != value) UpdateOrderFinishDateTime();
-                this.RaiseAndSetIfChanged(ref _OrderFinishSec, value);
+                this.SetProperty(ref _OrderFinishSec, value);
             }
         }
-        public DateTime OrderFinishDateTime { get => _OrderFinishDateTime; set => this.RaiseAndSetIfChanged(ref _OrderFinishDateTime, value); }
+        public DateTime OrderFinishDateTime { get => _OrderFinishDateTime; set => this.SetProperty(ref _OrderFinishDateTime, value); }
 
-        public int DraftTareWeight { get => _DraftTareWeight; set => this.RaiseAndSetIfChanged(ref _DraftTareWeight, value); }
-        public int DraftGrossWeight { get => _DraftGrossWeight; set => this.RaiseAndSetIfChanged(ref _DraftGrossWeight, value); }
-        public int DraftNetWeight { get => _DraftNetWeight; set => this.RaiseAndSetIfChanged(ref _DraftNetWeight, value); }
-        public int FlowRate { get => _FlowRate; set => this.RaiseAndSetIfChanged(ref _FlowRate, value); }
-        public int OrderBalance { get => _OrderBalance; set => this.RaiseAndSetIfChanged(ref _OrderBalance, value); }
-        public int TotalWeight { get => _TotalWeight; set => this.RaiseAndSetIfChanged(ref _TotalWeight, value); }
-        public int OrderDraftSize { get => _OrderDraftSize; set => this.RaiseAndSetIfChanged(ref _OrderDraftSize, value); }
-        public int SubtotalWeight { get => _SubtotalWeight; set => this.RaiseAndSetIfChanged(ref _SubtotalWeight, value); }
-        public int DraftTargetWeight { get => _DraftTargetWeight; set => this.RaiseAndSetIfChanged(ref _DraftTargetWeight, value); }
-        public uint CurrentDruftCount { get => _CurrentDruftCount; set => this.RaiseAndSetIfChanged(ref _CurrentDruftCount, value); }
-        public uint LastDruftCount { get => _LastDruftCount; set => this.RaiseAndSetIfChanged(ref _LastDruftCount, value); }
-        public uint PlannedNumberDruftCount { get => _PlannedNumberDruftCount; set => this.RaiseAndSetIfChanged(ref _PlannedNumberDruftCount, value); }
-        public uint ExtraWeight { get => _ExtraWeight; set => this.RaiseAndSetIfChanged(ref _ExtraWeight, value); }
-        public uint Performance { get => _Performance; set => this.RaiseAndSetIfChanged(ref _Performance, value); }
+        public int DraftTareWeight { get => _DraftTareWeight; set => this.SetProperty(ref _DraftTareWeight, value); }
+        public int DraftGrossWeight { get => _DraftGrossWeight; set => this.SetProperty(ref _DraftGrossWeight, value); }
+        public int DraftNetWeight { get => _DraftNetWeight; set => this.SetProperty(ref _DraftNetWeight, value); }
+        public int FlowRate { get => _FlowRate; set => this.SetProperty(ref _FlowRate, value); }
+        public int OrderBalance { get => _OrderBalance; set => this.SetProperty(ref _OrderBalance, value); }
+        public int TotalWeight { get => _TotalWeight; set => this.SetProperty(ref _TotalWeight, value); }
+        public int OrderDraftSize { get => _OrderDraftSize; set => this.SetProperty(ref _OrderDraftSize, value); }
+        public int SubtotalWeight { get => _SubtotalWeight; set => this.SetProperty(ref _SubtotalWeight, value); }
+        public int DraftTargetWeight { get => _DraftTargetWeight; set => this.SetProperty(ref _DraftTargetWeight, value); }
+        public uint CurrentDruftCount { get => _CurrentDruftCount; set => this.SetProperty(ref _CurrentDruftCount, value); }
+        public uint LastDruftCount { get => _LastDruftCount; set => this.SetProperty(ref _LastDruftCount, value); }
+        public uint PlannedNumberDruftCount { get => _PlannedNumberDruftCount; set => this.SetProperty(ref _PlannedNumberDruftCount, value); }
+        public uint ExtraWeight { get => _ExtraWeight; set => this.SetProperty(ref _ExtraWeight, value); }
+        public uint Performance { get => _Performance; set => this.SetProperty(ref _Performance, value); }
         
         
         

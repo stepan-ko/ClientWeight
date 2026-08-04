@@ -421,7 +421,7 @@
 					HorizontalAlignment="Center"/>
 		</Grid>
 		
-		<TextBlock Text="{Binding weightTitle}" />
+		
 
 
 	</StackPanel>

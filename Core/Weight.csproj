@@ -7,10 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="12.0.4" />
-    <PackageReference Include="NLog" Version="6.1.3" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="NLog" Version="6.1.4" />
     <PackageReference Include="NModbus" Version="3.0.83" />
-    <PackageReference Include="ReactiveUI.Avalonia" Version="12.0.3" />
   </ItemGroup>
 
 </Project>
