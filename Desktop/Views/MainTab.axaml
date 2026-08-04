@@ -19,19 +19,23 @@
 				<ColumnDefinition Width="*" MinWidth="165"/>
 			</Grid.ColumnDefinitions>
 
-			
+			<UserControl:Weight Grid.Column="0"/>
 
 			<Rectangle Fill="Black" 
 					   Grid.Column="1"
 					   Width="1"/>
 			
+			<UserControl:Order Grid.Column="2"/>
+			
+			<!--  
 			<Button Padding="15" 
 					Grid.Row="0" 
 					Grid.Column="2" 
 					Content="Êíîïêà"
 					HorizontalAlignment="Center"
 					Command="{Binding ClickMainTab}"/>
-			
+			-->
+
 	    </Grid>
 	
 </UserControl>

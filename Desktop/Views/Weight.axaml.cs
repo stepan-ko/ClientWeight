@@ -8,7 +8,6 @@ using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using ClientCW.ViewModels;
-using DynamicData;
 
 namespace ClientCW.Views;
 

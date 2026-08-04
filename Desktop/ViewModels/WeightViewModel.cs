@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Reactive;
 using System.Runtime.Serialization;
 using Avalonia.Threading;
 using ClientCW.Views;
 using ReactiveUI;
+using System.Reactive;
 using Weight;
 using Weight.Data;
+using ReactiveUI.Primitives;
 
 namespace ClientCW.ViewModels
 {
@@ -23,6 +24,7 @@ namespace ClientCW.ViewModels
             configData = new ConfigData();
             newOrderData = new NewOrderData();
 
+            Debug.WriteLine("До ReactiveCommand.Create(OnButtonClicked)");
             ClickCommand = ReactiveCommand.Create(OnButtonClicked);
 
             weightTitle = "Это public class WeightViewModel : ReactiveObject";
@@ -31,12 +33,11 @@ namespace ClientCW.ViewModels
         private string _weightTitle;
         public string weightTitle { get => _weightTitle; set => this.RaiseAndSetIfChanged(ref _weightTitle, value); }
 
-        public ReactiveCommand<Unit, Unit> ClickCommand { get; }
-
+        public ReactiveCommand<RxVoid, RxVoid> ClickCommand { get; }
+        
         private void OnButtonClicked()
         {
-            //Debug.WriteLine("Команда выполнена! Отладочная строка из View‑Model");
-
+            Debug.WriteLine("Команда выполнена! Отладочная строка из View‑Model");
         }
 
         private OrderData _orderData;
