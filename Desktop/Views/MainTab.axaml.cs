@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -9,7 +10,8 @@ public partial class MainTab : UserControl
 {
     public MainTab()
     {
-        InitializeComponent();
         DataContext = new MainTabViewModel();
+        InitializeComponent();
+        
     }
 }

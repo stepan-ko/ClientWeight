@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Reactive;
 using System.Runtime.Serialization;
@@ -23,8 +23,20 @@ namespace ClientCW.ViewModels
             configData = new ConfigData();
             newOrderData = new NewOrderData();
 
-            WeightClick = ReactiveCommand.Create(DebudPrintData);
-                        
+            ClickCommand = ReactiveCommand.Create(OnButtonClicked);
+
+            weightTitle = "Это public class WeightViewModel : ReactiveObject";
+        }
+
+        private string _weightTitle;
+        public string weightTitle { get => _weightTitle; set => this.RaiseAndSetIfChanged(ref _weightTitle, value); }
+
+        public ReactiveCommand<Unit, Unit> ClickCommand { get; }
+
+        private void OnButtonClicked()
+        {
+            //Debug.WriteLine("Команда выполнена! Отладочная строка из View‑Model");
+
         }
 
         private OrderData _orderData;
@@ -44,14 +56,5 @@ namespace ClientCW.ViewModels
 
 
        
-        private void DebudPrintData()
-        {
-           
-            Debug.WriteLine("WeightClick()");
-
-        }
-
-        public ReactiveCommand<Unit, Unit> WeightClick { get; }
-
     }
 }

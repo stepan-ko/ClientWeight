@@ -400,7 +400,7 @@
 					Grid.Column="0" 
 					Content="Кнопка 1" 
 					HorizontalAlignment="Center"
-					Command="{Binding WeightClick}"/>
+					Command="{Binding ClickCommand}"/>
 
 			<!--  Кнопка 2-->
 			<Button Padding="15"  
@@ -421,6 +421,9 @@
 					HorizontalAlignment="Center"/>
 		</Grid>
 		
+		<TextBlock Text="{Binding weightTitle}" />
+
+
 	</StackPanel>
 	
 </UserControl>

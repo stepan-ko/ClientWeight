@@ -26,6 +26,8 @@
 			</TabItem>
 			
 		</TabControl>
+
+		
 	</StackPanel>
 	
 </Window>
