@@ -16,10 +16,7 @@ namespace ClientCW.ViewModels
     public class WeightViewModel : ObservableObject
     {
 
-        private CancellationTokenSource? _cts;
-        private Task? _loopTask;
-        private ModbusWeightService mbService;
-        private Logger loggerModbus;
+       
 
         public WeightViewModel()
         {
@@ -30,7 +27,7 @@ namespace ClientCW.ViewModels
             configData = new ConfigData();
             newOrderData = new NewOrderData();
             ClickCommand = new RelayCommand(OnButtonClicked);
-            LoopAsync();
+            StartLoop();
         }
         
 
@@ -57,42 +54,123 @@ namespace ClientCW.ViewModels
         public NewOrderData newOrderData { get => _newOrderData; set => this.SetProperty(ref _newOrderData, value); }
 
 
-        private async void LoopAsync()
+        private CancellationTokenSource? _cts;
+        private Task? _loopTask;
+        private ModbusWeightService? _mbService;
+        private bool _isConnected;
+
+        public void StartLoop()
         {
-            // Отменяем предыдущий цикл, если был
-            _cts?.Cancel();
-            _loopTask?.Wait(0); // попытка быстро завершить (не блокирует)
+            StopLoop(); // отменяем предыдущий
 
             _cts = new CancellationTokenSource();
             var token = _cts.Token;
+            _loopTask = RunLoopAsync(token);
+        }
 
-            _loopTask = Task.Run(async () =>
+        public void StopLoop()
+        {
+            _cts?.Cancel();
+            // ждём завершения без блокировки основного потока
+            _ = _loopTask?.ContinueWith(t =>
+            {                
+                _mbService = null;
+                _isConnected = false;
+            }, TaskScheduler.Default);
+
+            _cts?.Dispose();
+            _cts = null;
+            _loopTask = null;
+        }
+
+        private async Task RunLoopAsync(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
             {
-                try
+                // Подключаемся (с ограничением времени на попытку)
+                if (await TryConnectWithRetryAsync(token))
                 {
-                    mbService = new ModbusWeightService("10.6.173.231", 1);
-                    _ = mbService.ConnectAsync();
-                    while (!token.IsCancellationRequested)
+                    _isConnected = true;
+                    Debug.WriteLine("Перед ProcessDataLoopAsync(token)");
+                    await ProcessDataLoopAsync(token); // цикл чтения данных
+                    _isConnected = false; // вышли из цикла чтения — значит, соединение потеряно
+                }
+                else
+                {
+                    _isConnected = false;
+                }
+
+                // Если не отменено — ждём 3 секунды перед следующей попыткой
+                if (!token.IsCancellationRequested)
+                {
+                    try
                     {
-                        // Чтение информации                    
-                        statusData = await mbService.ReadStatusDataAsync();
-                        orderData = await mbService.ReadOrderDataAsync();
-
-
-                        // Небольшая пауза, чтобы не забивать поток на 100% и дать шанс отмене
-                        Thread.Sleep(10);
+                        await Task.Delay(3000, token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // нормально: сервис останавливается
                     }
                 }
-                catch (Exception e) 
-                { 
-                    Debug.WriteLine("Ошибка LoopAsync() " + e);
-                }
-                
-
-
-
-            }, token);
+            }
         }
+
+        // Оркестратор подключения: одна попытка, без рекурсии
+        private async Task<bool> TryConnectWithRetryAsync(CancellationToken token)
+        {
+            //_mbService?.Dispose();
+            _mbService = new ModbusWeightService("10.6.173.231", 1);
+
+            try
+            {
+                var connected = await _mbService.ConnectAsync();
+                Debug.WriteLine($"Подключение {connected} 10.6.173.231");
+                return connected;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Ошибка при попытке подключения: ", ex.Message);
+                return false;
+            }
+        }
+
+        // Цикл только для чтения данных, пока соединение активно
+        private async Task ProcessDataLoopAsync(CancellationToken token)
+        {
+            int cycleCount = 0;
+            var lastReportTime = DateTimeOffset.UtcNow;
+            while (!token.IsCancellationRequested)
+            {
+                try
+                {                    
+                    // Проверяем, что сервис и соединение ещё валидны
+                    if (_mbService == null) break;                   
+                    
+                    statusData = await _mbService.ReadStatusDataAsync();
+                    orderData = await _mbService.ReadOrderDataAsync();
+
+                    cycleCount++;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Ошибка чтения данных: ", ex.Message);
+                    break; // выходим из цикла чтения, дальше сработает переподключение
+                }
+
+                // Асинхронная пауза (не Thread.Sleep!)
+                await Task.Delay(100, token); // 100 мс достаточно, чтобы не забивать CPU
+
+                // Проверка: прошла ли хотя бы 1 секунда с последнего отчёта
+                var now = DateTimeOffset.UtcNow;
+                if ((now - lastReportTime).TotalSeconds >= 1.0)
+                {
+                    Debug.WriteLine($"Циклов за последнюю секунду: {cycleCount}");
+                    cycleCount = 0;                 // сбрасываем счётчик
+                    lastReportTime = now;          // обновляем время отчёта
+                }
+            }
+        }
+
 
     }
 }

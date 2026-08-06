@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using NModbus;
 using NLog;
 using Weight.Data;
+using System.Diagnostics;
 
 namespace Weight
 {
@@ -28,18 +29,16 @@ namespace Weight
         }
 
         // ---------------- IWeightConnectionService ---------------
-        public async Task<bool> ConnectAsync()
+        public async Task<bool>  ConnectAsync()
         {
             try
             {
                 _tcpClient = new TcpClient();
                 await _tcpClient.ConnectAsync(host, port);
-
                 var factory = new ModbusFactory();
                 _master = factory.CreateMaster(_tcpClient);
                 _master.Transport.ReadTimeout = 1000;
                 _master.Transport.WriteTimeout = 1000;
-
                 _isConnected = true;
                 _logger.Info("Подключение к весам установлено");
                 return true;
@@ -50,18 +49,6 @@ namespace Weight
                 _isConnected = false;
                 //await ReConnectAsync();
                 return false;
-            }
-        }
-
-        public async Task ReConnectAsync()
-        {
-            try
-            {                
-                await ConnectAsync();                
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Ошибка переподключения: {ex.Message}");               
             }
         }
 
@@ -109,7 +96,7 @@ namespace Weight
             statusData.TimeSec = registers[28];
             statusData.TimeMSec = registers[29];
             statusData.ClientInfo = registers[30];
-
+            //Debug.WriteLine("statusData.ScaleWeight = " + statusData.ScaleWeight);
             return statusData;
         }
 
