@@ -33,6 +33,8 @@ namespace Weight
         {
             try
             {
+                Debug.WriteLine("ConnectAsync() host = " + host);
+                
                 _tcpClient = new TcpClient();
                 await _tcpClient.ConnectAsync(host, port);
                 var factory = new ModbusFactory();
@@ -45,7 +47,7 @@ namespace Weight
             }
             catch (Exception ex)
             {
-                _logger.Error($"Ошибка подключения: {ex.Message}");
+                _logger.Error($"Ошибка подключения: {ex}");
                 _isConnected = false;
                 //await ReConnectAsync();
                 return false;
