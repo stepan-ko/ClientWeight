@@ -137,7 +137,8 @@
 						Grid.Column="1"
 						MinWidth="150"
 						FontWeight="Bold"
-						IsEnabled=""/>
+						IsEnabled="" 
+						Command="{Binding }"/>
 			</Grid>
 		</StackPanel>
 		

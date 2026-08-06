@@ -261,9 +261,17 @@ namespace Weight
             wr[0] = CommandCode[numCommand];
 
             // Все команды по умолчанию
-            await Task.Run(() => _master.WriteMultipleRegistersAsync(_slaveId, 1000, wr));
-            
+            await Task.Run(() => _master.WriteMultipleRegistersAsync(_slaveId, 1000, wr));            
             return true;
+        }
+
+
+        
+        public async Task StartNewOrderAsync(NewOrderData newOrder)
+        {
+            ushort[] wr = newOrder.GetRegisters();           
+            await _master.WriteMultipleRegistersAsync(_slaveId, 1004, wr);
+            await StartCommandAsync(16);            
         }
 
         //public async Task<bool> ReviseOrderAsync(uint newWeight, uint newDraft)

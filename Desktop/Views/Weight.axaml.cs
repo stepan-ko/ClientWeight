@@ -24,17 +24,6 @@ public partial class Weight : UserControl
 
         DataContext = new WeightViewModel();
 
-
-        Debug.WriteLine($"DataContext: {DataContext?.GetType().Name ?? "null"}");
-
-        if (DataContext == null)
-        {
-            Debug.WriteLine("ОШИБКА: DataContext не установлен!");
-        }
-        else
-        {
-            Debug.WriteLine($"DataContext установлен: {DataContext.GetType().FullName}");
-        }
     }
       
     private static void SetBindingComboValue(int index, TextBlock block)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,9 +8,10 @@ using Avalonia.Threading;
 using ClientCW.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using NLog;
 using Weight;
 using Weight.Data;
-using NLog;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ClientCW.ViewModels
 {
@@ -27,6 +29,7 @@ namespace ClientCW.ViewModels
             configData = new ConfigData();
             newOrderData = new NewOrderData();
             ClickCommand = new RelayCommand(OnButtonClicked);
+            ClickStartOrder = new AsyncRelayCommand(StartOrderAsync);
             StartLoop();
         }
         
@@ -37,6 +40,33 @@ namespace ClientCW.ViewModels
             //Debug.WriteLine("Команда выполнена! Отладочная строка из View‑Model");
             statusData.ScaleWeight += 1;
         }
+
+        public AsyncRelayCommand ClickStartOrder { get; }
+        private async Task StartOrderAsync()
+        {
+            Debug.WriteLine("StartOrderClicked() - старт нового ордера");
+
+            if (_mbService == null)
+            {
+                Debug.WriteLine("Modbus-сервис не инициализирован");
+                return;
+            }
+            try
+            {                
+                await _mbService.StartNewOrderAsync(newOrderData);
+                Debug.WriteLine("Новый ордер запущен успешно");                
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.WriteLine("Запуск ордера отменён");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex, "Ошибка при запуске нового ордера");
+                // Тут можно показать пользователю сообщение об ошибке (через Avalonia dialog или label)
+            }          
+        }
+
 
         private OrderData _orderData;
         private StaticOrderData _staticOrderData;
@@ -205,43 +235,59 @@ namespace ClientCW.ViewModels
         /// <summary>
         /// Инкапсулирует логику:
         /// 1. Сравнение битовых масок (XOR) для поиска изменений.
-        /// 2. Определение необходимости чтения StaticOrderData и ConfigData.
-        /// 3. Выполнение чтения и обновление свойств ViewModel в UI-потоке.
+        /// 2. Определение необходимости чтения или обработки события.
+        /// 3. Обновление данных
         /// </summary>
-        private async Task EvaluateAndReadConditionalData(
-            CancellationToken token,
-            uint eventIdCurrent,
-            uint? eventIdOld)
+        private async Task EvaluateAndReadConditionalData(CancellationToken token, uint eventIdCurrent, uint? eventIdOld)
         {
-            const uint FlagStaticOrderChanged = 0x8000; // Static Order Data Changed
-            const uint FlagConfigChanged = 0x20000; // Configuration Data Changed
+            const uint FlagStaticOrderChanged = 0x8000;         // Static Order Data Changed
+            const uint FlagConfigChanged = 0x20000;             // Configuration Data Changed
+            const uint FlagMiscStatusDataChanged = 0x10000;     // Misc.Status Data Changed
+            const uint FlagOrderStarted = 0x2;          // Order Started
+            const uint FlagOrderFinished = 0x4;         // Order Finished
+            const uint FlagDraftStarted = 0x8;          // Draft Started
+            const uint FlagDraftFinished = 0x40;         // Draft Finished                       
 
             bool needReadStaticOrder = false;
             bool needReadConfig = false;
+            bool needReadMiscStatusData = false;
+            bool eventOrderStarted = false;
+            bool eventOrderFinished = false;
+            bool eventDraftStarted = false;
+            bool eventDraftFinished = false;
 
             // Логика определения, что нужно прочитать
             if (eventIdOld.HasValue)
             {
                 uint changedBits = eventIdCurrent ^ eventIdOld.Value; // XOR: 1 только там, где значение изменилось
 
-                // Проверяем изменение флага StaticOrder
-                if ((changedBits & FlagStaticOrderChanged) != 0)
-                {
-                    // Читаем только если флаг сейчас активен (появился: 0 -> 1)
-                    if ((eventIdCurrent & FlagStaticOrderChanged) != 0)
-                    {
-                        needReadStaticOrder = true;
-                    }
-                }
+                // Проверяем изменение флага StaticOrder (появился: 0-> 1)
+                if ((changedBits & FlagStaticOrderChanged) != 0 && (eventIdCurrent & FlagStaticOrderChanged) != 0)                   
+                    needReadStaticOrder = true;
 
-                // Проверяем изменение флага Config
-                if ((changedBits & FlagConfigChanged) != 0)
-                {
-                    if ((eventIdCurrent & FlagConfigChanged) != 0)
-                    {
-                        needReadConfig = true;
-                    }
-                }
+                // Проверяем изменение флага Config (появился: 0-> 1)
+                if ((changedBits & FlagConfigChanged) != 0 && (eventIdCurrent & FlagConfigChanged) != 0)
+                    needReadConfig = true;
+
+                // Проверяем изменение флага Misc.Status Data (появился: 0-> 1)
+                if ((changedBits & FlagMiscStatusDataChanged) != 0 && (eventIdCurrent & FlagMiscStatusDataChanged) != 0)
+                    needReadMiscStatusData = true;
+
+                // Проверяем Order Started
+                if ((changedBits & FlagOrderStarted) != 0 && (eventIdCurrent & FlagOrderStarted) != 0)
+                    eventOrderStarted = true;
+
+                // Проверяем Order Finished
+                if ((changedBits & FlagOrderFinished) != 0 && (eventIdCurrent & FlagOrderFinished) != 0)
+                    eventOrderFinished = true;
+
+                // Проверяем Draft Started
+                if ((changedBits & FlagDraftStarted) != 0 && (eventIdCurrent & FlagDraftStarted) != 0)
+                    eventDraftStarted = true;
+
+                // Проверяем Draft Finished
+                if ((changedBits & FlagDraftFinished) != 0 && (eventIdCurrent & FlagDraftFinished) != 0)
+                    eventDraftFinished = true;
             }
             else
             {
@@ -249,31 +295,70 @@ namespace ClientCW.ViewModels
                 // если флаги уже установлены
                 if ((eventIdCurrent & FlagStaticOrderChanged) != 0) needReadStaticOrder = true;
                 if ((eventIdCurrent & FlagConfigChanged) != 0) needReadConfig = true;
+                if ((eventIdCurrent & FlagMiscStatusDataChanged) != 0) needReadMiscStatusData = true;
+                if ((eventIdCurrent & FlagOrderStarted) != 0) eventOrderStarted = true;
+                if ((eventIdCurrent & FlagOrderFinished) != 0) eventOrderFinished = true;
+                if ((eventIdCurrent & FlagDraftStarted) != 0) eventDraftStarted = true;
+                if ((eventIdCurrent & FlagDraftFinished) != 0) eventDraftFinished = true;
+
+                needReadConfig = true; //в любом случае первый раз нужно читать конфигурцию
             }
 
             
             // Если сработали условия — читаем дополнительные данные
-            if (needReadStaticOrder)
+            if (_mbService != null)
             {
-                Debug.WriteLine("Сработал флаг Static Order Changed. Чтение StaticOrderData...");
-                staticOrderData = await _mbService.ReadStaticOrderDataAsync();
-                                
-            }
-
-            if (needReadConfig)
-            {
-                Debug.WriteLine("Сработал флаг Config Changed. Чтение ConfigData...");
-                var config = await _mbService.ReadConfigDataAsync();
-
-                Dispatcher.UIThread.Post(() =>
+                if (needReadStaticOrder)
                 {
-                    configData = config;
-                });
+                    Debug.WriteLine("Сработал флаг Static Order Changed. Чтение StaticOrderData...");
+                    staticOrderData = await _mbService.ReadStaticOrderDataAsync();
+                }
+
+                if (needReadConfig)
+                {
+                    Debug.WriteLine("Сработал флаг Config Changed. Чтение ConfigData...");
+                    configData = await _mbService.ReadConfigDataAsync();
+                }
+
+                if (needReadMiscStatusData)
+                {
+                    Debug.WriteLine("Сработал флаг needReadConfig....");
+                    miscStatusData = await _mbService.ReadMiscStatusDataAsync();
+                }
+
+                if (eventOrderStarted)
+                {
+                    Debug.WriteLine("Нужно прочитать статические данные Ордера : OrderStarted");
+                    staticOrderData = await _mbService.ReadStaticOrderDataAsync();
+                }
+            }
+            
+
+            // Обработка по событиям
+            if (eventOrderStarted)
+            {
+                Debug.WriteLine("Ордер начат : OrderStarted");
+            }
+            if (eventOrderFinished)
+            {
+                Debug.WriteLine("Ордер начат : OrderFinished");
+            }
+            if (eventDraftStarted)
+            {
+                Debug.WriteLine("Отвес начат : DraftStarted");
+            }
+            if (eventDraftFinished)
+            {
+                Debug.WriteLine("Отвес завершен : DraftFinished");
             }
 
-            // Сохраняем текущее значение как "старое" для следующей итерации
-            eventIdOld = eventIdCurrent;
+
         }
+
+
+
+
+
 
         // Медленный цикл: раз в 1 секунду
         private async Task ReadOrderLoopAsync(CancellationToken token)
