@@ -18,18 +18,20 @@ namespace ClientCW.ViewModels
     public class WeightViewModel : ObservableObject
     {
 
-       
+        private readonly ModbusWeightService _mbService;
+        //private ModbusWeightService? _mbService;
 
-        public WeightViewModel()
+        public WeightViewModel(ModbusWeightService mbService)
         {
+            _mbService = mbService;
             orderData = new OrderData();
             staticOrderData = new StaticOrderData();
             statusData = new StatusData();
             miscStatusData = new MiscStatusData();
             configData = new ConfigData();
-            newOrderData = new NewOrderData();
+            //newOrderData = new NewOrderData();
             ClickCommand = new RelayCommand(OnButtonClicked);
-            ClickStartOrder = new AsyncRelayCommand(StartOrderAsync);
+            
             StartLoop();
         }
         
@@ -41,31 +43,7 @@ namespace ClientCW.ViewModels
             statusData.ScaleWeight += 1;
         }
 
-        public AsyncRelayCommand ClickStartOrder { get; }
-        private async Task StartOrderAsync()
-        {
-            Debug.WriteLine("StartOrderClicked() - старт нового ордера");
-
-            if (_mbService == null)
-            {
-                Debug.WriteLine("Modbus-сервис не инициализирован");
-                return;
-            }
-            try
-            {                
-                await _mbService.StartNewOrderAsync(newOrderData);
-                Debug.WriteLine("Новый ордер запущен успешно");                
-            }
-            catch (OperationCanceledException)
-            {
-                Debug.WriteLine("Запуск ордера отменён");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex, "Ошибка при запуске нового ордера");
-                // Тут можно показать пользователю сообщение об ошибке (через Avalonia dialog или label)
-            }          
-        }
+        
 
 
         private OrderData _orderData;
@@ -73,7 +51,7 @@ namespace ClientCW.ViewModels
         private StatusData _statusData;
         private MiscStatusData _miscStatusData;
         private ConfigData _configData;
-        private NewOrderData _newOrderData;
+        //private NewOrderData _newOrderData;
 
 
         public OrderData orderData { get => _orderData; set => this.SetProperty(ref _orderData, value); }
@@ -81,12 +59,12 @@ namespace ClientCW.ViewModels
         public StatusData statusData { get => _statusData; set => this.SetProperty(ref _statusData, value); }
         public MiscStatusData miscStatusData { get => _miscStatusData; set => this.SetProperty(ref _miscStatusData, value); }
         public ConfigData configData { get => _configData; set => this.SetProperty(ref _configData, value); }
-        public NewOrderData newOrderData { get => _newOrderData; set => this.SetProperty(ref _newOrderData, value); }
+        //public NewOrderData newOrderData { get => _newOrderData; set => this.SetProperty(ref _newOrderData, value); }
 
 
         private CancellationTokenSource? _cts;
         private Task? _loopTask;
-        private ModbusWeightService? _mbService;
+        
         private bool _isConnected;
 
         // Флаг, чтобы читать staticOrderData/configData только при изменении нужного поля в statusData
@@ -108,7 +86,7 @@ namespace ClientCW.ViewModels
             _ = _loopTask?.ContinueWith(t =>
             {
                 //_mbService?.Dispose();
-                _mbService = null;
+                //_mbService = null;
                 _isConnected = false;
                 Debug.WriteLine("Цикл остановлен");
             }, TaskScheduler.Default);
@@ -147,7 +125,7 @@ namespace ClientCW.ViewModels
         private async Task<bool> TryConnectWithRetryAsync(CancellationToken token)
         {
             //_mbService?.Dispose();
-            _mbService = new ModbusWeightService("10.6.173.231", 1);
+            //_mbService = new ModbusWeightService("10.6.173.231", 1);
 
             try
             {

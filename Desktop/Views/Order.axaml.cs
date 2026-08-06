@@ -16,7 +16,7 @@ public partial class Order : UserControl
     public Order()
     {
         InitializeComponent();
-        
+        ComboBox_Type.SelectedIndex = 0;
     }
 
     private void InputCustomer(object? sender, Avalonia.Input.KeyEventArgs e)
@@ -111,6 +111,8 @@ public partial class Order : UserControl
         ComboBox comboBox = (ComboBox)sender;
         int index = comboBox.SelectedIndex;
         //Debug.WriteLine("index = " + index);
+        if (OrderWeightInput == null) return;
+
         switch (index)
         {
             case 0:

@@ -8,6 +8,7 @@ using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using ClientCW.ViewModels;
+using Desktop;
 
 namespace ClientCW.Views;
 
@@ -21,8 +22,9 @@ public partial class Weight : UserControl
         btnCoimbo2.SelectionChanged += BtnCoimbo2_SelectionChanged;
 
         Print();
-
-        DataContext = new WeightViewModel();
+        var app = (App)Application.Current;
+        //DataContext = new WeightViewModel();
+        DataContext = new WeightViewModel(app.MbService); // <-- передаём тот же сервис
 
     }
       

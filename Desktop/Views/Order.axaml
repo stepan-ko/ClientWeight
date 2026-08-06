@@ -6,6 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="330" d:DesignHeight="650"
              x:Class="ClientCW.Views.Order"
 			 x:DataType="vm:MainTabViewModel">
+
 	
 	<Grid Margin="10 10"
 		  ShowGridLines="false"
@@ -20,6 +21,7 @@
 						  Margin="0 5"
 						  Padding="10 0"
 						  MinWidth="125"
+						  Name="ComboBox_Type"
 						  SelectionChanged="ComboBox_SelectionChanged">
 					<ComboBoxItem>Элевация</ComboBoxItem>
 					<ComboBoxItem>На море</ComboBoxItem>
@@ -64,7 +66,7 @@
 				<TextBlock FontSize="16" 
 						   FontWeight="Bold"						   
 						   Text="Продукт"/>
-					<ComboBox SelectedIndex="" 
+					<ComboBox SelectedIndex="0" 
 							  Margin="0 5" 
 							  MinWidth="125"
 							  Padding="10 0">
@@ -137,8 +139,8 @@
 						Grid.Column="1"
 						MinWidth="150"
 						FontWeight="Bold"
-						IsEnabled="" 
-						Command="{Binding }"/>
+						IsEnabled="True" 
+						Command="{Binding OrderVm.ClickStartOrder}"/>
 			</Grid>
 		</StackPanel>
 		
