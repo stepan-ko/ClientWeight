@@ -28,8 +28,7 @@ namespace ClientCW.ViewModels
             staticOrderData = new StaticOrderData();
             statusData = new StatusData();
             miscStatusData = new MiscStatusData();
-            configData = new ConfigData();
-            //newOrderData = new NewOrderData();
+            configData = new ConfigData();            
             ClickCommand = new RelayCommand(OnButtonClicked);
             
             StartLoop();
@@ -39,19 +38,16 @@ namespace ClientCW.ViewModels
         public RelayCommand ClickCommand { get; }
         private void OnButtonClicked()
         {
-            //Debug.WriteLine("Команда выполнена! Отладочная строка из View‑Model");
+            Debug.WriteLine("Кнопка 1 - НАЖАТА");
             statusData.ScaleWeight += 1;
         }
-
-        
-
+                
 
         private OrderData _orderData;
         private StaticOrderData _staticOrderData;
         private StatusData _statusData;
         private MiscStatusData _miscStatusData;
         private ConfigData _configData;
-        //private NewOrderData _newOrderData;
 
 
         public OrderData orderData { get => _orderData; set => this.SetProperty(ref _orderData, value); }
@@ -59,8 +55,7 @@ namespace ClientCW.ViewModels
         public StatusData statusData { get => _statusData; set => this.SetProperty(ref _statusData, value); }
         public MiscStatusData miscStatusData { get => _miscStatusData; set => this.SetProperty(ref _miscStatusData, value); }
         public ConfigData configData { get => _configData; set => this.SetProperty(ref _configData, value); }
-        //public NewOrderData newOrderData { get => _newOrderData; set => this.SetProperty(ref _newOrderData, value); }
-
+        
 
         private CancellationTokenSource? _cts;
         private Task? _loopTask;

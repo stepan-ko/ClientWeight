@@ -19,12 +19,14 @@ namespace Weight
         private byte _slaveId;
 
         private string host;
+        private IPAddress localIP;
         private int port;
-        public ModbusWeightService(string Host, int slaveId, int Port = 502)
+        public ModbusWeightService(string Host, string LocalHost, int slaveId, int Port = 502)
         {
             //_logger = logger;
             _slaveId = (byte)slaveId;
-            host = Host;
+            host = Host;            
+            localIP = IPAddress.Parse(LocalHost);
             port = Port;
         }
 
@@ -35,7 +37,7 @@ namespace Weight
             {
                 Debug.WriteLine("ConnectAsync() host = " + host);
                 
-                _tcpClient = new TcpClient();
+                _tcpClient = new TcpClient(new IPEndPoint(localIP, 0));
                 await _tcpClient.ConnectAsync(host, port);
                 var factory = new ModbusFactory();
                 _master = factory.CreateMaster(_tcpClient);

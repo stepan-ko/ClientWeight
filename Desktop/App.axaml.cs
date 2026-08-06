@@ -20,7 +20,7 @@ namespace Desktop
 
         public override void OnFrameworkInitializationCompleted()
         {
-            MbService = new ModbusWeightService("10.6.173.231", 1);
+            MbService = new ModbusWeightService("10.6.173.231", "10.6.173.230", 1);
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {                

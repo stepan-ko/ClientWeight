@@ -16,7 +16,7 @@ namespace ClientCW.ViewModels
 
         public MainTabViewModel()
         {
-            _mbService = new ModbusWeightService("10.6.173.231", 1);
+            _mbService = new ModbusWeightService("10.6.173.231", "10.6.173.230", 1);
             WeightVm = new WeightViewModel(_mbService);
             OrderVm = new OrderViewModel(_mbService);
         }
