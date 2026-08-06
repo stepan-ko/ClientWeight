@@ -8,7 +8,7 @@ namespace Weight
 {
     public interface IWeightConnectionService
     {
-        Task<bool> ConnectAsync(string host, int port);
+        Task<bool> ConnectAsync();
         Task DisconnectAsync();
         bool IsConnected { get; }
     }

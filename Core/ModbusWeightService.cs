@@ -13,16 +13,22 @@ namespace Weight
         private TcpClient _tcpClient;
         private IModbusMaster _master;
         private bool _isConnected;
-        private Logger _logger;
+        //private Logger _logger;
+        private static readonly ILogger _logger = LogManager.GetLogger("Modbus");
         private byte _slaveId;
-        public ModbusWeightService(Logger logger, int slaveId)
+
+        private string host;
+        private int port;
+        public ModbusWeightService(string Host, int slaveId, int Port = 502)
         {
-            _logger = logger;
+            //_logger = logger;
             _slaveId = (byte)slaveId;
+            host = Host;
+            port = Port;
         }
 
         // ---------------- IWeightConnectionService ---------------
-        public async Task<bool> ConnectAsync(string host, int port)
+        public async Task<bool> ConnectAsync()
         {
             try
             {
@@ -41,7 +47,21 @@ namespace Weight
             catch (Exception ex)
             {
                 _logger.Error($"Ошибка подключения: {ex.Message}");
+                _isConnected = false;
+                //await ReConnectAsync();
                 return false;
+            }
+        }
+
+        public async Task ReConnectAsync()
+        {
+            try
+            {                
+                await ConnectAsync();                
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Ошибка переподключения: {ex.Message}");               
             }
         }
 

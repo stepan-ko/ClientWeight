@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia.Threading;
 using ClientCW.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Weight;
 using Weight.Data;
+using NLog;
 
 namespace ClientCW.ViewModels
 {
     public class WeightViewModel : ObservableObject
     {
+
+        private CancellationTokenSource? _cts;
+        private Task? _loopTask;
+        private ModbusWeightService mbService;
+        private Logger loggerModbus;
 
         public WeightViewModel()
         {
@@ -22,13 +30,15 @@ namespace ClientCW.ViewModels
             configData = new ConfigData();
             newOrderData = new NewOrderData();
             ClickCommand = new RelayCommand(OnButtonClicked);
+            LoopAsync();
         }
-
+        
 
         public RelayCommand ClickCommand { get; }
         private void OnButtonClicked()
         {
-            Debug.WriteLine("Команда выполнена! Отладочная строка из View‑Model");
+            //Debug.WriteLine("Команда выполнена! Отладочная строка из View‑Model");
+            statusData.ScaleWeight += 1;
         }
 
         private OrderData _orderData;
@@ -47,6 +57,42 @@ namespace ClientCW.ViewModels
         public NewOrderData newOrderData { get => _newOrderData; set => this.SetProperty(ref _newOrderData, value); }
 
 
-       
+        private async void LoopAsync()
+        {
+            // Отменяем предыдущий цикл, если был
+            _cts?.Cancel();
+            _loopTask?.Wait(0); // попытка быстро завершить (не блокирует)
+
+            _cts = new CancellationTokenSource();
+            var token = _cts.Token;
+
+            _loopTask = Task.Run(async () =>
+            {
+                try
+                {
+                    mbService = new ModbusWeightService("10.6.173.231", 1);
+                    _ = mbService.ConnectAsync();
+                    while (!token.IsCancellationRequested)
+                    {
+                        // Чтение информации                    
+                        statusData = await mbService.ReadStatusDataAsync();
+                        orderData = await mbService.ReadOrderDataAsync();
+
+
+                        // Небольшая пауза, чтобы не забивать поток на 100% и дать шанс отмене
+                        Thread.Sleep(10);
+                    }
+                }
+                catch (Exception e) 
+                { 
+                    Debug.WriteLine("Ошибка LoopAsync() " + e);
+                }
+                
+
+
+
+            }, token);
+        }
+
     }
 }
