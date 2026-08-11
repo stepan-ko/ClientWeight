@@ -2,9 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="900"             
-			 xmlns:vm="using:ClientCW.ViewModels"			 
-			 xmlns:UserControl="using:ClientCW.Views"
+             mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="900" 
+			 xmlns:views="clr-namespace:ClientCW.Views"            
+			 xmlns:vm="clr-namespace:ClientCW.ViewModels"
 			 x:Class="ClientCW.Views.MainTab"
 			 x:DataType="vm:MainTabViewModel">
 	
@@ -18,24 +18,13 @@
 				<ColumnDefinition Width="1"/>			
 				<ColumnDefinition Width="*" MinWidth="165"/>
 			</Grid.ColumnDefinitions>
-
-			<UserControl:Weight Grid.Column="0"/>
-
-			<Rectangle Fill="Black" 
-					   Grid.Column="1"
-					   Width="1"/>
 			
-			<UserControl:Order Grid.Column="2"/>
+			<views:Weight DataContext="{Binding WeightVM}" Grid.Column="0" />
 			
-			<!--  
-			<Button Padding="15" 
-					Grid.Row="0" 
-					Grid.Column="2" 
-					Content="Êíîïêà"
-					HorizontalAlignment="Center"
-					Command="{Binding ClickMainTab}"/>
-			-->
-
+			<Rectangle Fill="Black" Grid.Column="1" Width="1"/>
+			
+			<views:Order  DataContext="{Binding OrderVM}"  Grid.Column="2" />
+			
 	    </Grid>
 	
 </UserControl>

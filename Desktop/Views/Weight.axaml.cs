@@ -18,12 +18,12 @@ public partial class Weight : UserControl
     {
         InitializeComponent();
 
-        btnCoimbo1.SelectionChanged += BtnCoimbo1_SelectionChanged;
-        btnCoimbo2.SelectionChanged += BtnCoimbo2_SelectionChanged;
+        //btnCoimbo1.SelectionChanged += BtnCoimbo1_SelectionChanged;
+        //btnCoimbo2.SelectionChanged += BtnCoimbo2_SelectionChanged;
 
         Print();
-        var app = (App)Application.Current;        
-        DataContext = new WeightViewModel(app.MbService);
+        //var app = (App)Application.Current;        
+        //DataContext = new WeightViewModel(app.MbService);
 
     }
       

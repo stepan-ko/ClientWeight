@@ -4,15 +4,14 @@ using Avalonia.Markup.Xaml;
 using ClientCW.ViewModels;
 using ClientCW.Views;
 using Weight;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace Desktop
 {
     public partial class App : Application
     {
-        public ModbusWeightService MbService { get; private set; }
-
-
+        
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -20,19 +19,21 @@ namespace Desktop
 
         public override void OnFrameworkInitializationCompleted()
         {
-            MbService = new ModbusWeightService("10.6.173.231", "10.6.173.230", 1);
+            base.OnFrameworkInitializationCompleted();
+
+           
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {                
-
+            {
+                var vm = Program._serviceProvider!.GetRequiredService<MainWindowViewModel>();
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = vm,
                 };
 
             }
 
-            base.OnFrameworkInitializationCompleted();
+
         }
     }
 }

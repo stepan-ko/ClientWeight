@@ -19,11 +19,11 @@ public partial class Order : UserControl
     {
         InitializeComponent();        
         
-        var app = (App)Application.Current;
-        DataContext = new OrderViewModel(app.MbService);
+        //var app = (App)Application.Current;
+        //DataContext = new OrderViewModel(app.MbService);
 
-        ComboBox_Type.SelectedIndex = 0;
-        ComboBox_Product.SelectedIndex = 0;
+        //ComboBox_Type.SelectedIndex = 0;
+        //ComboBox_Product.SelectedIndex = 0;
 
     }
 

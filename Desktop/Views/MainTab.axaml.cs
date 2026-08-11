@@ -14,6 +14,6 @@ public partial class MainTab : UserControl
         
         InitializeComponent();
         
-        DataContext = new MainTabViewModel();
+        
     }
 }

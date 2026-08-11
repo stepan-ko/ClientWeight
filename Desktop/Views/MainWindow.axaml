@@ -19,7 +19,7 @@
 		<Button Click="CloseProgram">Закрыть</Button>		
 		<TabControl Margin="5">
 			<TabItem Header="Главная" HorizontalAlignment="Center">
-				<UserControl:MainTab Margin="0 10"/>
+				<UserControl:MainTab DataContext="{Binding MainTabVM}" Margin="0 10"/>
 			</TabItem>
 			<TabItem Header="Сообщения">
 					

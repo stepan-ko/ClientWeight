@@ -1,5 +1,6 @@
 
 using System.Diagnostics;
+using ClientCW.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Weight;
 
@@ -7,12 +8,20 @@ using Weight;
 
 namespace ClientCW.ViewModels
 {
-    public class MainTabViewModel : ObservableObject
+    public partial class MainTabViewModel : ObservableObject
     {
-        public MainTabViewModel()
-        {
-           
-        }
+        [ObservableProperty]
+        private WeightViewModel _weightVM;
 
+        [ObservableProperty]
+        private OrderViewModel _orderVM;
+
+        public MainTabViewModel(WeightViewModel weight, OrderViewModel order)
+        {
+            WeightVM = weight;
+            OrderVM = order;
+        }
     }
+
+    
 }

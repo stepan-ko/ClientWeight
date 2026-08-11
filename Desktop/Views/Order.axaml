@@ -22,6 +22,7 @@
 						  Padding="10 0"
 						  MinWidth="125"
 						  Name="ComboBox_Type"
+						  SelectedIndex="0"
 						  SelectionChanged="ComboBox_SelectionChanged">
 					<ComboBoxItem>На море</ComboBoxItem>
 					<ComboBoxItem>Элевация</ComboBoxItem>
