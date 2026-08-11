@@ -7,6 +7,8 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using ClientCW.ViewModels;
+using Desktop;
+using Weight;
 
 namespace ClientCW.Views;
 
@@ -15,8 +17,14 @@ public partial class Order : UserControl
    
     public Order()
     {
-        InitializeComponent();
+        InitializeComponent();        
+        
+        var app = (App)Application.Current;
+        DataContext = new OrderViewModel(app.MbService);
+
         ComboBox_Type.SelectedIndex = 0;
+        ComboBox_Product.SelectedIndex = 0;
+
     }
 
     private void InputCustomer(object? sender, Avalonia.Input.KeyEventArgs e)
@@ -104,22 +112,45 @@ public partial class Order : UserControl
             }
         }        
     }
+    private void Product_SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
+    {
+        ComboBox comboBox = (ComboBox)sender;
+        int index = comboBox.SelectedIndex;                
+        var vm = (OrderViewModel)DataContext;
+        if (vm == null) return;
+        switch (index)
+        {
+            case 0:
+                vm.newOrderData.ProductName = "Wheat";  //ѕшеница              
+                break;
+            case 1:
+                vm.newOrderData.ProductName = "Wheat2"; //ячмень              
+                break;
+            case 2:
+                vm.newOrderData.ProductName = "Wheat3"; // укуруза              
+                break;
+            default:
+                break;
+        }
+    }
 
-    
     private void ComboBox_SelectionChanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
     {
         ComboBox comboBox = (ComboBox)sender;
         int index = comboBox.SelectedIndex;
         //Debug.WriteLine("index = " + index);
         if (OrderWeightInput == null) return;
+        var vm = (OrderViewModel)DataContext;
 
         switch (index)
         {
             case 0:
+                vm.newOrderData.StartUpMode = 7;
                 OrderWeightInput.IsEnabled = false;
                 OrderWeightInput.Text = "0";
                 break;
             case 1:
+                vm.newOrderData.StartUpMode = 10;
                 OrderWeightInput.IsEnabled = true;
                 OrderWeightInput.Text = "50000000";
                 break;
@@ -129,10 +160,10 @@ public partial class Order : UserControl
         }
     }
 
-    private void TextBox_TextChanging(object? sender, Avalonia.Controls.TextChangingEventArgs e)
-    {
-        TextBox comboBox = (TextBox)sender;        
-        Debug.WriteLine(comboBox.Text);
-        e.Handled = false;
-    }
+    //private void TextBox_TextChanging(object? sender, Avalonia.Controls.TextChangingEventArgs e)
+    //{
+    //    TextBox comboBox = (TextBox)sender;        
+    //    Debug.WriteLine(comboBox.Text);
+    //    e.Handled = false;
+    //}
 }

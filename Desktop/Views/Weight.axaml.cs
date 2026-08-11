@@ -23,7 +23,7 @@ public partial class Weight : UserControl
 
         Print();
         var app = (App)Application.Current;        
-        DataContext = new WeightViewModel(app.MbService); // <-- передаём тот же сервис
+        DataContext = new WeightViewModel(app.MbService);
 
     }
       

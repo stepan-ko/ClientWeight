@@ -19,8 +19,7 @@ namespace ClientCW.ViewModels
     {
 
         private readonly ModbusWeightService _mbService;
-        //private ModbusWeightService? _mbService;
-
+       
         public WeightViewModel(ModbusWeightService mbService)
         {
             _mbService = mbService;
