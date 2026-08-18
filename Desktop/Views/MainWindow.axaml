@@ -6,7 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="1000"
         x:Class="ClientCW.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-		xmlns:UserControl="using:ClientCW.Views"        
+		xmlns:UserControl="using:ClientCW.Views" 
+		xmlns:views="clr-namespace:ClientCW.Views"  
         Title="ClientCW">
 
     <Design.DataContext>
@@ -21,8 +22,8 @@
 			<TabItem Header="Главная" HorizontalAlignment="Center">
 				<UserControl:MainTab DataContext="{Binding MainTabVM}" Margin="0 10"/>
 			</TabItem>
-			<TabItem Header="Сообщения">
-					
+			<TabItem Header="Настройки">
+				<UserControl:Settings DataContext="{Binding SettingsVM}" Margin="0 10"/>	
 			</TabItem>
 			
 		</TabControl>

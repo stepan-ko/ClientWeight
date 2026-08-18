@@ -54,7 +54,8 @@ public partial class Order : UserControl
 
     private void InputId_TextChanged(object? sender, Avalonia.Controls.TextChangedEventArgs e)
     {
-        ToUpper_Input(sender);
+        Debug.WriteLine("сработал InputId_TextChanged");
+        //ToUpper_Input(sender);
     }
 
 

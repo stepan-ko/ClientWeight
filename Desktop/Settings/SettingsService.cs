@@ -23,6 +23,22 @@ namespace Desktop.Settings
             var appDir = Path.Combine(baseDir, "ClientCW");
             Directory.CreateDirectory(appDir);
             _path = Path.Combine(appDir, "settings.json");
+
+
+            // Если файла ещё нет — создаём с дефолтными настройками
+            if (!File.Exists(_path))
+            {
+                var defaultSettings = new AppSettings
+                {
+                    ModbusHost = "10.6.173.231",
+                    ModbusLocalHost = "10.6.173.230",
+                    ModbusUnitId = 1,
+                    
+                };
+                var json = System.Text.Json.JsonSerializer.Serialize(defaultSettings, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(_path, json);
+            }
+
         }
 
         private AppSettings Load()

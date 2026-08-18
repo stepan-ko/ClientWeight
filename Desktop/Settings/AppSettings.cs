@@ -18,6 +18,6 @@ namespace Desktop.Settings
         [ObservableProperty] private int _reconnectDelaySeconds = 5;
 
         // Окно
-        
+      
     }
 }

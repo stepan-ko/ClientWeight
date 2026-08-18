@@ -37,7 +37,7 @@
 						  MaxLength="10"						  
 						  Text="{Binding newOrderData.OrderID}"
 						  KeyDown="InputId"						  
-						  TextChanged="InputId_TextChanged"/>
+						  />
 			</StackPanel>
 
 			<StackPanel  Margin="0 10 0 0">

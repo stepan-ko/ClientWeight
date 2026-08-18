@@ -21,7 +21,7 @@ namespace Desktop
         {
             var services = new ServiceCollection();
 
-            // Сначала настройки и логгер (если нужен)
+            // Сначала настройки
             services.AddSingleton<SettingsService>();
 
             // Регистрируем ModbusWeightService с нужными параметрами
@@ -35,6 +35,7 @@ namespace Desktop
             services.AddTransient<WeightViewModel>();
             services.AddTransient<OrderViewModel>();
             services.AddTransient<MainTabViewModel>();
+            services.AddTransient<SettingsViewModel>();
             services.AddTransient<MainWindowViewModel>();
 
 

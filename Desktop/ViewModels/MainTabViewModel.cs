@@ -16,10 +16,13 @@ namespace ClientCW.ViewModels
         [ObservableProperty]
         private OrderViewModel _orderVM;
 
+        
+
         public MainTabViewModel(WeightViewModel weight, OrderViewModel order)
         {
             WeightVM = weight;
             OrderVM = order;
+            
         }
     }
 

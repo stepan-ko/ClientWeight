@@ -1,0 +1,74 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="clr-namespace:ClientCW.ViewModels"             
+             x:Class="ClientCW.Views.Settings"
+			 x:DataType="vm:SettingsViewModel">
+  <StackPanel Margin="16">
+    <!-- Modbus Host -->
+    <DockPanel Margin="0,8">
+        <TextBlock DockPanel.Dock="Left"
+                   Width="200"
+                   VerticalAlignment="Center"
+                   Text="Modbus Host"/>
+        <TextBox VerticalAlignment="Center"
+                 Text="{Binding Settings.Current.ModbusHost, UpdateSourceTrigger=PropertyChanged}"/>
+    </DockPanel>
+
+    <!-- Modbus Local Host -->
+    <DockPanel Margin="0,8">
+        <TextBlock DockPanel.Dock="Left"
+                   Width="200"
+                   VerticalAlignment="Center"
+                   Text="Modbus Local Host"/>
+        <TextBox VerticalAlignment="Center"
+                 Text="{Binding Settings.Current.ModbusLocalHost, UpdateSourceTrigger=PropertyChanged}"/>
+    </DockPanel>
+
+    <!-- Modbus Port -->
+    <DockPanel Margin="0,8">
+        <TextBlock DockPanel.Dock="Left"
+                   Width="200"
+                   VerticalAlignment="Center"
+                   Text="Modbus Port"/>
+        <!-- Если есть NumericUpDown -->
+        <NumericUpDown VerticalAlignment="Center"
+                       Value="{Binding Settings.Current.ModbusPort}"/>
+    </DockPanel>
+
+    <!-- Modbus Unit ID -->
+    <DockPanel Margin="0,8">
+        <TextBlock DockPanel.Dock="Left"
+                   Width="200"
+                   VerticalAlignment="Center"
+                   Text="Modbus Unit ID"/>
+        <NumericUpDown VerticalAlignment="Center"
+                       Value="{Binding Settings.Current.ModbusUnitId}"
+                       Minimum="0" Maximum="255"/>
+    </DockPanel>
+
+    <!-- Auto Reconnect -->
+    <DockPanel Margin="0,8">
+        <TextBlock DockPanel.Dock="Left"
+                   Width="200"
+                   VerticalAlignment="Center"
+                   Text="Auto Reconnect"/>
+        <CheckBox VerticalAlignment="Center"
+                  IsChecked="{Binding Settings.Current.AutoReconnect}"/>
+    </DockPanel>
+
+    <!-- Reconnect Delay Seconds -->
+    <DockPanel Margin="0,8">
+        <TextBlock DockPanel.Dock="Left"
+                   Width="200"
+                   VerticalAlignment="Center"
+                   Text="Reconnect Delay (seconds)"/>
+        <NumericUpDown VerticalAlignment="Center"
+                       Value="{Binding Settings.Current.ReconnectDelaySeconds}"
+                       Minimum="1" Maximum="300"
+                       FormatString="F0"/>
+    </DockPanel>
+</StackPanel>
+</UserControl>

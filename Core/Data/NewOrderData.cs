@@ -16,7 +16,7 @@ namespace Weight
 
         private uint _OrderWeight;
         private int _DefaultDraftSize;
-        private string _OrderID = "";
+        private string _OrderID = "Order 1.0";
         private uint _TicketNumber;
         private string _VesselID = "";
         private string _BinID = "";
