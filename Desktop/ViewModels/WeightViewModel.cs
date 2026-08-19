@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
+using System.Runtime;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using Avalonia.Threading;
 using ClientCW.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Desktop.Settings;
 using NLog;
 using Weight;
 using Weight.Data;
@@ -19,10 +21,13 @@ namespace ClientCW.ViewModels
     {
 
         private readonly ModbusWeightService _mbService;
-       
-        public WeightViewModel(ModbusWeightService mbService)
+        private readonly SettingsService _settings;        
+        //private int ReconnecMs;
+        public WeightViewModel(ModbusWeightService mbService, SettingsService settingsService)
         {
             _mbService = mbService;
+            _settings = settingsService;
+            //ReconnecMs = _settings.Current.ReconnectDelaySeconds * 1000;
             orderData = new OrderData();
             staticOrderData = new StaticOrderData();
             statusData = new StatusData();
@@ -96,7 +101,7 @@ namespace ClientCW.ViewModels
             {
                 if (await TryConnectWithRetryAsync(token))
                 {
-                    _isConnected = true;
+                    _isConnected = true;                    
                     await ProcessDataLoopAsync(token);
                     _isConnected = false;
                 }
@@ -108,8 +113,8 @@ namespace ClientCW.ViewModels
                 if (!token.IsCancellationRequested)
                 {
                     try
-                    {
-                        await Task.Delay(3000, token);
+                    {                        
+                        await Task.Delay(_settings.Current.ReconnectDelaySeconds * 1000, token);
                     }
                     catch (OperationCanceledException) { /* нормально */ }
                 }

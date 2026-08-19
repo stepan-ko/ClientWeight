@@ -6,69 +6,93 @@
              xmlns:vm="clr-namespace:ClientCW.ViewModels"             
              x:Class="ClientCW.Views.Settings"
 			 x:DataType="vm:SettingsViewModel">
-  <StackPanel Margin="16">
-    <!-- Modbus Host -->
-    <DockPanel Margin="0,8">
-        <TextBlock DockPanel.Dock="Left"
-                   Width="200"
-                   VerticalAlignment="Center"
-                   Text="Modbus Host"/>
-        <TextBox VerticalAlignment="Center"
-                 Text="{Binding Settings.Current.ModbusHost, UpdateSourceTrigger=PropertyChanged}"/>
-    </DockPanel>
+ 
+  
+	   <Grid Margin="16">
+            <!-- Настройка строк: Auto под размер контента, * растягивает свободное место (если нужно) -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/> <!-- Для кнопок -->
+            </Grid.RowDefinitions>
 
-    <!-- Modbus Local Host -->
-    <DockPanel Margin="0,8">
-        <TextBlock DockPanel.Dock="Left"
-                   Width="200"
-                   VerticalAlignment="Center"
-                   Text="Modbus Local Host"/>
-        <TextBox VerticalAlignment="Center"
-                 Text="{Binding Settings.Current.ModbusLocalHost, UpdateSourceTrigger=PropertyChanged}"/>
-    </DockPanel>
+            <!-- Настройка колонок: фиксированная ширина для лейблов, остальное для контролов -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
 
-    <!-- Modbus Port -->
-    <DockPanel Margin="0,8">
-        <TextBlock DockPanel.Dock="Left"
-                   Width="200"
-                   VerticalAlignment="Center"
-                   Text="Modbus Port"/>
-        <!-- Если есть NumericUpDown -->
-        <NumericUpDown VerticalAlignment="Center"
-                       Value="{Binding Settings.Current.ModbusPort}"/>
-    </DockPanel>
+            <!-- Modbus Host -->
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       VerticalAlignment="Center"    
+                       Margin="0,10,0,0"
+                       Text="IP-адрес весов"/>
+            
+           <TextBox Grid.Row="0" Grid.Column="1"
+                     VerticalAlignment="Center"
+                     Margin="0,10,0,0"
+                     Classes="setting-value"                    
+                     Text="{Binding Settings.Current.ModbusHost, UpdateSourceTrigger=PropertyChanged}"
+                     MaxLength="15"/>
 
-    <!-- Modbus Unit ID -->
-    <DockPanel Margin="0,8">
-        <TextBlock DockPanel.Dock="Left"
-                   Width="200"
-                   VerticalAlignment="Center"
-                   Text="Modbus Unit ID"/>
-        <NumericUpDown VerticalAlignment="Center"
-                       Value="{Binding Settings.Current.ModbusUnitId}"
-                       Minimum="0" Maximum="255"/>
-    </DockPanel>
+            <!-- Modbus Local Host -->
+            <TextBlock Grid.Row="1" Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Margin="0,10,0,0"
+                       Text="IP-адрес локальный"/>
+            <TextBox Grid.Row="1" Grid.Column="1"
+                     VerticalAlignment="Center"
+                     Margin="0,10,0,0"
+                     Classes="setting-value"
+                     Text="{Binding Settings.Current.ModbusLocalHost, UpdateSourceTrigger=PropertyChanged}"
+                     MaxLength="15" />
 
-    <!-- Auto Reconnect -->
-    <DockPanel Margin="0,8">
-        <TextBlock DockPanel.Dock="Left"
-                   Width="200"
-                   VerticalAlignment="Center"
-                   Text="Auto Reconnect"/>
-        <CheckBox VerticalAlignment="Center"
-                  IsChecked="{Binding Settings.Current.AutoReconnect}"/>
-    </DockPanel>
+            <!-- Modbus Unit ID -->
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Margin="0,10,0,0"
+                       Text="Modbus ID"/>
+            <NumericUpDown Grid.Row="2" Grid.Column="1"
+                           VerticalAlignment="Center"
+                           Margin="0,10,0,0"
+                           Classes="setting-value"
+                           Value="{Binding Settings.Current.ModbusUnitId}"
+                           Minimum="0" Maximum="255" FormatString="F0"/>
 
-    <!-- Reconnect Delay Seconds -->
-    <DockPanel Margin="0,8">
-        <TextBlock DockPanel.Dock="Left"
-                   Width="200"
-                   VerticalAlignment="Center"
-                   Text="Reconnect Delay (seconds)"/>
-        <NumericUpDown VerticalAlignment="Center"
-                       Value="{Binding Settings.Current.ReconnectDelaySeconds}"
-                       Minimum="1" Maximum="300"
-                       FormatString="F0"/>
-    </DockPanel>
-</StackPanel>
+            <!-- Reconnect Delay Seconds -->
+            <TextBlock Grid.Row="3" Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Margin="0,10,0,0"
+                       Text="Повторное подключение, сек."/>
+            <NumericUpDown Grid.Row="3" Grid.Column="1"
+                           VerticalAlignment="Center"
+                           Margin="0,10,0,0"
+                           Classes="setting-value"
+                           Value="{Binding Settings.Current.ReconnectDelaySeconds}"
+                           Minimum="1" Maximum="300" FormatString="F0"/>
+
+            <!-- Кнопки (занимает всю ширину, выровнены вправо) -->            
+            <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,24,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Сбросить к исходным"
+                        Command="{Binding ResetCommand}"
+                        IsEnabled="{Binding CanSave}"
+                        ToolTip.Tip="Показать актуальные настройки"
+                        Grid.Column="0"/>
+
+                <Button Content="Сохранить настройки"
+                        Command="{Binding SaveCommand}"
+                        IsEnabled="{Binding CanSave}"
+                        ToolTip.Tip="Сохранить изменения"
+                        Grid.Column="1"/>
+            </Grid>
+        </Grid>
+  
+
 </UserControl>

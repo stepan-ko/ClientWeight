@@ -20,23 +20,21 @@ namespace Weight
 
         private string host;
         private IPAddress localIP;
-        private int port;
+        private int port;        
         public ModbusWeightService(string Host, string LocalHost, int slaveId, int Port = 502)
         {
             //_logger = logger;
             _slaveId = (byte)slaveId;
             host = Host;            
             localIP = IPAddress.Parse(LocalHost);
-            port = Port;
+            port = Port;            
         }
 
         // ---------------- IWeightConnectionService ---------------
         public async Task<bool>  ConnectAsync()
         {
             try
-            {
-                Debug.WriteLine("ConnectAsync() host = " + host);
-                
+            {     
                 _tcpClient = new TcpClient(new IPEndPoint(localIP, 0));
                 await _tcpClient.ConnectAsync(host, port);
                 var factory = new ModbusFactory();
@@ -44,14 +42,14 @@ namespace Weight
                 _master.Transport.ReadTimeout = 1000;
                 _master.Transport.WriteTimeout = 1000;
                 _isConnected = true;
-                _logger.Info("Подключение к весам установлено");
+                //_logger.Info("Подключение к весам установлено");
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.Error($"Ошибка подключения: {ex}");
+                _logger.Error($"Ошибка подключения: {ex}");                
+                Debug.WriteLine($"Ошибка подключения: {ex}");
                 _isConnected = false;
-                //await ReConnectAsync();
                 return false;
             }
         }
