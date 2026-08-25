@@ -9,7 +9,7 @@ namespace Weight
 {
     public interface IWeightDataReader
     {
-        Task<StatusData> ReadStatusDataAsync();
+        Task ReadStatusDataAsync(StatusData statusData);
         Task<MiscStatusData> ReadMiscStatusDataAsync();
         Task<OrderData> ReadOrderDataAsync();
         Task<StaticOrderData> ReadStaticOrderDataAsync();

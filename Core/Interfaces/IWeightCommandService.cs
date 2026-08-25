@@ -8,7 +8,7 @@ namespace Weight
 {
     public interface IWeightCommandService
     {
-        Task<bool> StartCommandAsync(int commandNumber);
+        Task StartCommandAsync(int commandNumber);
 
         Task StartNewOrderAsync(NewOrderData newOrderData);
 

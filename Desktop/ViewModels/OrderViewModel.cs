@@ -23,8 +23,9 @@ namespace ClientCW.ViewModels
             ClickTest = new AsyncRelayCommand(TestAsync);
 
             ClickStartOrder = new AsyncRelayCommand(StartOrderAsync);            
-            ClickTareZero = new AsyncRelayCommand(TareZeroAsync);
-            ClickResetRunningTotal = new AsyncRelayCommand(ResetRunningTotalAsync);
+            ClickTareZero = new AsyncRelayCommand(() => SendCommandNumberAsync(15));
+            ClickResetRunningTotal = new AsyncRelayCommand(() => SendCommandNumberAsync(36));
+            ClickResetError = new AsyncRelayCommand(() => SendCommandNumberAsync(2));
         }
 
         private NewOrderData _newOrderData;
@@ -41,6 +42,7 @@ namespace ClientCW.ViewModels
         public AsyncRelayCommand ClickStartOrder { get; }
         public AsyncRelayCommand ClickTareZero { get; }
         public AsyncRelayCommand ClickResetRunningTotal { get; }
+        public AsyncRelayCommand ClickResetError { get; }
         private async Task StartOrderAsync()
         {
             Debug.WriteLine("StartOrderClicked() - старт нового ордера");
@@ -66,51 +68,37 @@ namespace ClientCW.ViewModels
             }
         }
 
-        private async Task TareZeroAsync()
-        {        
+
+        private async Task SendCommandNumberAsync(int commandNumber)
+        {
+             
             if (_mbService == null)
             {
                 Debug.WriteLine("Modbus-сервис не инициализирован");
                 return;
             }
-            try
+            if (!_mbService.IsConnected)
             {
-                await _mbService.StartCommandAsync(15);
-                Debug.WriteLine("Тара обнулена");
-            }
-            catch (OperationCanceledException)
-            {
-                Debug.WriteLine("Обнуление тары - отмена!");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex, "Ошибка при Обнулении тары");               
-            }
-        }
-
-        private async Task ResetRunningTotalAsync()
-        {
-            if (_mbService == null)
-            {
-                Debug.WriteLine("Modbus-сервис не инициализирован");
+                Debug.WriteLine("Весы не подключены!");
                 return;
             }
             try
             {                
-                await _mbService.StartCommandAsync(36);
-                Debug.WriteLine("Текущий итог сброшен");
+                await _mbService.StartCommandAsync(commandNumber);
+                Debug.WriteLine($"Команда {commandNumber} выполнена");
+                
             }
             catch (OperationCanceledException)
             {
-                Debug.WriteLine("Обнуление Текущий итог - отмена!");
+                Debug.WriteLine($"Команда {commandNumber} - отмена!");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex, "Ошибка при Обнуление Текущий итог");
+                Debug.WriteLine(ex, $"Ошибка при команде {commandNumber}");
             }
         }
-
         
+
         // ---------------------- тестовое событие -----------------------
         public AsyncRelayCommand ClickTest { get; }
         private async Task TestAsync()

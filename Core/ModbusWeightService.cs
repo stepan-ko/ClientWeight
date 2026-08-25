@@ -64,42 +64,41 @@ namespace Weight
         public bool IsConnected => _isConnected;
 
         // ------------------ IWeightDataReader --------------------
-        public async Task<StatusData> ReadStatusDataAsync()
+        public async Task ReadStatusDataAsync(StatusData target)
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
 
             var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 49, 31));
             var statusData = new StatusData();
             
-            statusData.ScaleMode = registers[0];
-            statusData.StatusWord1 = registers[1];
-            statusData.StatusWord2 = registers[2];
-            statusData.ScaleAlarmWord1 = registers[3];
-            statusData.ScaleAlarmWord2 = registers[4];
-            statusData.InputWord1 = registers[5];
-            statusData.InputWord2 = registers[6];
-            statusData.OutputWord1 = registers[7];
-            statusData.OutputWord2 = registers[8];
-            statusData.SmartAlarmWord1 = registers[9];
-            statusData.SmartAlarmWord2 = registers[10];
-            statusData.DWIStatus = registers[13];
-            statusData.ScaleWeight = Lib.DcrToInt(registers[14], registers[15]);
-            statusData.ScaleFlowRate = Lib.DcrToInt(registers[16], registers[17]);
-            statusData.ScaleGatePosition = registers[18];
-            statusData.RejectCode = registers[19];
-            statusData.AcceptedCode = registers[20];
-            statusData.CommunicationResult = registers[21];
-            statusData.EventIdMask = (uint)registers[22] << 16 | registers[23];
-            statusData.MastersCount = Lib.GetLowByte(registers[24]);
-            statusData.ObservCount = Lib.GetHiByte(registers[24]);
-            statusData.CounterLive = registers[25];
-            statusData.TimeOur = registers[26];
-            statusData.TimeMin = registers[27];
-            statusData.TimeSec = registers[28];
-            statusData.TimeMSec = registers[29];
-            statusData.ClientInfo = registers[30];
-            //Debug.WriteLine("statusData.ScaleWeight = " + statusData.ScaleWeight);
-            return statusData;
+            target.ScaleMode = registers[0];
+            target.StatusWord1 = registers[1];
+            target.StatusWord2 = registers[2];
+            target.ScaleAlarmWord1 = registers[3];
+            target.ScaleAlarmWord2 = registers[4];
+            target.InputWord1 = registers[5];
+            target.InputWord2 = registers[6];
+            target.OutputWord1 = registers[7];
+            target.OutputWord2 = registers[8];
+            target.SmartAlarmWord1 = registers[9];
+            target.SmartAlarmWord2 = registers[10];
+            target.DWIStatus = registers[13];
+            target.ScaleWeight = Lib.DcrToInt(registers[14], registers[15]);
+            target.ScaleFlowRate = Lib.DcrToInt(registers[16], registers[17]);
+            target.ScaleGatePosition = registers[18];
+            target.RejectCode = registers[19];
+            target.AcceptedCode = registers[20];
+            target.CommunicationResult = registers[21];
+            target.EventIdMask = (uint)registers[22] << 16 | registers[23];
+            target.MastersCount = Lib.GetLowByte(registers[24]);
+            target.ObservCount = Lib.GetHiByte(registers[24]);
+            target.CounterLive = registers[25];
+            target.TimeOur = registers[26];
+            target.TimeMin = registers[27];
+            target.TimeSec = registers[28];
+            target.TimeMSec = registers[29];
+            target.ClientInfo = registers[30];            
+            //return statusData;
         }
 
         public async Task<MiscStatusData> ReadMiscStatusDataAsync()
@@ -251,7 +250,7 @@ namespace Weight
 
 
         // -------------------- IWeightCommandService --------------------------
-        public async Task<bool> StartCommandAsync(int numCommand)
+        public async Task StartCommandAsync(int numCommand)
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
 
@@ -261,12 +260,15 @@ namespace Weight
             wr[0] = CommandCode[numCommand];
 
             // Все команды по умолчанию
-            await Task.Run(() => _master.WriteMultipleRegistersAsync(_slaveId, 1000, wr));            
-            return true;
+            Debug.WriteLine($"numCommand = {numCommand}, wr[0] = {wr[0]}");
+
+            await _master.WriteMultipleRegistersAsync(_slaveId, 1000, wr);            
+          
         }
 
 
-        
+
+
         public async Task StartNewOrderAsync(NewOrderData newOrder)
         {
             ushort[] wr = newOrder.GetRegisters();           

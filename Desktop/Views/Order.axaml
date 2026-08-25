@@ -120,16 +120,17 @@
 						MinWidth="150"
 						Command="{Binding ClickResetRunningTotal}"/>
 
+				<!-- КНОПКА - ТЕСТ -->
 				<Button Background="#f0f0f0"
 						HorizontalContentAlignment="Center"
 						Padding="15"
 						FontSize="16"
 						Margin="0 10 10 0"
-						Content="Тест"
+						Content="Тест "
 						Grid.Row="0"
 						Grid.Column="1"
 						MinWidth="150"
-						Command="{Binding ClickTest}"/>
+						Command="{Binding ClickResetError}"/>
 
 				<!-- КНОПКА - Тара -->
 				<Button Background="#f0f0f0"

@@ -175,7 +175,7 @@ namespace ClientCW.ViewModels
                     if (_mbService == null) break;
 
                     // 1. Читаем данные
-                    statusData = await _mbService.ReadStatusDataAsync();
+                    await _mbService.ReadStatusDataAsync(statusData);
                     miscStatusData = await _mbService.ReadMiscStatusDataAsync();
                     
                     uint EventIdCurrent = statusData.EventIdMask;

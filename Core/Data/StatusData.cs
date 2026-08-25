@@ -25,6 +25,8 @@ namespace Weight
         private int _TimeMSec;
         private ushort _AcceptedCode;
         private ushort _RejectCode;
+        private string _AcceptedCodeText;
+        private string _RejectCodeText;
 
         private int _CommunicationResult;
         private uint _EventIdMask;
@@ -201,6 +203,7 @@ namespace Weight
             strTime += GetStrFromInt(TimeMin, 59) + ":";
             strTime += GetStrFromInt(TimeSec, 59);
 
+            Debug.WriteLine(strTime);
             this.TimeString = strTime;
         }
 
@@ -265,7 +268,7 @@ namespace Weight
         /// </summary>  
         private void UpdateAlarms1()
         {
-            Debug.WriteLine("ScaleAlarmWord1 = " + ScaleAlarmWord1);
+            //Debug.WriteLine("ScaleAlarmWord1 = " + ScaleAlarmWord1);
 
             AlarmReportsPrinterErr = Lib.GetBitWord(ScaleAlarmWord1, 15);
             AlarmGateNotInPosition = Lib.GetBitWord(ScaleAlarmWord1, 14);
@@ -334,31 +337,31 @@ namespace Weight
             if (AlarmRemotePrinterErr) strAlarm += $"{num++}. Ошибка удаленного принтера\r\n";
 
 
-            Debug.WriteLine(" AlarmSmartTechAlarm = " + AlarmSmartTechAlarm);
-            Debug.WriteLine(" AlarmReportsPrinterErr = " + AlarmReportsPrinterErr);
-            Debug.WriteLine(" AlarmGateNotInPosition = " + AlarmGateNotInPosition);
-            Debug.WriteLine(" AlarmDWIOffline = " + AlarmDWIOffline);
-            Debug.WriteLine(" AlarmGateNotCalibrated = " + AlarmGateNotCalibrated);
-            Debug.WriteLine(" AlarmRemoteLinkShutdown = " + AlarmRemoteLinkShutdown);
-            Debug.WriteLine(" AlarmCommunicationError = " + AlarmCommunicationError);
-            Debug.WriteLine(" AlarmRemoteLinkOffline = " + AlarmRemoteLinkOffline);
-            Debug.WriteLine(" AlarmDataErrBadConfigCRC = " + AlarmDataErrBadConfigCRC);
-            Debug.WriteLine(" AlarmAuditPrinterErr = " + AlarmAuditPrinterErr);
-            Debug.WriteLine(" AlarmUnderzero = " + AlarmUnderzero);
-            Debug.WriteLine(" AlarmOvercapacity = " + AlarmOvercapacity);
-            Debug.WriteLine(" AlarmInterlockAlarm = " + AlarmInterlockAlarm);
-            Debug.WriteLine(" AlarmLGFullAlarm = " + AlarmLGFullAlarm);
-            Debug.WriteLine(" AlarmUGFullAlarm = " + AlarmUGFullAlarm);
-            Debug.WriteLine(" AlarmWHFullAlarm = " + AlarmWHFullAlarm);
-            Debug.WriteLine(" AlarmLGNotEmpty = " + AlarmLGNotEmpty);
-            Debug.WriteLine(" AlarmDWIJumperErr = " + AlarmDWIJumperErr);
-            Debug.WriteLine(" AlarmDWIDataErr = " + AlarmDWIDataErr);
-            Debug.WriteLine(" AlarmRemotePrinterErr = " + AlarmRemotePrinterErr);
-            Debug.WriteLine("");
+            //Debug.WriteLine(" AlarmSmartTechAlarm = " + AlarmSmartTechAlarm);
+            //Debug.WriteLine(" AlarmReportsPrinterErr = " + AlarmReportsPrinterErr);
+            //Debug.WriteLine(" AlarmGateNotInPosition = " + AlarmGateNotInPosition);
+            //Debug.WriteLine(" AlarmDWIOffline = " + AlarmDWIOffline);
+            //Debug.WriteLine(" AlarmGateNotCalibrated = " + AlarmGateNotCalibrated);
+            //Debug.WriteLine(" AlarmRemoteLinkShutdown = " + AlarmRemoteLinkShutdown);
+            //Debug.WriteLine(" AlarmCommunicationError = " + AlarmCommunicationError);
+            //Debug.WriteLine(" AlarmRemoteLinkOffline = " + AlarmRemoteLinkOffline);
+            //Debug.WriteLine(" AlarmDataErrBadConfigCRC = " + AlarmDataErrBadConfigCRC);
+            //Debug.WriteLine(" AlarmAuditPrinterErr = " + AlarmAuditPrinterErr);
+            //Debug.WriteLine(" AlarmUnderzero = " + AlarmUnderzero);
+            //Debug.WriteLine(" AlarmOvercapacity = " + AlarmOvercapacity);
+            //Debug.WriteLine(" AlarmInterlockAlarm = " + AlarmInterlockAlarm);
+            //Debug.WriteLine(" AlarmLGFullAlarm = " + AlarmLGFullAlarm);
+            //Debug.WriteLine(" AlarmUGFullAlarm = " + AlarmUGFullAlarm);
+            //Debug.WriteLine(" AlarmWHFullAlarm = " + AlarmWHFullAlarm);
+            //Debug.WriteLine(" AlarmLGNotEmpty = " + AlarmLGNotEmpty);
+            //Debug.WriteLine(" AlarmDWIJumperErr = " + AlarmDWIJumperErr);
+            //Debug.WriteLine(" AlarmDWIDataErr = " + AlarmDWIDataErr);
+            //Debug.WriteLine(" AlarmRemotePrinterErr = " + AlarmRemotePrinterErr);
+            //Debug.WriteLine("");
 
             this.AlarmList = strAlarm;
 
-            Debug.WriteLine("AlarmList=" + AlarmList);
+            //Debug.WriteLine("AlarmList=" + AlarmList);
         }
 
         /// <summary>
@@ -476,14 +479,37 @@ namespace Weight
         {
             get => _TimeSec;
             set
-            {
-                if (_TimeSec != value) UpdateTimeString();
-                this.SetProperty(ref _TimeSec, value);
+            {               
+                if (this.SetProperty(ref _TimeSec, value)) UpdateTimeString(); ;
             }
         }
         public int TimeMSec { get => _TimeMSec; set => this.SetProperty(ref _TimeMSec, value); }
-        public ushort AcceptedCode { get => _AcceptedCode; set => this.SetProperty(ref _AcceptedCode, value); }
-        public ushort RejectCode { get => _RejectCode; set => this.SetProperty(ref _RejectCode, value); }
+
+        public string AcceptedCodeText { get => _AcceptedCodeText; set => this.SetProperty(ref _AcceptedCodeText, value); }
+        public string RejectCodeText { get => _RejectCodeText; set => this.SetProperty(ref _RejectCodeText, value); }
+
+        public ushort AcceptedCode { 
+            get => _AcceptedCode; 
+            set 
+            {
+                if (SetProperty(ref _AcceptedCode, value))
+                {
+                    AcceptedCodeText = Convert.ToString(value, 16).ToUpper();
+                }
+             }
+        }
+
+        public ushort RejectCode
+        {
+            get => _RejectCode;
+            set
+            {
+                if (SetProperty(ref _RejectCode, value))
+                {
+                    RejectCodeText = Convert.ToString(value, 16).ToUpper();
+                }
+            }
+        }
         public int CommunicationResult { get => _CommunicationResult; set => this.SetProperty(ref _CommunicationResult, value); }
         public uint EventIdMask { get => _EventIdMask; set => this.SetProperty(ref _EventIdMask, value); }
         public int MastersCount { get => _MastersCount; set => this.SetProperty(ref _MastersCount, value); }
