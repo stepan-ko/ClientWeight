@@ -68,8 +68,7 @@ namespace Weight
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
 
-            var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 49, 31));
-            var statusData = new StatusData();
+            var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 49, 31));           
             
             target.ScaleMode = registers[0];
             target.StatusWord1 = registers[1];
@@ -97,154 +96,143 @@ namespace Weight
             target.TimeMin = registers[27];
             target.TimeSec = registers[28];
             target.TimeMSec = registers[29];
-            target.ClientInfo = registers[30];            
-            //return statusData;
+            target.ClientInfo = registers[30]; 
         }
 
-        public async Task<MiscStatusData> ReadMiscStatusDataAsync()
+        public async Task ReadMiscStatusDataAsync(MiscStatusData target)
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
-            var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 399, 30));
-            MiscStatusData miscData = new MiscStatusData();
+            var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 399, 30));           
 
-            miscData.mBuildupTestWeight = Lib.DcrToInt(registers[0], registers[1]);
-            miscData.mRunningTotalWeight = Lib.DcrToInt(registers[2], registers[3]);
-            miscData.mTotalDraftCounter = registers[4];
-            miscData.mGateSetpoint = registers[5];
-            miscData.mSelShippWord = registers[6];
-            miscData.mHWWord1 = registers[8]; // уточнить какой регистр
-            miscData.mStatisticsLoggingStatus = registers[9];
-            miscData.mOrderPreCutoff = (uint)registers[10] << 16 | registers[11];
-            miscData.mLGGateState = registers[12];
-            miscData.mHourlyTotal = Lib.DcrToInt(registers[13], registers[14]);
-            miscData.mDailyTotal = Lib.DcrToInt(registers[15], registers[16]);
-            miscData.mHourlyTotalHour = registers[17];
-            miscData.mHourlyTotalMin = registers[18];
-            miscData.mHourlyTotalSec = registers[19];
-            miscData.mHourlyTotalDay = registers[20];
-            miscData.mHourlyTotalMonth = registers[21];
-            miscData.mHourlyTotalYear = registers[22];
-            miscData.mDailyTotalHour = registers[23];
-            miscData.mDailyTotalMin = registers[24];
-            miscData.mDailyTotalSec = registers[25];
-            miscData.mDailyTotalDay = registers[26];
-            miscData.mDailyTotalMonth = registers[27];
-            miscData.mDailyTotalYear = registers[28];
+            target.mBuildupTestWeight = Lib.DcrToInt(registers[0], registers[1]);
+            target.mRunningTotalWeight = Lib.DcrToInt(registers[2], registers[3]);
+            target.mTotalDraftCounter = registers[4];
+            target.mGateSetpoint = registers[5];
+            target.mSelShippWord = registers[6];
+            target.mHWWord1 = registers[8]; // уточнить какой регистр
+            target.mStatisticsLoggingStatus = registers[9];
+            target.mOrderPreCutoff = (uint)registers[10] << 16 | registers[11];
+            target.mLGGateState = registers[12];
+            target.mHourlyTotal = Lib.DcrToInt(registers[13], registers[14]);
+            target.mDailyTotal = Lib.DcrToInt(registers[15], registers[16]);
+            target.mHourlyTotalHour = registers[17];
+            target.mHourlyTotalMin = registers[18];
+            target.mHourlyTotalSec = registers[19];
+            target.mHourlyTotalDay = registers[20];
+            target.mHourlyTotalMonth = registers[21];
+            target.mHourlyTotalYear = registers[22];
+            target.mDailyTotalHour = registers[23];
+            target.mDailyTotalMin = registers[24];
+            target.mDailyTotalSec = registers[25];
+            target.mDailyTotalDay = registers[26];
+            target.mDailyTotalMonth = registers[27];
+            target.mDailyTotalYear = registers[28];
 
-            return miscData;
         }
 
 
-        public async Task<OrderData> ReadOrderDataAsync()
+        public async Task ReadOrderDataAsync(OrderData target)
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
             var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 99, 72));
-            OrderData orderData = new OrderData();
-            orderData.DraftGrossWeight = Lib.DcrToInt(registers[0], registers[1]);
-            orderData.DraftGrossWeightHour = registers[2];
-            orderData.DraftGrossWeightMin = registers[3];
-            orderData.DraftGrossWeightSec = registers[4];
-            orderData.DraftGrossWeightDay = registers[5];
-            orderData.DraftGrossWeightMonth = registers[6];
-            orderData.DraftGrossWeightYear = registers[7];
-            orderData.DraftTareWeight = Lib.DcrToInt(registers[8], registers[9]);
-            orderData.DraftTareWeightHour = registers[10];
-            orderData.DraftTareWeightMin = registers[11];
-            orderData.DraftTareWeightSec = registers[12];
-            orderData.DraftTareWeightDay = registers[13];
-            orderData.DraftTareWeightMonth = registers[14];
-            orderData.DraftTareWeightYear = registers[15];
-            orderData.DraftNetWeight = Lib.DcrToInt(registers[16], registers[17]);
-            orderData.FlowRate = Lib.DcrToInt(registers[18], registers[19]);
-            orderData.OrderBalance = Lib.DcrToInt(registers[22], registers[23]);
-            orderData.TotalWeight = Lib.DcrToInt(registers[24], registers[25]);
-            orderData.OrderDraftSize = Lib.DcrToInt(registers[26], registers[27]);
-            orderData.SubtotalWeight = Lib.DcrToInt(registers[28], registers[29]);
-            orderData.CurrentDruftCount = registers[30];
-            orderData.PlannedNumberDruftCount = registers[31];
-            orderData.DraftTargetWeight = Lib.DcrToInt(registers[32], registers[33]);
-            orderData.OrderStartHour = registers[34];
-            orderData.OrderStartMin = registers[35];
-            orderData.OrderStartSec = registers[36];
-            orderData.OrderStartDay = registers[37];
-            orderData.OrderStartMonth = registers[38];
-            orderData.OrderStartYear = registers[39];
-            orderData.OrderFinishHour = registers[40];
-            orderData.OrderFinishMin = registers[41];
-            orderData.OrderFinishSec = registers[42];
-            orderData.OrderFinishDay = registers[43];
-            orderData.OrderFinishMonth = registers[44];
-            orderData.OrderFinishYear = registers[45];
-            orderData.ExtraWeight = (uint)registers[70] << 16 | registers[71];
-
-            return orderData;
+            
+            target.DraftGrossWeight = Lib.DcrToInt(registers[0], registers[1]);
+            target.DraftGrossWeightHour = registers[2];
+            target.DraftGrossWeightMin = registers[3];
+            target.DraftGrossWeightSec = registers[4];
+            target.DraftGrossWeightDay = registers[5];
+            target.DraftGrossWeightMonth = registers[6];
+            target.DraftGrossWeightYear = registers[7];
+            target.DraftTareWeight = Lib.DcrToInt(registers[8], registers[9]);
+            target.DraftTareWeightHour = registers[10];
+            target.DraftTareWeightMin = registers[11];
+            target.DraftTareWeightSec = registers[12];
+            target.DraftTareWeightDay = registers[13];
+            target.DraftTareWeightMonth = registers[14];
+            target.DraftTareWeightYear = registers[15];
+            target.DraftNetWeight = Lib.DcrToInt(registers[16], registers[17]);
+            target.FlowRate = Lib.DcrToInt(registers[18], registers[19]);
+            target.OrderBalance = Lib.DcrToInt(registers[22], registers[23]);
+            target.TotalWeight = Lib.DcrToInt(registers[24], registers[25]);
+            target.OrderDraftSize = Lib.DcrToInt(registers[26], registers[27]);
+            target.SubtotalWeight = Lib.DcrToInt(registers[28], registers[29]);
+            target.CurrentDruftCount = registers[30];
+            target.PlannedNumberDruftCount = registers[31];
+            target.DraftTargetWeight = Lib.DcrToInt(registers[32], registers[33]);
+            target.OrderStartHour = registers[34];
+            target.OrderStartMin = registers[35];
+            target.OrderStartSec = registers[36];
+            target.OrderStartDay = registers[37];
+            target.OrderStartMonth = registers[38];
+            target.OrderStartYear = registers[39];
+            target.OrderFinishHour = registers[40];
+            target.OrderFinishMin = registers[41];
+            target.OrderFinishSec = registers[42];
+            target.OrderFinishDay = registers[43];
+            target.OrderFinishMonth = registers[44];
+            target.OrderFinishYear = registers[45];
+            target.ExtraWeight = (uint)registers[70] << 16 | registers[71];
         }
 
-        public async Task<StaticOrderData> ReadStaticOrderDataAsync()
+        public async Task ReadStaticOrderDataAsync(StaticOrderData target)
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
             var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 199, 66));
-            StaticOrderData orderDataStatic = new StaticOrderData();
             
-            orderDataStatic.sOrderTypeInformation = registers[0];
-            orderDataStatic.sOrderWeight = Lib.DcrToInt(registers[1], registers[2]);
-            orderDataStatic.sDefaultDraftSize = Lib.DcrToInt(registers[3], registers[4]);
-            orderDataStatic.sOrderID = Lib.RegToString(registers, 5, 10);
-            orderDataStatic.sTicketNumber = (uint)registers[10] << 16 | registers[11];
-            orderDataStatic.sVesselID = Lib.RegToString(registers, 12, 12);
-            orderDataStatic.sBinID = Lib.RegToString(registers, 18, 10);
-            orderDataStatic.sProductID = Lib.RegToString(registers, 23, 8);
-            orderDataStatic.sProductName = Lib.RegToString(registers, 27, 26);
-            orderDataStatic.sProductDensity = registers[40];
-            orderDataStatic.sCustomerName = Lib.RegToString(registers, 41, 30);
-            orderDataStatic.sUnitTrainNumber = Lib.RegToString(registers, 56, 20);
+            target.sOrderTypeInformation = registers[0];
+            target.sOrderWeight = Lib.DcrToInt(registers[1], registers[2]);
+            target.sDefaultDraftSize = Lib.DcrToInt(registers[3], registers[4]);
+            target.sOrderID = Lib.RegToString(registers, 5, 10);
+            target.sTicketNumber = (uint)registers[10] << 16 | registers[11];
+            target.sVesselID = Lib.RegToString(registers, 12, 12);
+            target.sBinID = Lib.RegToString(registers, 18, 10);
+            target.sProductID = Lib.RegToString(registers, 23, 8);
+            target.sProductName = Lib.RegToString(registers, 27, 26);
+            target.sProductDensity = registers[40];
+            target.sCustomerName = Lib.RegToString(registers, 41, 30);
+            target.sUnitTrainNumber = Lib.RegToString(registers, 56, 20);
 
             ushort[] reg = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 265, 74));
-            orderDataStatic.sNotes = Lib.RegToString(reg, 0, 120);
-            orderDataStatic.sLotSize = Lib.DcrToInt(reg[70], reg[71]);
-            orderDataStatic.sGlobalTicketCounter = (uint)reg[72] << 16 | reg[73];
+            target.sNotes = Lib.RegToString(reg, 0, 120);
+            target.sLotSize = Lib.DcrToInt(reg[70], reg[71]);
+            target.sGlobalTicketCounter = (uint)reg[72] << 16 | reg[73];
 
-            return orderDataStatic;
         }
 
-        public async Task<ConfigData> ReadConfigDataAsync()
+        public async Task ReadConfigDataAsync(ConfigData target)
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
-
             var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 499, 110));
-            ConfigData configData = new ConfigData();
-           
-            // if ((statusData.EventIdMask & 0x20000) == 0x20000 || firstConn)
-            configData.ScaleName = Lib.RegToString(registers, 0, 20);
-            configData.ScaleCapacityInDecimal = Lib.DcrToInt(registers[10], registers[11]);
-            configData.DivisionSizeInDecimal = registers[12];
-            configData.Decimals = registers[13];
-            configData.WeightUnits = registers[14];
-            configData.DefaultDraftSize = Lib.DcrToInt(registers[15], registers[16]);
-            configData.MaxAddtoDraftSize = Lib.DcrToInt(registers[17], registers[18]);
-            configData.TareResetRange = Lib.DcrToInt(registers[19], registers[20]);
-            configData.WHEmptyOffset = Lib.DcrToInt(registers[21], registers[21]);
-            configData.GateControlType = registers[23];
-            configData.GatePulseTime = registers[24];
-            configData.GateDeadBand = registers[25];
-            configData.GateJoggingDeadBand = registers[26];
-            configData.LGCleanoutTime = registers[27];
-            configData.LGGateType = registers[28];
-            configData.MiscSingleBitData1 = registers[29];
-            configData.MiscSingleBitData2 = registers[30];
-            configData.DraftCountRollover = registers[31];
-            configData.DraftsPerSubtotal = registers[32];
-            configData.FillMotionDelayTime = registers[33];
-            configData.DumpMotionDelayTime = registers[34];
-            configData.AllowedTransactionTypes = registers[35];
-            configData.AuditPrinterPaperSize = registers[36];
-            configData.RemotePrinterPaperSize = registers[37];
-            configData.ReportPrinterPaperSize = registers[38];
-            configData.HeaderLine1 = Lib.RegToString(registers, 39, 40);
-            configData.HeaderLine2 = Lib.RegToString(registers, 59, 40);
-            configData.SignatureLine1 = Lib.RegToString(registers, 79, 30);
-            configData.SignatureLine2 = Lib.RegToString(registers, 94, 30);
-            return configData;
+            
+            target.ScaleName = Lib.RegToString(registers, 0, 20);
+            target.ScaleCapacityInDecimal = Lib.DcrToInt(registers[10], registers[11]);
+            target.DivisionSizeInDecimal = registers[12];
+            target.Decimals = registers[13];
+            target.WeightUnits = registers[14];
+            target.DefaultDraftSize = Lib.DcrToInt(registers[15], registers[16]);
+            target.MaxAddtoDraftSize = Lib.DcrToInt(registers[17], registers[18]);
+            target.TareResetRange = Lib.DcrToInt(registers[19], registers[20]);
+            target.WHEmptyOffset = Lib.DcrToInt(registers[21], registers[21]);
+            target.GateControlType = registers[23];
+            target.GatePulseTime = registers[24];
+            target.GateDeadBand = registers[25];
+            target.GateJoggingDeadBand = registers[26];
+            target.LGCleanoutTime = registers[27];
+            target.LGGateType = registers[28];
+            target.MiscSingleBitData1 = registers[29];
+            target.MiscSingleBitData2 = registers[30];
+            target.DraftCountRollover = registers[31];
+            target.DraftsPerSubtotal = registers[32];
+            target.FillMotionDelayTime = registers[33];
+            target.DumpMotionDelayTime = registers[34];
+            target.AllowedTransactionTypes = registers[35];
+            target.AuditPrinterPaperSize = registers[36];
+            target.RemotePrinterPaperSize = registers[37];
+            target.ReportPrinterPaperSize = registers[38];
+            target.HeaderLine1 = Lib.RegToString(registers, 39, 40);
+            target.HeaderLine2 = Lib.RegToString(registers, 59, 40);
+            target.SignatureLine1 = Lib.RegToString(registers, 79, 30);
+            target.SignatureLine2 = Lib.RegToString(registers, 94, 30);            
         }
 
 

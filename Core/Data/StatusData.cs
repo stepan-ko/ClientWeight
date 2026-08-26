@@ -25,8 +25,8 @@ namespace Weight
         private int _TimeMSec;
         private ushort _AcceptedCode;
         private ushort _RejectCode;
-        private string _AcceptedCodeText;
-        private string _RejectCodeText;
+        private string? _AcceptedCodeText;
+        private string? _RejectCodeText;
 
         private int _CommunicationResult;
         private uint _EventIdMask;
@@ -60,12 +60,12 @@ namespace Weight
         private int _StatusMode;
         private int _StatusCurrentKeySet;
 
-        // -------------------------------  Аварии --------------------------
-        private ushort _ScaleAlarmWord1_last;
-        private ushort _ScaleAlarmWord2_last;
-
+        // -------------------------------  Аварии --------------------------        
         private ushort _ScaleAlarmWord1;
         private ushort _ScaleAlarmWord2;
+
+        [ObservableProperty]
+        private ushort _SmartAlarm1;
 
         private bool _AlarmReportsPrinterErr;
         private bool _AlarmGateNotInPosition;
@@ -201,9 +201,7 @@ namespace Weight
 
             strTime += GetStrFromInt(TimeOur, 23) + ":";
             strTime += GetStrFromInt(TimeMin, 59) + ":";
-            strTime += GetStrFromInt(TimeSec, 59);
-
-            Debug.WriteLine(strTime);
+            strTime += GetStrFromInt(TimeSec, 59);            
             this.TimeString = strTime;
         }
 
@@ -522,8 +520,7 @@ namespace Weight
             get => _StatusWord1;
             set
             {
-                if (_StatusWord1 != value) UpdateStatus1();
-                this.SetProperty(ref _StatusWord1, value);
+                if (SetProperty(ref _StatusWord1, value)) UpdateStatus1();               
             }
         }
         public ushort StatusWord2
@@ -531,8 +528,7 @@ namespace Weight
             get => _StatusWord2;
             set
             {
-                if (_StatusWord2 != value) UpdateStatus2();
-                this.SetProperty(ref _StatusWord2, value);
+                if (SetProperty(ref _StatusWord2, value)) UpdateStatus2();               
             }
         }
 
@@ -578,28 +574,16 @@ namespace Weight
         {
             get => _SmartAlarmWord1;
             set
-            {
-                this.SetProperty(ref _SmartAlarmWord1, value);
-
-                if (_ScaleAlarmWord1_last != value)
-                {
-                    UpdateAlarmList();
-                    _ScaleAlarmWord1_last = value;
-                }
+            {               
+                if (SetProperty(ref _SmartAlarmWord1, value)) UpdateAlarmList();
             }
         }
         public ushort SmartAlarmWord2
         {
             get => _SmartAlarmWord2;
             set
-            {
-                this.SetProperty(ref _SmartAlarmWord2, value);
-
-                if (_ScaleAlarmWord2_last != value)
-                {
-                    UpdateAlarmList();
-                    _ScaleAlarmWord2_last = value;
-                }
+            {               
+                if (SetProperty(ref _SmartAlarmWord2, value)) UpdateAlarmList();                
             }
         }
 
@@ -609,11 +593,7 @@ namespace Weight
             get => _ScaleAlarmWord1;
             set
             {
-                if (_ScaleAlarmWord1 != value)
-                {
-                    this.SetProperty(ref _ScaleAlarmWord1, value);
-                    UpdateAlarms1();
-                }
+                if (SetProperty(ref _ScaleAlarmWord1, value)) UpdateAlarms1();
             }
         }
         public ushort ScaleAlarmWord2
@@ -621,11 +601,7 @@ namespace Weight
             get => _ScaleAlarmWord2;
             set
             {
-                if (_ScaleAlarmWord2 != value)
-                {
-                    this.SetProperty(ref _ScaleAlarmWord2, value);
-                    UpdateAlarms2();
-                }
+                if (SetProperty(ref _ScaleAlarmWord2, value)) UpdateAlarms2();                
             }
         }
 
@@ -637,8 +613,7 @@ namespace Weight
             get => _InputWord1;
             set
             {
-                if (_InputWord1 != value) UpdateInput1();
-                this.SetProperty(ref _InputWord1, value);
+                if (SetProperty(ref _InputWord1, value)) UpdateInput1();              
             }
         }
         public ushort InputWord2
@@ -646,8 +621,7 @@ namespace Weight
             get => _InputWord2;
             set
             {
-                if (_InputWord2 != value) UpdateInput2();
-                this.SetProperty(ref _InputWord2, value);
+                if (SetProperty(ref _InputWord2, value)) UpdateInput2();               
             }
         }
         public ushort OutputWord1
@@ -655,8 +629,7 @@ namespace Weight
             get => _OutputWord1;
             set
             {
-                if (_OutputWord1 != value) UpdateOutput1();
-                this.SetProperty(ref _OutputWord1, value);
+                if (SetProperty(ref _OutputWord1, value)) UpdateOutput1();               
             }
         }
         public ushort OutputWord2
@@ -664,8 +637,7 @@ namespace Weight
             get => _OutputWord2;
             set
             {
-                if (_OutputWord2 != value) UpdateOutput2();
-                this.SetProperty(ref _OutputWord2, value);
+                if (SetProperty(ref _OutputWord2, value)) UpdateOutput2();               
             }
         }
         public bool InputLGClosedLS { get => _InputLGClosedLS; set => this.SetProperty(ref _InputLGClosedLS, value); }
@@ -680,12 +652,10 @@ namespace Weight
             get => _InputUGFullSensor;
             set
             {
-                if (_InputUGFullSensor != value)
+                if (SetProperty(ref _InputUGFullSensor, value))
                 {
                     ColorUGFullSensor = value ? Lib.MyColor.Green : Lib.MyColor.Red;
-
-                }
-                this.SetProperty(ref _InputUGFullSensor, value);
+                }                
             }
         }
         public bool InputUGClosedLS { get => _InputUGClosedLS; set => this.SetProperty(ref _InputUGClosedLS, value); }

@@ -176,7 +176,7 @@ namespace ClientCW.ViewModels
 
                     // 1. Читаем данные
                     await _mbService.ReadStatusDataAsync(statusData);
-                    miscStatusData = await _mbService.ReadMiscStatusDataAsync();
+                    await _mbService.ReadMiscStatusDataAsync(miscStatusData);
                     
                     uint EventIdCurrent = statusData.EventIdMask;
 
@@ -288,25 +288,25 @@ namespace ClientCW.ViewModels
                 if (needReadStaticOrder)
                 {
                     Debug.WriteLine("Сработал флаг Static Order Changed. Чтение StaticOrderData...");
-                    staticOrderData = await _mbService.ReadStaticOrderDataAsync();
+                    await _mbService.ReadStaticOrderDataAsync(staticOrderData);
                 }
 
                 if (needReadConfig)
                 {
                     Debug.WriteLine("Сработал флаг Config Changed. Чтение ConfigData...");
-                    configData = await _mbService.ReadConfigDataAsync();
+                    await _mbService.ReadConfigDataAsync(configData);
                 }
 
                 if (needReadMiscStatusData)
                 {
                     Debug.WriteLine("Сработал флаг needReadConfig....");
-                    miscStatusData = await _mbService.ReadMiscStatusDataAsync();
+                     await _mbService.ReadMiscStatusDataAsync(miscStatusData);
                 }
 
                 if (eventOrderStarted)
                 {
                     Debug.WriteLine("Нужно прочитать статические данные Ордера : OrderStarted");
-                    staticOrderData = await _mbService.ReadStaticOrderDataAsync();
+                     await _mbService.ReadStaticOrderDataAsync(staticOrderData);
                 }
             }
             
@@ -348,8 +348,8 @@ namespace ClientCW.ViewModels
                 try
                 {
                     if (_mbService == null) break;
-                    orderData = await _mbService.ReadOrderDataAsync();
-                    miscStatusData = await _mbService.ReadMiscStatusDataAsync();
+                    await _mbService.ReadOrderDataAsync(orderData);
+                    await _mbService.ReadMiscStatusDataAsync(miscStatusData);
                 }
                 catch (Exception ex)
                 {
