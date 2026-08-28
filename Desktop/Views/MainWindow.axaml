@@ -16,18 +16,26 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<StackPanel Margin="10">					
-		<TabControl Margin="5">
-			<TabItem Header="Главная" HorizontalAlignment="Center">
-				<UserControl:MainTab DataContext="{Binding MainTabVM}" Margin="0 10"/>
-			</TabItem>
-			<TabItem Header="Настройки">
-				<UserControl:Settings DataContext="{Binding SettingsVM}" Margin="0 10"/>	
-			</TabItem>
-			
-		</TabControl>
+	<Grid>
+		<Grid.RenderTransform>
+			<ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+		</Grid.RenderTransform>
 
-		
-	</StackPanel>
+		<StackPanel Margin="10">
+			<TabControl Margin="5">
+				<TabItem Header="Главная" HorizontalAlignment="Center">
+					<UserControl:MainTab DataContext="{Binding MainTabVM}" Margin="0 10"/>
+				</TabItem>
+				<TabItem Header="Настройки">
+					<UserControl:Settings DataContext="{Binding SettingsVM}" Margin="0 10"/>
+				</TabItem>
+
+			</TabControl>
+
+
+		</StackPanel>
+	</Grid>
+	
+	
 	
 </Window>

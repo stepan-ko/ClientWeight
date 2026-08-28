@@ -66,11 +66,12 @@
 					</Canvas>
 					<!-- *****************************************************  -->
 
-					<TextBlock Margin="0 5"
-							   Padding="20 0"
+					<TextBlock Margin="0 10"
+							   Padding="0 5"
 							   Height="50"
 							   TextAlignment ="Center"
-							   TextWrapping="Wrap">Статус весов. Еще данные , многотекста и еще амвамав мавмав ам ва мав текст
+							   TextWrapping="Wrap">
+						Статус весов
 					</TextBlock>
 
 				</StackPanel>
@@ -365,7 +366,7 @@
 						HorizontalAlignment="Center"
 						Foreground="Wheat"
 						Background="Red"
-						IsVisible="true">
+						IsVisible="False">
 					Ошибка Smart
 				</Button>
 
