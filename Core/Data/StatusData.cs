@@ -10,7 +10,7 @@ using static Weight.Lib;
 
 namespace Weight
 {
-    public class StatusData : ObservableObject
+    public partial class StatusData : ObservableObject
     {
         private int _ScaleMode;
         private int _ScaleWeight;
@@ -64,9 +64,6 @@ namespace Weight
         private ushort _ScaleAlarmWord1;
         private ushort _ScaleAlarmWord2;
 
-        [ObservableProperty]
-        private ushort _SmartAlarm1;
-
         private bool _AlarmReportsPrinterErr;
         private bool _AlarmGateNotInPosition;
         private bool _AlarmSmartTechAlarm;
@@ -87,14 +84,14 @@ namespace Weight
         private bool _AlarmDWIJumperErr;
         private bool _AlarmDWIDataErr;
         private bool _AlarmRemotePrinterErr;
+      
 
         /// <summary>
         /// Текстовый список аварий
         /// </summary>
         private string _AlarmList = "";
 
-        // -------------------------------  Smart Аварии --------------------------   
-
+        // -------------------------------  Smart Аварии --------------------------  
         private ushort _SmartAlarmWord1;
         private ushort _SmartAlarmWord2;
 
@@ -251,14 +248,14 @@ namespace Weight
                                             "Весовой индикатор. Ошибка в данных",
                                             "Ошибка #7. Задвижка весового бункера"};
 
-            Debug.WriteLine("SmartAlarmWord1 = " + SmartAlarmWord1);
-
             str += ((byte)SmartAlarmWord1 != 0) ? smartTechText[(byte)SmartAlarmWord1] : "";
             str += (SmartAlarmWord1 >> 8 != 0) ? smartTechText[SmartAlarmWord1 >> 8] + "\n\r" : "";
             str += ((byte)SmartAlarmWord2 != 0) ? smartTechText[(byte)SmartAlarmWord2] + "\n\r" : "";
             str += (SmartAlarmWord2 >> 8 != 0) ? smartTechText[SmartAlarmWord2 >> 8] + "\n\r" : "";
 
             this.SmartAlarmList = str;
+
+            Debug.WriteLine("SmartAlarmList = " + SmartAlarmList);
         }
 
         /// <summary>
@@ -289,6 +286,8 @@ namespace Weight
             AlarmDWIJumperErr = Lib.GetBitWord(ScaleAlarmWord2, 2);
             AlarmDWIDataErr = Lib.GetBitWord(ScaleAlarmWord2, 1);
             AlarmRemotePrinterErr = Lib.GetBitWord(ScaleAlarmWord2, 0);
+
+            Debug.WriteLine("AlarmSmartTechAlarm = " + AlarmSmartTechAlarm);
 
             UpdateAlarmList();
         }
@@ -333,29 +332,6 @@ namespace Weight
             if (AlarmDWIJumperErr) strAlarm += $"{num++}. Отсутствует перемычка в цифровом индикаторе\r\n";
             if (AlarmDWIDataErr) strAlarm += $"{num++}. Ошибка цифрового индикатора\r\n";
             if (AlarmRemotePrinterErr) strAlarm += $"{num++}. Ошибка удаленного принтера\r\n";
-
-
-            //Debug.WriteLine(" AlarmSmartTechAlarm = " + AlarmSmartTechAlarm);
-            //Debug.WriteLine(" AlarmReportsPrinterErr = " + AlarmReportsPrinterErr);
-            //Debug.WriteLine(" AlarmGateNotInPosition = " + AlarmGateNotInPosition);
-            //Debug.WriteLine(" AlarmDWIOffline = " + AlarmDWIOffline);
-            //Debug.WriteLine(" AlarmGateNotCalibrated = " + AlarmGateNotCalibrated);
-            //Debug.WriteLine(" AlarmRemoteLinkShutdown = " + AlarmRemoteLinkShutdown);
-            //Debug.WriteLine(" AlarmCommunicationError = " + AlarmCommunicationError);
-            //Debug.WriteLine(" AlarmRemoteLinkOffline = " + AlarmRemoteLinkOffline);
-            //Debug.WriteLine(" AlarmDataErrBadConfigCRC = " + AlarmDataErrBadConfigCRC);
-            //Debug.WriteLine(" AlarmAuditPrinterErr = " + AlarmAuditPrinterErr);
-            //Debug.WriteLine(" AlarmUnderzero = " + AlarmUnderzero);
-            //Debug.WriteLine(" AlarmOvercapacity = " + AlarmOvercapacity);
-            //Debug.WriteLine(" AlarmInterlockAlarm = " + AlarmInterlockAlarm);
-            //Debug.WriteLine(" AlarmLGFullAlarm = " + AlarmLGFullAlarm);
-            //Debug.WriteLine(" AlarmUGFullAlarm = " + AlarmUGFullAlarm);
-            //Debug.WriteLine(" AlarmWHFullAlarm = " + AlarmWHFullAlarm);
-            //Debug.WriteLine(" AlarmLGNotEmpty = " + AlarmLGNotEmpty);
-            //Debug.WriteLine(" AlarmDWIJumperErr = " + AlarmDWIJumperErr);
-            //Debug.WriteLine(" AlarmDWIDataErr = " + AlarmDWIDataErr);
-            //Debug.WriteLine(" AlarmRemotePrinterErr = " + AlarmRemotePrinterErr);
-            //Debug.WriteLine("");
 
             this.AlarmList = strAlarm;
 
@@ -575,7 +551,7 @@ namespace Weight
             get => _SmartAlarmWord1;
             set
             {               
-                if (SetProperty(ref _SmartAlarmWord1, value)) UpdateAlarmList();
+                if (SetProperty(ref _SmartAlarmWord1, value)) UpdateSmartAlarmList();
             }
         }
         public ushort SmartAlarmWord2
@@ -583,7 +559,7 @@ namespace Weight
             get => _SmartAlarmWord2;
             set
             {               
-                if (SetProperty(ref _SmartAlarmWord2, value)) UpdateAlarmList();                
+                if (SetProperty(ref _SmartAlarmWord2, value)) UpdateSmartAlarmList();                
             }
         }
 
