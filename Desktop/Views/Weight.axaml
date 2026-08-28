@@ -365,23 +365,9 @@
 						HorizontalAlignment="Center"
 						Foreground="Wheat"
 						Background="Red"
-						IsVisible="false">
+						IsVisible="true">
 					Ошибка Smart
 				</Button>
-
-				<Button Grid.Column="1"
-						Grid.Row="9"
-						HorizontalAlignment="Center"
-						Foreground="Wheat"
-						Background="Red"
-						IsVisible="false">
-					Нет принтера
-				</Button>
-
-
-
-
-
 
 
 			</Grid>
@@ -440,22 +426,7 @@
 								Text="{Binding statusData.AcceptedCodeText}"/>
 				</StackPanel>
 			</Border>
-			<Border Background="#f5f5f5"
-					BorderBrush="#ededed"
-					BorderThickness="2"
-					CornerRadius="3"
-					Width="200"
-					HorizontalAlignment="Right"
-					Padding="5" Margin="10">
-				
-				<StackPanel>
-					<TextBlock FontWeight="Bold"
-								Text="Код ошибки"/>
-					<TextBlock Margin="0 5 0 0"
-								TextAlignment="Center"
-								Text="{Binding statusData.RejectCodeText}"/>
-				</StackPanel>
-			</Border>
+			
 		</StackPanel>
 			
 
