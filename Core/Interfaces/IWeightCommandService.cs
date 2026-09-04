@@ -9,7 +9,7 @@ namespace Weight
     public interface IWeightCommandService
     {
         Task StartCommandAsync(int commandNumber);
-
+        void StartCommand(int commandNumber);
         Task StartNewOrderAsync(NewOrderData newOrderData);
 
         //Task<bool> ReviseOrderAsync(uint newWeight, uint newDraft);

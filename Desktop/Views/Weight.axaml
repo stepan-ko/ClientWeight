@@ -365,7 +365,7 @@
 						HorizontalAlignment="Center"
 						Foreground="Wheat"
 						Background="Red"
-						IsVisible="true">
+						IsVisible="{Binding statusData.AlarmSmartTechAlarm}">
 					Ошибка Smart
 				</Button>
 

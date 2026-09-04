@@ -35,7 +35,8 @@ namespace Desktop.Settings
                     ModbusLocalHost = "10.6.173.230",
                     ModbusPort = 502,
                     ModbusUnitId = 1,
-                    ReconnectDelaySeconds = 5
+                    ReconnectDelaySeconds = 5,
+                    MasterMode = true
                 };
 
                 var options = new JsonSerializerOptions { WriteIndented = true };
@@ -94,6 +95,7 @@ namespace Desktop.Settings
             Current.ModbusPort = _original.ModbusPort;
             Current.ModbusUnitId = _original.ModbusUnitId;
             Current.ReconnectDelaySeconds = _original.ReconnectDelaySeconds;
+            Current.MasterMode = _original.MasterMode;
         }
 
         /// <summary>
@@ -107,7 +109,8 @@ namespace Desktop.Settings
                 || Current.ModbusLocalHost != _original.ModbusLocalHost
                 || Current.ModbusPort != _original.ModbusPort
                 || Current.ModbusUnitId != _original.ModbusUnitId
-                || Current.ReconnectDelaySeconds != _original.ReconnectDelaySeconds;
+                || Current.ReconnectDelaySeconds != _original.ReconnectDelaySeconds
+                || Current.MasterMode != _original.MasterMode;
         }
 
         private static AppSettings Clone(AppSettings source)
@@ -118,7 +121,8 @@ namespace Desktop.Settings
                 ModbusLocalHost = source.ModbusLocalHost,
                 ModbusPort = source.ModbusPort,
                 ModbusUnitId = source.ModbusUnitId,
-                ReconnectDelaySeconds = source.ReconnectDelaySeconds
+                ReconnectDelaySeconds = source.ReconnectDelaySeconds,
+                MasterMode = source.MasterMode
             };
         }
     }

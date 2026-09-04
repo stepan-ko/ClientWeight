@@ -15,6 +15,7 @@ namespace Desktop.Settings
         [ObservableProperty] private int _modbusPort = 502;
         [ObservableProperty] private byte _modbusUnitId = 1;
         [ObservableProperty] private int _reconnectDelaySeconds = 5;
+        [ObservableProperty] private bool _masterMode = true;
 
     }
 

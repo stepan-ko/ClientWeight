@@ -15,6 +15,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/> <!-- Для кнопок -->
             </Grid.RowDefinitions>
 
@@ -73,8 +74,19 @@
                            Value="{Binding Settings.Current.ReconnectDelaySeconds}"
                            Minimum="1" Maximum="300" FormatString="F0"/>
 
+            <!-- Master mode -->
+            <TextBlock Grid.Row="4" Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Margin="0,10,0,0"
+                       Text="Режим управления"/>
+            <CheckBox  Grid.Row="4" Grid.Column="1"
+                       VerticalAlignment="Center"
+                       Margin="0,10,0,0"
+                       Classes="setting-value"
+                       IsChecked="{Binding Settings.Current.MasterMode}"/>
+             
             <!-- Кнопки (занимает всю ширину, выровнены вправо) -->            
-            <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,24,0,0">
+            <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,24,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />

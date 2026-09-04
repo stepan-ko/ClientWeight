@@ -287,7 +287,7 @@ namespace Weight
             AlarmDWIDataErr = Lib.GetBitWord(ScaleAlarmWord2, 1);
             AlarmRemotePrinterErr = Lib.GetBitWord(ScaleAlarmWord2, 0);
 
-            Debug.WriteLine("AlarmSmartTechAlarm = " + AlarmSmartTechAlarm);
+            //Debug.WriteLine("AlarmSmartTechAlarm = " + AlarmSmartTechAlarm);
 
             UpdateAlarmList();
         }

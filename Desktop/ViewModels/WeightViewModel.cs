@@ -66,6 +66,8 @@ namespace ClientCW.ViewModels
         
         private bool _isConnected;
 
+        private bool _isMaster;
+
         // Флаг, чтобы читать staticOrderData/configData только при изменении нужного поля в statusData
         private int? _lastKnownTriggerValue; // сюда положи значение поля, по которому решаем, когда читать
 
@@ -177,7 +179,7 @@ namespace ClientCW.ViewModels
                     // 1. Читаем данные
                     await _mbService.ReadStatusDataAsync(statusData);
                     await _mbService.ReadMiscStatusDataAsync(miscStatusData);
-                    
+
                     uint EventIdCurrent = statusData.EventIdMask;
 
                     // 2. Вызываем отдельный метод для логики флагов, чтения и обновления UI
@@ -294,7 +296,7 @@ namespace ClientCW.ViewModels
                 if (needReadConfig)
                 {
                     Debug.WriteLine("Сработал флаг Config Changed. Чтение ConfigData...");
-                    await _mbService.ReadConfigDataAsync(configData);
+                    await _mbService.ReadConfigDataAsync(configData);                    
                 }
 
                 if (needReadMiscStatusData)
@@ -308,8 +310,23 @@ namespace ClientCW.ViewModels
                     Debug.WriteLine("Нужно прочитать статические данные Ордера : OrderStarted");
                      await _mbService.ReadStaticOrderDataAsync(staticOrderData);
                 }
-            }
             
+                if(_settings.Current.MasterMode && !_isMaster)
+                {                    
+                    if (statusData.AcceptedCode == 0x3401)
+                    {
+                        _isMaster = true;
+                        Debug.WriteLine($"Режим мастера активен");
+                    }
+                    else
+                    {
+                        await _mbService.StartCommandAsync(42);
+                    }                    
+                }
+            
+            
+            }
+
 
             // Обработка по событиям
             if (eventOrderStarted)

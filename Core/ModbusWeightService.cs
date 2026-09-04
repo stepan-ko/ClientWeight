@@ -68,7 +68,7 @@ namespace Weight
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
 
-            var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 49, 31));           
+            var registers = await _master.ReadHoldingRegistersAsync(_slaveId, 49, 31);           
             
             target.ScaleMode = registers[0];
             target.StatusWord1 = registers[1];
@@ -99,10 +99,47 @@ namespace Weight
             target.ClientInfo = registers[30]; 
         }
 
+        public void ReadStatusData(StatusData target)
+        {
+            if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
+
+            var registers = _master.ReadHoldingRegisters(_slaveId, 49, 31);
+
+            target.ScaleMode = registers[0];
+            target.StatusWord1 = registers[1];
+            target.StatusWord2 = registers[2];
+            target.ScaleAlarmWord1 = registers[3];
+            target.ScaleAlarmWord2 = registers[4];
+            target.InputWord1 = registers[5];
+            target.InputWord2 = registers[6];
+            target.OutputWord1 = registers[7];
+            target.OutputWord2 = registers[8];
+            target.SmartAlarmWord1 = registers[9];
+            target.SmartAlarmWord2 = registers[10];
+            target.DWIStatus = registers[13];
+            target.ScaleWeight = Lib.DcrToInt(registers[14], registers[15]);
+            target.ScaleFlowRate = Lib.DcrToInt(registers[16], registers[17]);
+            target.ScaleGatePosition = registers[18];
+            target.RejectCode = registers[19];
+            target.AcceptedCode = registers[20];
+            target.CommunicationResult = registers[21];
+            target.EventIdMask = (uint)registers[22] << 16 | registers[23];
+            target.MastersCount = Lib.GetLowByte(registers[24]);
+            target.ObservCount = Lib.GetHiByte(registers[24]);
+            target.CounterLive = registers[25];
+            target.TimeOur = registers[26];
+            target.TimeMin = registers[27];
+            target.TimeSec = registers[28];
+            target.TimeMSec = registers[29];
+            target.ClientInfo = registers[30];
+        }
+
+
+
         public async Task ReadMiscStatusDataAsync(MiscStatusData target)
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
-            var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 399, 30));           
+            var registers = await _master.ReadHoldingRegistersAsync(_slaveId, 399, 30);           
 
             target.mBuildupTestWeight = Lib.DcrToInt(registers[0], registers[1]);
             target.mRunningTotalWeight = Lib.DcrToInt(registers[2], registers[3]);
@@ -134,7 +171,7 @@ namespace Weight
         public async Task ReadOrderDataAsync(OrderData target)
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
-            var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 99, 72));
+            var registers = await _master.ReadHoldingRegistersAsync(_slaveId, 99, 72);
             
             target.DraftGrossWeight = Lib.DcrToInt(registers[0], registers[1]);
             target.DraftGrossWeightHour = registers[2];
@@ -177,7 +214,7 @@ namespace Weight
         public async Task ReadStaticOrderDataAsync(StaticOrderData target)
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
-            var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 199, 66));
+            var registers = await _master.ReadHoldingRegistersAsync(_slaveId, 199, 66);
             
             target.sOrderTypeInformation = registers[0];
             target.sOrderWeight = Lib.DcrToInt(registers[1], registers[2]);
@@ -192,7 +229,7 @@ namespace Weight
             target.sCustomerName = Lib.RegToString(registers, 41, 30);
             target.sUnitTrainNumber = Lib.RegToString(registers, 56, 20);
 
-            ushort[] reg = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 265, 74));
+            ushort[] reg = await _master.ReadHoldingRegistersAsync(_slaveId, 265, 74);
             target.sNotes = Lib.RegToString(reg, 0, 120);
             target.sLotSize = Lib.DcrToInt(reg[70], reg[71]);
             target.sGlobalTicketCounter = (uint)reg[72] << 16 | reg[73];
@@ -202,7 +239,7 @@ namespace Weight
         public async Task ReadConfigDataAsync(ConfigData target)
         {
             if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
-            var registers = await Task.Run(() => _master.ReadHoldingRegistersAsync(_slaveId, 499, 110));
+            var registers = await _master.ReadHoldingRegistersAsync(_slaveId, 499, 110);
             
             target.ScaleName = Lib.RegToString(registers, 0, 20);
             target.ScaleCapacityInDecimal = Lib.DcrToInt(registers[10], registers[11]);
@@ -254,7 +291,21 @@ namespace Weight
           
         }
 
+        public void StartCommand(int numCommand)
+        {
+            if (!_isConnected) throw new InvalidOperationException("Не подключено к весам");
 
+            // Логика отправки команд
+            ushort[] CommandCode = { 0x0000, 0x0001, 0x0002, 0x0003, 0x1040, 0x1041, 0x1042, 0x1043, 0x1044, 0x1045, 0x1046, 0x1047, 0x104A, 0x104B, 0x104C, 0x104D, 0x104E, 0x104F, 0x1051, 0x1052, 0x1053, 0x1054, 0x1055, 0x1056, 0x1057, 0x1059, 0x105D, 0x105F, 0x1060, 0x1061, 0x1062, 0x1063, 0x1067, 0x1069, 0x106E, 0x1070, 0x1071, 0x1072, 0x1073, 0x1074, 0x1075, 0x1076, 0x3401, 0x3402, 0x340A, 0x4000 };
+            ushort[] wr = new ushort[3];
+            wr[0] = CommandCode[numCommand];
+
+            // Все команды по умолчанию
+            Debug.WriteLine($"Синхронно!!! numCommand = {numCommand}, wr[0] = {wr[0]}");
+
+            _master.WriteMultipleRegisters(_slaveId, 1000, wr);
+
+        }
 
 
         public async Task StartNewOrderAsync(NewOrderData newOrder)

@@ -41,6 +41,8 @@ namespace ClientCW.ViewModels
 
         public AsyncRelayCommand ClickStartOrder { get; }
         public AsyncRelayCommand ClickTareZero { get; }
+
+
         public AsyncRelayCommand ClickResetRunningTotal { get; }
         public AsyncRelayCommand ClickResetError { get; }
         private async Task StartOrderAsync()
@@ -83,7 +85,8 @@ namespace ClientCW.ViewModels
                 return;
             }
             try
-            {                
+            {
+                Debug.WriteLine($"Команда {commandNumber} начала выполнение");
                 await _mbService.StartCommandAsync(commandNumber);
                 Debug.WriteLine($"Команда {commandNumber} выполнена");
                 
@@ -97,7 +100,7 @@ namespace ClientCW.ViewModels
                 Debug.WriteLine(ex, $"Ошибка при команде {commandNumber}");
             }
         }
-        
+
 
         // ---------------------- тестовое событие -----------------------
         public AsyncRelayCommand ClickTest { get; }
