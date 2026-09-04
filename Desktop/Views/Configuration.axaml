@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="clr-namespace:ClientCW.ViewModels"             
+             x:Class="ClientCW.Views.Configuration"
+			 x:DataType="vm:ConfigurationViewModel">
+ 
+  
+	  <Grid RowDefinitions="*,Auto"
+          Margin="15">
+
+        <TabControl Grid.Row="0">
+
+           <ItemsControl ItemsSource="{Binding ConfigParameters}">    
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="20">
+
+                            <TextBlock Text="{Binding Name}"
+                                       Width="200"/>
+
+                            <TextBlock Text="{Binding CurrentValue}"
+                                       Width="200"/>
+
+                            <TextBox Text="{Binding NewValue}"
+                                     Width="200"/>
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+
+        </TabControl>
+
+
+        <!-- Кнопка -->
+        <Button Grid.Row="1"
+                Content="Записать новые данные"
+                Command="{Binding SaveConfigCommand}"
+                HorizontalAlignment="Right"
+                Width="220"
+                Height="40"
+                Margin="0,10,0,0"/>
+
+    </Grid>
+  
+
+</UserControl>

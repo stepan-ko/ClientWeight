@@ -31,11 +31,15 @@ namespace Desktop
                 return new ModbusWeightService(settings.Current.ModbusHost, settings.Current.ModbusLocalHost, settings.Current.ModbusUnitId);
             });
 
+            // Данные весов
+            services.AddSingleton<ScaleData>();
+
             // ViewModels
             services.AddTransient<WeightViewModel>();
             services.AddTransient<OrderViewModel>();
             services.AddTransient<MainTabViewModel>();
             services.AddTransient<SettingsViewModel>();
+            services.AddTransient<ConfigurationViewModel>();
             services.AddTransient<MainWindowViewModel>();
 
 

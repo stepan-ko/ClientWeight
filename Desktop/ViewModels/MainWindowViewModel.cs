@@ -15,10 +15,14 @@ namespace ClientCW.ViewModels
         [ObservableProperty]
         private SettingsViewModel _settingsVM;
 
-        public MainWindowViewModel(MainTabViewModel mainTab, SettingsViewModel settings)
+        [ObservableProperty]
+        private ConfigurationViewModel _configVM;
+
+        public MainWindowViewModel(MainTabViewModel mainTab, SettingsViewModel settings, ConfigurationViewModel configVM)
         {
             MainTabVM = mainTab;
             SettingsVM = settings;
+            ConfigVM = configVM;
 
             //_mbService = new ModbusWeightService("10.6.173.231", 1);
             //WeightVm = new WeightViewModel(_mbService);

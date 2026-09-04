@@ -25,7 +25,9 @@
 			<TabItem Header="Настройки">
 				<UserControl:Settings DataContext="{Binding SettingsVM}" Margin="0 10"/>	
 			</TabItem>
-			
+			<TabItem Header="Конфигурация">
+				<UserControl:Configuration DataContext="{Binding ConfigVM}" Margin="0 10"/>	
+			</TabItem>
 		</TabControl>
 
 		

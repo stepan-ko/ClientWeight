@@ -21,18 +21,22 @@ namespace ClientCW.ViewModels
     {
 
         private readonly ModbusWeightService _mbService;
-        private readonly SettingsService _settings;        
+        private readonly SettingsService _settings;
+
+        private readonly ScaleData _scale;
+
         //private int ReconnecMs;
-        public WeightViewModel(ModbusWeightService mbService, SettingsService settingsService)
+        public WeightViewModel(ModbusWeightService mbService, SettingsService settingsService, ScaleData scale)
         {
             _mbService = mbService;
             _settings = settingsService;
             //ReconnecMs = _settings.Current.ReconnectDelaySeconds * 1000;
-            orderData = new OrderData();
-            staticOrderData = new StaticOrderData();
-            statusData = new StatusData();
-            miscStatusData = new MiscStatusData();
-            configData = new ConfigData();            
+            _scale = scale;
+            orderData = _scale.OrderData;
+            staticOrderData = _scale.StaticOrderData;
+            statusData = _scale.StatusData;
+            miscStatusData = _scale.MiscStatusData;
+            configData = _scale.ConfigData;            
             ClickCommand = new RelayCommand(OnButtonClicked);
             
             StartLoop();
@@ -296,7 +300,9 @@ namespace ClientCW.ViewModels
                 if (needReadConfig)
                 {
                     Debug.WriteLine("Сработал флаг Config Changed. Чтение ConfigData...");
-                    await _mbService.ReadConfigDataAsync(configData);                    
+                    await _mbService.ReadConfigDataAsync(configData);
+                    Debug.WriteLine($"configData.ScaleName = {configData.ScaleName}");
+                    
                 }
 
                 if (needReadMiscStatusData)
