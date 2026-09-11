@@ -60,8 +60,7 @@ namespace Weight
         /// <param name="length">Длинна строки</param>
         /// <returns>Строка формата string</returns>
         public static string RegToString(ushort[] reg, int stIndex, int length)
-        {
-            
+        {            
             string str = "";
             int regCount = (length % 2 == 0) ? length / 2 : length / 2 - 1;
             regCount += stIndex;
@@ -72,10 +71,14 @@ namespace Weight
                 if (reg[i] > 0)
                 {
                     s = reg[i];
-                    str = string.Concat(str, (char)(s >> 8));
-                    str = string.Concat(str, (char)(s & 0x00FF));
+                    byte hi = (byte)(s >> 8);
+                    byte lo = (byte)(s & 0x00FF);
+
+                    if (hi != 0) str += (char)hi;
+                    if (lo != 0) str += (char)lo;                    
                 }                         
             }
+            //Debug.Print($"---");
             //Debug.Print($"str.Length = {str.Length}, str = {str}");
             return str;
         }

@@ -47,7 +47,8 @@ namespace ClientCW.ViewModels
         private void OnButtonClicked()
         {
             Debug.WriteLine("Кнопка 1 - НАЖАТА");
-            statusData.ScaleWeight += 1;
+            Debug.WriteLine("configData.ScaleName = " + configData.ScaleName);
+            Debug.WriteLine("_scale.configData.ScaleName = " + _scale.ConfigData.ScaleName);
         }
                 
 
@@ -193,14 +194,14 @@ namespace ClientCW.ViewModels
                         EventIdOld);
 
                     EventIdOld = EventIdCurrent;
-                    
-                    
+                                       
                     cycleCount++;
                     // Отчёт по частоте цикла (раз в секунду)
                     var now = DateTimeOffset.UtcNow;
                     if ((now - lastReportTime).TotalSeconds >= 1.0)
                     {
-                        //Debug.WriteLine($"Быстрых циклов за секунду: {cycleCount}");
+                        //Debug.WriteLine($"Быстрых циклов за секунду: {cycleCount}");         
+
                         cycleCount = 0;
                         lastReportTime = now;
                     }
@@ -301,8 +302,6 @@ namespace ClientCW.ViewModels
                 {
                     Debug.WriteLine("Сработал флаг Config Changed. Чтение ConfigData...");
                     await _mbService.ReadConfigDataAsync(configData);
-                    Debug.WriteLine($"configData.ScaleName = {configData.ScaleName}");
-                    
                 }
 
                 if (needReadMiscStatusData)

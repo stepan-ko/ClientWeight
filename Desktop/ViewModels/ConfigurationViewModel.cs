@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Desktop.Settings;
 using Weight;
+using static ClientCW.ViewModels.ConfigurationViewModel;
 
 namespace ClientCW.ViewModels
 {
@@ -20,13 +21,20 @@ namespace ClientCW.ViewModels
         [ObservableProperty]
         private SettingsService _settings;
         private readonly ModbusWeightService _mbService;
-        private readonly ScaleData _scale;
+        
 
         private ConfigData NewConfigData = new ConfigData();
 
         [ObservableProperty]
         private ObservableCollection<ConfigParameter> _configParameters = new();
 
+        private readonly ScaleData _scale;
+        
+        [ObservableProperty]
+        public ConfigData _currentConfig;
+        
+        [ObservableProperty]
+        public ConfigData _newConfig = new();
 
         public ConfigurationViewModel(SettingsService settingsService, ModbusWeightService mbService, ScaleData scale)
         {
@@ -34,35 +42,60 @@ namespace ClientCW.ViewModels
             _scale = scale;
             Settings = settingsService;
 
+            //CopyConfigData();
+            CurrentConfig = _scale.ConfigData;
 
-            CopyConfigData();
+            ConfigParameters.Add(new ConfigParameter { Name = "Название весов", Value = _scale.ConfigData.ScaleName});
+            ConfigParameters.Add(new ConfigParameter { Name = "Вес тары", Value = _scale.ConfigData.TareResetRange});
 
-            ConfigParameters.Add(
-                new ConfigParameter {Name = "Название весов", CurrentValue = _scale.ConfigData.ScaleName, NewValue = NewConfigData.ScaleName }
-                    
-                );
         }
 
         [RelayCommand]
         private void SaveConfig()
         {            
-            Debug.WriteLine("Нажали сохранить конфигурацию в Весах");
-            Debug.WriteLine($"_scale.ConfigData.ScaleName = {_scale.ConfigData.ScaleName} ");
-           
+            Debug.WriteLine("Нажали сохранить конфигурацию в Весах");                        
+        }
+
+        [RelayCommand]
+        private void ResetConfig()
+        {
+            Debug.WriteLine("Отменить изменения");
+            ResetNewValue();
+        }
+
+        private void ResetNewValue()
+        {
+            ConfigParameters[0].Value = ConfigParameters[0].NewValue = _scale.ConfigData.ScaleName;
+            ConfigParameters[1].Value = ConfigParameters[1].NewValue = _scale.ConfigData.TareResetRange;
         }
 
 
         private void CopyConfigData()
-        {
+        {   
             NewConfigData.ScaleName = _scale.ConfigData.ScaleName;
         }
-       
 
         public partial class ConfigParameter : ObservableObject
-        {         
-            public string Name { get; set; } = "";                       
-            public object? CurrentValue { get; set; }
-            public object? NewValue { get; set; }
+        {
+            public string Name { get; set; } = "";
+            
+            [ObservableProperty]
+            public object? _newValue;
+
+            private object? _value;
+
+            public object? Value { get => _value;
+                set
+                {
+                    if (SetProperty(ref _value, value))
+                    {
+                        NewValue = value;
+                    }
+                }
+            }
+
+            
+            
         }
 
 

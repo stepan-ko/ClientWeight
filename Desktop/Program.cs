@@ -24,6 +24,9 @@ namespace Desktop
             // Сначала настройки
             services.AddSingleton<SettingsService>();
 
+            // Данные весов
+            services.AddSingleton<ScaleData>();
+
             // Регистрируем ModbusWeightService с нужными параметрами
             services.AddSingleton<ModbusWeightService>(provider =>
             {
@@ -31,8 +34,6 @@ namespace Desktop
                 return new ModbusWeightService(settings.Current.ModbusHost, settings.Current.ModbusLocalHost, settings.Current.ModbusUnitId);
             });
 
-            // Данные весов
-            services.AddSingleton<ScaleData>();
 
             // ViewModels
             services.AddTransient<WeightViewModel>();

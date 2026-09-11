@@ -269,7 +269,8 @@ namespace Weight
             target.HeaderLine1 = Lib.RegToString(registers, 39, 40);
             target.HeaderLine2 = Lib.RegToString(registers, 59, 40);
             target.SignatureLine1 = Lib.RegToString(registers, 79, 30);
-            target.SignatureLine2 = Lib.RegToString(registers, 94, 30);            
+            target.SignatureLine2 = Lib.RegToString(registers, 94, 30);
+
         }
 
 
