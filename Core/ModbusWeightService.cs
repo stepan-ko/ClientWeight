@@ -271,6 +271,39 @@ namespace Weight
             target.SignatureLine1 = Lib.RegToString(registers, 79, 30);
             target.SignatureLine2 = Lib.RegToString(registers, 94, 30);
 
+            var registers2 = await _master.ReadHoldingRegistersAsync(_slaveId, 608, 36);
+
+            target.PrintCustomTicketInformation = registers2[0];
+            target.DeviationInfluencein = registers2[1];
+            target.UnderZeroRange = registers2[2];
+            target.OvercapacityRange = registers2[3];
+            target.MaxAllowableDraftSize = registers2[4];
+            target.MinAllowableDraftSize = registers2[5];
+            target.DirectTrimRange = registers2[6];
+            target.JogRangein = registers2[7];
+            target.UGGateJogTime = registers2[8];
+            target.MaxWeightThroughUG = Lib.DcrToInt(registers2[9], registers2[10]);
+            target.TrimLSPosition = registers2[11];
+            target.SmartTechAlarmsMask1 = (uint)registers2[12] << 16 | registers2[13];
+            target.SmartTechAlarmsMask2 = (uint)registers2[14] << 16 | registers2[15];
+            target.GateFullMotionTime = registers2[16];
+            target.GateTrimMotionTime = registers2[17];
+            target.GateDirectTrimMotionTime = registers2[18];
+            target.GateFullTrimMotionTime = registers2[19];
+            target.LGGateADRange = registers2[20];
+            target.DWIMotionRange = registers2[21];
+            target.SubtotalsConfiguration = registers2[22];
+            target.ModbusNodeAddress = registers2[23];
+            target.SerialCommParameters = registers2[24];
+            target.IPAddress = (uint)registers2[25] << 16 | registers2[26];
+            target.SubnetMask = (uint)registers2[27] << 16 | registers2[28];
+            target.TCPPort = registers2[29];
+            target.ModbusTimeout = registers2[30];
+            target.SocketTimeout = registers2[31];
+            target.MaxTCPConnectionsAllowed = registers2[32];
+            target.DefaultGateway = (uint)registers2[33] << 16 | registers2[34];
+            target.WHGateType = registers2[35];
+
         }
 
 

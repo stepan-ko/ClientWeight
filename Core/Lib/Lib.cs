@@ -154,13 +154,8 @@ namespace Weight
         /// <returns>Сетевой адрес в string</returns>
         public static string RegIpToString(uint register)
         {
-            string str = (register >> 24 | 0xFF).ToString();
-            str += ".";
-            str += (register >> 16 | 0xFF).ToString();
-            str += ".";
-            str += (register >> 8 | 0xFF).ToString();
-            str += ".";
-            str += (register | 0xFF).ToString();
+            string str = $"{(register >> 24) & 0xFF}.{(register >> 16) & 0xFF}.{(register >> 8) & 0xFF}.{register & 0xFF}";
+
             return str;
         }
 

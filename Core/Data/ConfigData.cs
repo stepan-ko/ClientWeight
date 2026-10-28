@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -305,8 +306,11 @@ namespace Weight
             get => _IPAddress; 
             set 
             {
-                if (_IPAddress != value) IPAddressString = Lib.RegIpToString(value);
-                this.SetProperty(ref _IPAddress, value); 
+                if (SetProperty(ref _IPAddress, value))
+                {
+                    IPAddressString = Lib.RegIpToString(value);
+                    Debug.WriteLine($"IPAddressString = {IPAddressString}");
+                }
             } 
         }
         public uint SubnetMask 

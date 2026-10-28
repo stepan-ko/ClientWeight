@@ -38,7 +38,7 @@
 
            
 			<TabItem Header="Основные" Margin="5">
-				<DataGrid ItemsSource="{Binding ConfigParameters}"
+				<DataGrid ItemsSource="{Binding ConfigMain}"
                           AutoGenerateColumns="False"
                           GridLinesVisibility="All"
                           IsReadOnly="False">
@@ -65,7 +65,25 @@
 
 			</TabItem>
 			<TabItem Header="Сеть">
-				
+				<DataGrid ItemsSource="{Binding ConfigNetwork}"
+                          AutoGenerateColumns="False"
+                          GridLinesVisibility="All"
+                          IsReadOnly="False">
+
+                    <DataGrid.Columns>
+						<DataGridTextColumn  Header="Параметр"
+                                             Binding="{Binding Name}"
+                                             IsReadOnly="True"/>
+                        <DataGridTextColumn  Header="Значение"
+                                             Binding="{Binding Value}"
+                                             IsReadOnly="True"/>
+                        <DataGridTextColumn  Header="Новое значение"
+                                             Binding="{Binding NewValue}"
+                                             IsReadOnly="False"/>
+
+                    </DataGrid.Columns>
+			
+                </DataGrid>
 			</TabItem>
 		
             

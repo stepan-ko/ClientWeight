@@ -39,6 +39,8 @@ namespace ClientCW.ViewModels
             configData = _scale.ConfigData;            
             ClickCommand = new RelayCommand(OnButtonClicked);
             
+
+
             StartLoop();
         }
         
